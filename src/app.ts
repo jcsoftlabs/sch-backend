@@ -15,6 +15,8 @@ import vaccinationRoutes from './interfaces/http/routes/vaccination.routes';
 import caseReportRoutes from './interfaces/http/routes/case-report.routes';
 import maternalCareRoutes from './interfaces/http/routes/maternal-care.routes';
 import appointmentRoutes from './interfaces/http/routes/appointment.routes';
+import medicalProtocolRoutes from './interfaces/http/routes/medical-protocol.routes';
+import epidemiologicalAlertRoutes from './interfaces/http/routes/epidemiological-alert.routes';
 import { errorHandler } from './interfaces/http/middlewares/errorHandler';
 import { authLimiter, apiLimiter } from './interfaces/http/middlewares/rateLimiter.middleware';
 
@@ -41,7 +43,7 @@ app.use('/api', apiLimiter);
 // Existing routes
 app.use('/api/auth', authRoutes);
 app.use('/api/patients', patientRoutes);
-app.use('/api/centers', healthCenterRoutes);
+app.use('/api/health-centers', healthCenterRoutes);
 app.use('/api/consultations', consultationRoutes);
 app.use('/api/users', userRoutes);
 
@@ -52,6 +54,8 @@ app.use('/api/vaccinations', vaccinationRoutes);
 app.use('/api/case-reports', caseReportRoutes);
 app.use('/api/maternal-care', maternalCareRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/medical-protocols', medicalProtocolRoutes);
+app.use('/api/epidemiological-alerts', epidemiologicalAlertRoutes);
 
 app.get('/health', (req, res) => {
 
