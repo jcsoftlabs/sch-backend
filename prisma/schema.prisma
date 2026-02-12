@@ -91,46 +91,58 @@ enum SMSStatus {
   FAILED
 }
 
+enum HealthCenterType {
+  HOSPITAL
+  CLINIC
+  DISPENSARY
+  HEALTH_POST
+}
+
 // ========================
 // MODELS EXISTANTS ENRICHIS
 // ========================
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String
-  role      Role     @default(AGENT)
-  phone     String?
-  zone      String?  // zone géographique d'intervention
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String        @id @default(uuid())
+  email          String        @unique
+  password       String
+  name           String
+  role           Role          @default(AGENT)
+  phone          String?
+  zone           String?       // zone géographique d'intervention
+  healthCenterId String?       // centre de santé d'affectation
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
-  consultations     Consultation[]
-  auditLogs         AuditLog[]
-  households        Household[]       // ménages gérés (ASCP)
-  vaccinationsGiven Vaccination[]     @relation("VaccinationAgent")
-  vitalSignsTaken   VitalSign[]       @relation("VitalSignAgent")
-  caseReportsAgent  CaseReport[]      @relation("CaseReportAgent")
-  caseReportsDoctor CaseReport[]      @relation("CaseReportDoctor")
-  appointmentsDoctor Appointment[]    @relation("AppointmentDoctor")
-  smsMessages       SMSMessage[]      @relation("SMSAgent")
+  healthCenter       HealthCenter? @relation(fields: [healthCenterId], references: [id])
+  consultations      Consultation[]
+  auditLogs          AuditLog[]
+  households         Household[]       // ménages gérés (ASCP)
+  vaccinationsGiven  Vaccination[]     @relation("VaccinationAgent")
+  vitalSignsTaken    VitalSign[]       @relation("VitalSignAgent")
+  caseReportsAgent   CaseReport[]      @relation("CaseReportAgent")
+  caseReportsDoctor  CaseReport[]      @relation("CaseReportDoctor")
+  appointmentsDoctor Appointment[]     @relation("AppointmentDoctor")
+  smsMessages        SMSMessage[]      @relation("SMSAgent")
 }
 
 model HealthCenter {
-  id        String   @id @default(uuid())
+  id        String            @id @default(uuid())
   name      String
+  type      HealthCenterType  @default(CLINIC)
   address   String
   phone     String?
   latitude  Float?
   longitude Float?
-  services  String?  // JSON: liste des services disponibles
-  capacity  Int?     // capacité d'accueil
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  services  String?           // JSON: liste des services disponibles
+  capacity  Int?              // capacité d'accueil
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 
-  patients     Patient[]
-  appointments Appointment[]
+  patients      Patient[]
+  appointments  Appointment[]
+  consultations Consultation[]
+  staff         User[]          // personnel affecté
 }
 
 model Patient {
@@ -160,15 +172,17 @@ model Patient {
 }
 
 model Consultation {
-  id        String             @id @default(uuid())
-  patientId String
-  patient   Patient            @relation(fields: [patientId], references: [id])
-  doctorId  String?
-  doctor    User?              @relation(fields: [doctorId], references: [id])
-  status    ConsultationStatus @default(PENDING)
-  notes     String?
-  createdAt DateTime           @default(now())
-  updatedAt DateTime           @updatedAt
+  id             String             @id @default(uuid())
+  patientId      String
+  patient        Patient            @relation(fields: [patientId], references: [id])
+  doctorId       String?
+  doctor         User?              @relation(fields: [doctorId], references: [id])
+  healthCenterId String?            // centre où la consultation a lieu
+  healthCenter   HealthCenter?      @relation(fields: [healthCenterId], references: [id])
+  status         ConsultationStatus @default(PENDING)
+  notes          String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
 }
 
 model AuditLog {
@@ -295,6 +309,9 @@ model CaseReport {
   response    String?          // réponse/protocole du médecin
   referral    Boolean          @default(false) // référé vers hôpital?
   imageUrl    String?          // photo jointe (blessure, test rapide)
+  latitude    Float?           // coordonnées GPS du cas
+  longitude   Float?           // coordonnées GPS du cas
+  zone        String?          // zone géographique
   resolvedAt  DateTime?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
