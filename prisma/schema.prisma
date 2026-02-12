@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -8,10 +8,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ========================
+// ENUMS
+// ========================
+
 enum Role {
   ADMIN
   AGENT
   DOCTOR
+  NURSE
 }
 
 enum ConsultationStatus {
@@ -21,17 +26,82 @@ enum ConsultationStatus {
   CANCELLED
 }
 
+enum UrgencyLevel {
+  NORMAL
+  URGENT
+  CRITICAL
+}
+
+enum CaseReportStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  RESOLVED
+  REFERRED
+}
+
+enum CaseChannel {
+  SMS
+  WHATSAPP
+  APP
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum NutritionStatus {
+  NORMAL
+  MAM    // Malnutrition Aiguë Modérée
+  MAS    // Malnutrition Aiguë Sévère
+}
+
+enum RiskLevel {
+  NORMAL
+  HIGH
+  CRITICAL
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum AlertStatus {
+  ACTIVE
+  INVESTIGATING
+  RESOLVED
+  DISMISSED
+}
+
+// ========================
+// MODELS EXISTANTS ENRICHIS
+// ========================
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
   name      String
   role      Role     @default(AGENT)
+  phone     String?
+  zone      String?  // zone géographique d'intervention
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  consultations Consultation[]
-  auditLogs     AuditLog[]
+  consultations     Consultation[]
+  auditLogs         AuditLog[]
+  households        Household[]       // ménages gérés (ASCP)
+  vaccinationsGiven Vaccination[]     @relation("VaccinationAgent")
+  vitalSignsTaken   VitalSign[]       @relation("VitalSignAgent")
+  caseReportsAgent  CaseReport[]      @relation("CaseReportAgent")
+  caseReportsDoctor CaseReport[]      @relation("CaseReportDoctor")
+  appointmentsDoctor Appointment[]    @relation("AppointmentDoctor")
 }
 
 model HealthCenter {
@@ -39,10 +109,15 @@ model HealthCenter {
   name      String
   address   String
   phone     String?
+  latitude  Float?
+  longitude Float?
+  services  String?  // JSON: liste des services disponibles
+  capacity  Int?     // capacité d'accueil
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  patients Patient[]
+  patients     Patient[]
+  appointments Appointment[]
 }
 
 model Patient {
@@ -53,12 +128,21 @@ model Patient {
   gender         String
   address        String
   phone          String?
+  nationalId     String?       // identifiant national (NIF)
   healthCenterId String?
   healthCenter   HealthCenter? @relation(fields: [healthCenterId], references: [id])
+  householdId    String?
+  household      Household?    @relation(fields: [householdId], references: [id])
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
-  consultations Consultation[]
+  consultations    Consultation[]
+  medicalRecord    MedicalRecord?
+  vaccinations     Vaccination[]
+  maternalCares    MaternalCare[]
+  nutritionRecords NutritionRecord[]
+  caseReports      CaseReport[]
+  appointments     Appointment[]
 }
 
 model Consultation {
@@ -81,4 +165,172 @@ model AuditLog {
   resource  String
   details   String?
   createdAt DateTime @default(now())
+}
+
+// ========================
+// NOUVEAUX MODELS
+// ========================
+
+// Recensement des ménages
+model Household {
+  id        String   @id @default(uuid())
+  address   String
+  gpsLat    Float?
+  gpsLng    Float?
+  zone      String   // zone géographique
+  agentId   String   // ASCP responsable
+  agent     User     @relation(fields: [agentId], references: [id])
+  members   Patient[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Dossier médical enrichi (1 par patient)
+model MedicalRecord {
+  id          String      @id @default(uuid())
+  patientId   String      @unique
+  patient     Patient     @relation(fields: [patientId], references: [id])
+  bloodType   String?     // A+, A-, B+, B-, AB+, AB-, O+, O-
+  allergies   String?     // texte libre ou JSON
+  height      Float?      // cm
+  weight      Float?      // kg
+  conditions  String?     // pathologies chroniques (JSON ou texte)
+  notes       String?     // notes médicales générales
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  vitalSigns VitalSign[]
+}
+
+// Constantes vitales
+model VitalSign {
+  id              String        @id @default(uuid())
+  medicalRecordId String
+  medicalRecord   MedicalRecord @relation(fields: [medicalRecordId], references: [id])
+  temperature     Float?        // °C
+  bloodPressureSys Int?         // systolique mmHg
+  bloodPressureDia Int?         // diastolique mmHg
+  heartRate       Int?          // bpm
+  respiratoryRate Int?          // respirations/min
+  oxygenSaturation Float?      // SpO2 %
+  agentId         String
+  agent           User          @relation("VitalSignAgent", fields: [agentId], references: [id])
+  recordedAt      DateTime      @default(now())
+}
+
+// Suivi vaccinal
+model Vaccination {
+  id          String    @id @default(uuid())
+  patientId   String
+  patient     Patient   @relation(fields: [patientId], references: [id])
+  vaccine     String    // BCG, DPT, VPO, Choléra, RR, etc.
+  doseNumber  Int       // numéro de la dose
+  dateGiven   DateTime
+  nextDueDate DateTime? // prochaine dose prévue
+  batchNumber String?   // numéro de lot
+  agentId     String
+  agent       User      @relation("VaccinationAgent", fields: [agentId], references: [id])
+  notes       String?
+  createdAt   DateTime  @default(now())
+}
+
+// Suivi maternelle & grossesse
+model MaternalCare {
+  id               String    @id @default(uuid())
+  patientId        String
+  patient          Patient   @relation(fields: [patientId], references: [id])
+  pregnancyStart   DateTime? // date de début de grossesse estimée
+  expectedDelivery DateTime? // DPA - Date Prévue Accouchement
+  prenatalVisits   Int       @default(0)
+  riskLevel        RiskLevel @default(NORMAL)
+  deliveryDate     DateTime?
+  deliveryType     String?   // normal, césarienne
+  outcome          String?   // vivant, mort-né, etc.
+  newbornWeight    Float?    // poids en kg
+  notes            String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+// Indicateurs nutritionnels
+model NutritionRecord {
+  id        String          @id @default(uuid())
+  patientId String
+  patient   Patient         @relation(fields: [patientId], references: [id])
+  weight    Float           // kg
+  height    Float           // cm
+  muac      Float?          // périmètre brachial en mm
+  status    NutritionStatus @default(NORMAL)
+  notes     String?
+  date      DateTime        @default(now())
+}
+
+// Rapports de cas terrain (SMS/WhatsApp)
+model CaseReport {
+  id          String           @id @default(uuid())
+  agentId     String
+  agent       User             @relation("CaseReportAgent", fields: [agentId], references: [id])
+  patientId   String?
+  patient     Patient?         @relation(fields: [patientId], references: [id])
+  symptoms    String           // description des symptômes
+  urgency     UrgencyLevel     @default(NORMAL)
+  channel     CaseChannel      @default(APP)
+  status      CaseReportStatus @default(PENDING)
+  doctorId    String?
+  doctor      User?            @relation("CaseReportDoctor", fields: [doctorId], references: [id])
+  response    String?          // réponse/protocole du médecin
+  referral    Boolean          @default(false) // référé vers hôpital?
+  imageUrl    String?          // photo jointe (blessure, test rapide)
+  resolvedAt  DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+// Protocoles médicaux standardisés
+model MedicalProtocol {
+  id           String   @id @default(uuid())
+  name         String   // "Protocole Malaria", "Protocole Diarrhée Aiguë"
+  nameKr       String?  // nom en Créole haïtien
+  keywords     String[] // mots-clés déclencheurs
+  steps        String   // JSON: étapes du protocole
+  urgencyLevel UrgencyLevel @default(NORMAL)
+  category     String?  // "Maladies infectieuses", "Urgences", etc.
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Rendez-vous
+model Appointment {
+  id             String            @id @default(uuid())
+  patientId      String
+  patient        Patient           @relation(fields: [patientId], references: [id])
+  doctorId       String?
+  doctor         User?             @relation("AppointmentDoctor", fields: [doctorId], references: [id])
+  healthCenterId String?
+  healthCenter   HealthCenter?     @relation(fields: [healthCenterId], references: [id])
+  scheduledAt    DateTime
+  duration       Int               @default(30) // minutes
+  reason         String?
+  status         AppointmentStatus @default(SCHEDULED)
+  notes          String?
+  reminderSent   Boolean           @default(false)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+}
+
+// Alertes épidémiologiques
+model EpidemiologicalAlert {
+  id          String        @id @default(uuid())
+  title       String        // "Augmentation cas choléra – Zone Nord"
+  description String
+  disease     String        // choléra, malaria, dengue, etc.
+  zone        String        // zone géographique
+  caseCount   Int           // nombre de cas détectés
+  threshold   Int           // seuil déclencheur
+  severity    AlertSeverity @default(WARNING)
+  status      AlertStatus   @default(ACTIVE)
+  resolvedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
