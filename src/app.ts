@@ -8,6 +8,7 @@ import authRoutes from './interfaces/http/routes/auth.routes';
 import patientRoutes from './interfaces/http/routes/patient.routes';
 import healthCenterRoutes from './interfaces/http/routes/health-center.routes';
 import consultationRoutes from './interfaces/http/routes/consultation.routes';
+import userRoutes from './interfaces/http/routes/user.routes';
 import { errorHandler } from './interfaces/http/middlewares/errorHandler';
 import { authLimiter, apiLimiter } from './interfaces/http/middlewares/rateLimiter.middleware';
 
@@ -32,6 +33,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/centers', healthCenterRoutes);
 app.use('/api/consultations', consultationRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/health', (req, res) => {
 
