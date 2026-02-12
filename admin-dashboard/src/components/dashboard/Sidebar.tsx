@@ -16,6 +16,7 @@ import {
     BarChart3,
     AlertTriangle,
     FileText,
+    MessageSquare,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { useRouter } from "next/navigation";
@@ -76,6 +77,12 @@ const routes = [
         icon: FileText,
         href: "/dashboard/reports",
         color: "text-indigo-500",
+    },
+    {
+        label: "Messages",
+        icon: MessageSquare,
+        href: "/dashboard/sms",
+        color: "text-yellow-500",
     },
 ];
 
