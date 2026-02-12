@@ -14,7 +14,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const caseReport = await service.getCaseReportById(req.params.id as string);
+        const caseReport = await service.getCaseReportById(req.params.id as string as string);
         res.status(200).json({ status: 'success', data: { caseReport } });
     } catch (error) { next(error); }
 };
@@ -42,28 +42,28 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const assignDoctor = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const caseReport = await service.assignDoctor(req.params.id as string, req.body.doctorId);
+        const caseReport = await service.assignDoctor(req.params.id as string as string, req.body.doctorId);
         res.status(200).json({ status: 'success', data: { caseReport } });
     } catch (error) { next(error); }
 };
 
 export const resolve = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const caseReport = await service.resolveCase(req.params.id as string, req.body.response, req.body.referral);
+        const caseReport = await service.resolveCase(req.params.id as string as string, req.body.response, req.body.referral);
         res.status(200).json({ status: 'success', data: { caseReport } });
     } catch (error) { next(error); }
 };
 
 export const update = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const caseReport = await service.updateCaseReport(req.params.id as string, req.body);
+        const caseReport = await service.updateCaseReport(req.params.id as string as string, req.body);
         res.status(200).json({ status: 'success', data: { caseReport } });
     } catch (error) { next(error); }
 };
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await service.deleteCaseReport(req.params.id as string);
+        await service.deleteCaseReport(req.params.id as string as string);
         res.status(204).send();
     } catch (error) { next(error); }
 };

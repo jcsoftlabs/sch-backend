@@ -14,7 +14,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const protocol = await service.getById(req.params.id as string);
+        const protocol = await service.getById(req.params.id as string as string);
         if (!protocol) return res.status(404).json({ message: 'Protocol not found' });
         res.json(protocol);
     } catch (error) {
@@ -42,7 +42,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const update = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const protocol = await service.update(req.params.id as string, req.body);
+        const protocol = await service.update(req.params.id as string as string, req.body);
         res.json(protocol);
     } catch (error) {
         next(error);
@@ -51,7 +51,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await service.delete(req.params.id as string);
+        await service.delete(req.params.id as string as string);
         res.status(204).send();
     } catch (error) {
         next(error);

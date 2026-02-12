@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { EmergencyContactService } from '../../application/services/emergency-contact.service';
-import { EmergencyContactRepository } from '../../infrastructure/repositories/emergency-contact.repository';
+import { EmergencyContactService } from '../../../application/services/emergencyContactService';
+import { EmergencyContactRepository } from '../../../infrastructure/repositories/emergencyContactRepository';
 
 const contactService = new EmergencyContactService(new EmergencyContactRepository());
 
@@ -9,7 +9,7 @@ export const EmergencyContactController = {
     getByPatient: async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { patientId } = req.params;
-            const contacts = await contactService.getContactsByPatient(patientId);
+            const contacts = await contactService.getContactsByPatient(patientId as string);
 
             res.json({
                 status: 'success',
@@ -24,7 +24,7 @@ export const EmergencyContactController = {
     getPrimary: async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { patientId } = req.params;
-            const contact = await contactService.getPrimaryContact(patientId);
+            const contact = await contactService.getPrimaryContact(patientId as string);
 
             res.json({
                 status: 'success',
@@ -38,8 +38,8 @@ export const EmergencyContactController = {
     // GET /api/emergency-contacts/:id
     getById: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const contact = await contactService.getContactById(id);
+            const { id } = req.params; const idStr = id as string;
+            const contact = await contactService.getContactById(id as string);
 
             res.json({
                 status: 'success',
@@ -67,8 +67,8 @@ export const EmergencyContactController = {
     // PUT /api/emergency-contacts/:id
     update: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const contact = await contactService.updateContact(id, req.body);
+            const { id } = req.params; const idStr = id as string;
+            const contact = await contactService.updateContact(id as string, req.body);
 
             res.json({
                 status: 'success',
@@ -82,8 +82,8 @@ export const EmergencyContactController = {
     // PATCH /api/emergency-contacts/:id/primary
     setPrimary: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const contact = await contactService.setPrimaryContact(id);
+            const { id } = req.params; const idStr = id as string;
+            const contact = await contactService.setPrimaryContact(id as string);
 
             res.json({
                 status: 'success',
@@ -97,8 +97,8 @@ export const EmergencyContactController = {
     // DELETE /api/emergency-contacts/:id
     delete: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            await contactService.deleteContact(id);
+            const { id } = req.params; const idStr = id as string;
+            await contactService.deleteContact(id as string);
 
             res.status(204).send();
         } catch (error) {

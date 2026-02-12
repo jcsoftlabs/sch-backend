@@ -21,7 +21,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
 
 export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; const idStr = id as string;
         const user = await userService.getUserById(id as string);
         const { password, ...sanitizedUser } = user;
         res.status(200).json({ status: 'success', data: { user: sanitizedUser } });
@@ -42,7 +42,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; const idStr = id as string;
         const user = await userService.updateUser(id as string, req.body);
         const { password, ...sanitizedUser } = user;
         res.status(200).json({ status: 'success', data: { user: sanitizedUser } });
@@ -53,7 +53,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; const idStr = id as string;
         await userService.deleteUser(id as string);
         res.status(204).send();
     } catch (error) {

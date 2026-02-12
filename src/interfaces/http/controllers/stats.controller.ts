@@ -228,7 +228,7 @@ export class StatsController {
      */
     async getAgentDetailStats(req: Request, res: Response) {
         try {
-            const { id } = req.params;
+            const { id } = req.params; const idStr = id as string;
             const { startDate, endDate } = req.query;
 
             const dateFilter = startDate && endDate ? {

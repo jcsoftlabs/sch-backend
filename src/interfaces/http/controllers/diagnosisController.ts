@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { DiagnosisService } from '../../application/services/diagnosis.service';
-import { DiagnosisRepository } from '../../infrastructure/repositories/diagnosis.repository';
+import { DiagnosisService } from '../../../application/services/diagnosisService';
+import { DiagnosisRepository } from '../../../infrastructure/repositories/diagnosisRepository';
 
 const diagnosisService = new DiagnosisService(new DiagnosisRepository());
 
@@ -12,8 +12,8 @@ export const DiagnosisController = {
             const { active } = req.query;
 
             const diagnoses = active === 'true'
-                ? await diagnosisService.getActiveDiagnosesByPatient(patientId)
-                : await diagnosisService.getDiagnosesByPatient(patientId);
+                ? await diagnosisService.getActiveDiagnosesByPatient(patientId as string)
+                : await diagnosisService.getDiagnosesByPatient(patientId as string);
 
             res.json({
                 status: 'success',
@@ -27,8 +27,8 @@ export const DiagnosisController = {
     // GET /api/diagnoses/:id
     getById: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const diagnosis = await diagnosisService.getDiagnosisById(id);
+            const { id } = req.params; const idStr = id as string;
+            const diagnosis = await diagnosisService.getDiagnosisById(id as string);
 
             res.json({
                 status: 'success',
@@ -56,8 +56,8 @@ export const DiagnosisController = {
     // PUT /api/diagnoses/:id
     update: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const diagnosis = await diagnosisService.updateDiagnosis(id, req.body);
+            const { id } = req.params; const idStr = id as string;
+            const diagnosis = await diagnosisService.updateDiagnosis(id as string, req.body);
 
             res.json({
                 status: 'success',
@@ -71,8 +71,8 @@ export const DiagnosisController = {
     // PATCH /api/diagnoses/:id/resolve
     resolve: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const diagnosis = await diagnosisService.resolveDiagnosis(id);
+            const { id } = req.params; const idStr = id as string;
+            const diagnosis = await diagnosisService.resolveDiagnosis(id as string);
 
             res.json({
                 status: 'success',
@@ -86,8 +86,8 @@ export const DiagnosisController = {
     // DELETE /api/diagnoses/:id
     delete: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            await diagnosisService.deleteDiagnosis(id);
+            const { id } = req.params; const idStr = id as string;
+            await diagnosisService.deleteDiagnosis(id as string);
 
             res.status(204).send();
         } catch (error) {

@@ -25,8 +25,8 @@ export const getAllPatients = async (req: Request, res: Response, next: NextFunc
 
 export const getPatientById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const patientId = req.params.id as string;
-        const patient = await patientService.getPatientById(patientId);
+        const patientId = req.params.id as string as string;
+        const patient = await patientService.getPatientById(patientId as string);
         res.status(200).json({ status: 'success', data: { patient } });
     } catch (error) {
         next(error);
@@ -35,8 +35,8 @@ export const getPatientById = async (req: Request, res: Response, next: NextFunc
 
 export const updatePatient = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const patientId = req.params.id as string;
-        const patient = await patientService.updatePatient(patientId, req.body);
+        const patientId = req.params.id as string as string;
+        const patient = await patientService.updatePatient(patientId as string, req.body);
         res.status(200).json({ status: 'success', data: { patient } });
     } catch (error) {
         next(error);
@@ -45,8 +45,8 @@ export const updatePatient = async (req: Request, res: Response, next: NextFunct
 
 export const deletePatient = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const patientId = req.params.id as string;
-        await patientService.deletePatient(patientId);
+        const patientId = req.params.id as string as string;
+        await patientService.deletePatient(patientId as string);
         res.status(204).json({ status: 'success', data: null });
     } catch (error) {
         next(error);

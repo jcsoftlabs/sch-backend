@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrescriptionService } from '../../application/services/prescription.service';
-import { PrescriptionRepository } from '../../infrastructure/repositories/prescription.repository';
+import { PrescriptionService } from '../../../application/services/prescriptionService';
+import { PrescriptionRepository } from '../../../infrastructure/repositories/prescriptionRepository';
 
 const prescriptionService = new PrescriptionService(new PrescriptionRepository());
 
@@ -12,8 +12,8 @@ export const PrescriptionController = {
             const { active } = req.query;
 
             const prescriptions = active === 'true'
-                ? await prescriptionService.getActivePrescriptionsByPatient(patientId)
-                : await prescriptionService.getPrescriptionsByPatient(patientId);
+                ? await prescriptionService.getActivePrescriptionsByPatient(patientId as string)
+                : await prescriptionService.getPrescriptionsByPatient(patientId as string);
 
             res.json({
                 status: 'success',
@@ -27,8 +27,8 @@ export const PrescriptionController = {
     // GET /api/prescriptions/:id
     getById: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const prescription = await prescriptionService.getPrescriptionById(id);
+            const { id } = req.params; const idStr = id as string;
+            const prescription = await prescriptionService.getPrescriptionById(id as string);
 
             res.json({
                 status: 'success',
@@ -56,8 +56,8 @@ export const PrescriptionController = {
     // PUT /api/prescriptions/:id
     update: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const prescription = await prescriptionService.updatePrescription(id, req.body);
+            const { id } = req.params; const idStr = id as string;
+            const prescription = await prescriptionService.updatePrescription(id as string, req.body);
 
             res.json({
                 status: 'success',
@@ -71,10 +71,10 @@ export const PrescriptionController = {
     // PATCH /api/prescriptions/:id/status
     updateStatus: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
+            const { id } = req.params; const idStr = id as string;
             const { status } = req.body;
 
-            const prescription = await prescriptionService.updatePrescriptionStatus(id, status);
+            const prescription = await prescriptionService.updatePrescriptionStatus(id as string, status);
 
             res.json({
                 status: 'success',
@@ -88,8 +88,8 @@ export const PrescriptionController = {
     // DELETE /api/prescriptions/:id
     delete: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            await prescriptionService.deletePrescription(id);
+            const { id } = req.params; const idStr = id as string;
+            await prescriptionService.deletePrescription(id as string);
 
             res.status(204).send();
         } catch (error) {

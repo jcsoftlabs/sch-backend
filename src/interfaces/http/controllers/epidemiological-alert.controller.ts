@@ -26,7 +26,7 @@ export const getActive = async (req: Request, res: Response, next: NextFunction)
 
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const alert = await service.getById(req.params.id as string);
+        const alert = await service.getById(req.params.id as string as string);
         if (!alert) return res.status(404).json({ message: 'Alert not found' });
         res.json(alert);
     } catch (error) {
@@ -54,7 +54,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const update = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const alert = await service.update(req.params.id as string, req.body);
+        const alert = await service.update(req.params.id as string as string, req.body);
         res.json(alert);
     } catch (error) {
         next(error);
@@ -63,7 +63,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 
 export const resolve = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const alert = await service.resolve(req.params.id as string);
+        const alert = await service.resolve(req.params.id as string as string);
         res.json(alert);
     } catch (error) {
         next(error);
@@ -72,7 +72,7 @@ export const resolve = async (req: Request, res: Response, next: NextFunction) =
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await service.delete(req.params.id as string);
+        await service.delete(req.params.id as string as string);
         res.status(204).send();
     } catch (error) {
         next(error);
@@ -114,7 +114,7 @@ export const updateConfig = async (req: Request, res: Response, next: NextFuncti
 
 export const updateStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; const idStr = id as string;
         const { status } = req.body;
 
         if (!status || !['ACTIVE', 'RESOLVED'].includes(status)) {

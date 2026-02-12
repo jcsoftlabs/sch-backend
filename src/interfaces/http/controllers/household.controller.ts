@@ -14,7 +14,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const household = await service.getHouseholdById(req.params.id as string);
+        const household = await service.getHouseholdById(req.params.id as string as string);
         res.status(200).json({ status: 'success', data: { household } });
     } catch (error) { next(error); }
 };
@@ -42,14 +42,14 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const update = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const household = await service.updateHousehold(req.params.id as string, req.body);
+        const household = await service.updateHousehold(req.params.id as string as string, req.body);
         res.status(200).json({ status: 'success', data: { household } });
     } catch (error) { next(error); }
 };
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await service.deleteHousehold(req.params.id as string);
+        await service.deleteHousehold(req.params.id as string as string);
         res.status(204).send();
     } catch (error) { next(error); }
 };

@@ -14,7 +14,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const appointment = await service.getAppointmentById(req.params.id as string);
+        const appointment = await service.getAppointmentById(req.params.id as string as string);
         res.status(200).json({ status: 'success', data: { appointment } });
     } catch (error) { next(error); }
 };
@@ -42,35 +42,35 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
 export const confirm = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const appointment = await service.confirmAppointment(req.params.id as string);
+        const appointment = await service.confirmAppointment(req.params.id as string as string);
         res.status(200).json({ status: 'success', data: { appointment } });
     } catch (error) { next(error); }
 };
 
 export const cancel = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const appointment = await service.cancelAppointment(req.params.id as string);
+        const appointment = await service.cancelAppointment(req.params.id as string as string);
         res.status(200).json({ status: 'success', data: { appointment } });
     } catch (error) { next(error); }
 };
 
 export const complete = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const appointment = await service.completeAppointment(req.params.id as string, req.body.notes);
+        const appointment = await service.completeAppointment(req.params.id as string as string, req.body.notes);
         res.status(200).json({ status: 'success', data: { appointment } });
     } catch (error) { next(error); }
 };
 
 export const update = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const appointment = await service.updateAppointment(req.params.id as string, req.body);
+        const appointment = await service.updateAppointment(req.params.id as string as string, req.body);
         res.status(200).json({ status: 'success', data: { appointment } });
     } catch (error) { next(error); }
 };
 
 export const remove = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await service.deleteAppointment(req.params.id as string);
+        await service.deleteAppointment(req.params.id as string as string);
         res.status(204).send();
     } catch (error) { next(error); }
 };

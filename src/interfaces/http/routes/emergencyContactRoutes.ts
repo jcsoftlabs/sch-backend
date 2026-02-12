@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { EmergencyContactController } from '../controllers/emergency-contact.controller';
+import { EmergencyContactController } from '../controllers/emergencyContactController';
 import { authenticate } from '../middlewares/auth.middleware';
 
 const router = Router();

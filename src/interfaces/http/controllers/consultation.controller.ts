@@ -11,7 +11,7 @@ const consultationService = new ConsultationService(consultationRepository, noti
 export const requestConsultation = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { patientId, notes } = req.body;
-        const consultation = await consultationService.requestConsultation(patientId, notes);
+        const consultation = await consultationService.requestConsultation(patientId as string, notes);
         res.status(201).json({ status: 'success', data: { consultation } });
     } catch (error) {
         next(error);
@@ -29,8 +29,8 @@ export const getAllConsultations = async (req: Request, res: Response, next: Nex
 
 export const getConsultationById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = req.params.id as string;
-        const consultation = await consultationService.getConsultationById(id);
+        const id = req.params.id as string as string;
+        const consultation = await consultationService.getConsultationById(id as string);
         res.status(200).json({ status: 'success', data: { consultation } });
     } catch (error) {
         next(error);
@@ -39,7 +39,7 @@ export const getConsultationById = async (req: Request, res: Response, next: Nex
 
 export const updateConsultationStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = req.params.id as string;
+        const id = req.params.id as string as string;
         const { status } = req.body;
 
         // If doctor accepts, assign them
@@ -47,7 +47,7 @@ export const updateConsultationStatus = async (req: Request, res: Response, next
         const user = (req as AuthRequest).user;
         const doctorId = user?.role === 'DOCTOR' ? user.id : undefined;
 
-        const consultation = await consultationService.updateStatus(id, status, doctorId);
+        const consultation = await consultationService.updateStatus(id as string, status, doctorId);
         res.status(200).json({ status: 'success', data: { consultation } });
     } catch (error) {
         next(error);

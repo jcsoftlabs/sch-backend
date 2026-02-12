@@ -2,7 +2,7 @@ import {
     DiagnosisRepository,
     CreateDiagnosisDTO,
     UpdateDiagnosisDTO,
-} from '../../infrastructure/repositories/diagnosis.repository';
+} from '../../infrastructure/repositories/diagnosisRepository';
 import { Diagnosis } from '@prisma/client';
 import { AppError } from '../../utils/AppError';
 

@@ -2,7 +2,7 @@ import {
     LabResultRepository,
     CreateLabResultDTO,
     UpdateLabResultDTO,
-} from '../../infrastructure/repositories/lab-result.repository';
+} from '../../infrastructure/repositories/labResultRepository';
 import { LabResult, LabTestType } from '@prisma/client';
 import { AppError } from '../../utils/AppError';
 
