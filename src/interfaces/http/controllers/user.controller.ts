@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserService } from '../../application/services/user.service';
-import { UserRepository } from '../../infrastructure/repositories/user.repository';
+import { UserService } from '../../../application/services/user.service';
+import { UserRepository } from '../../../infrastructure/repositories/user.repository';
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
@@ -22,7 +22,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
 export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const user = await userService.getUserById(id);
+        const user = await userService.getUserById(id as string);
         const { password, ...sanitizedUser } = user;
         res.status(200).json({ status: 'success', data: { user: sanitizedUser } });
     } catch (error) {
@@ -43,7 +43,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const user = await userService.updateUser(id, req.body);
+        const user = await userService.updateUser(id as string, req.body);
         const { password, ...sanitizedUser } = user;
         res.status(200).json({ status: 'success', data: { user: sanitizedUser } });
     } catch (error) {
@@ -54,7 +54,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        await userService.deleteUser(id);
+        await userService.deleteUser(id as string);
         res.status(204).send();
     } catch (error) {
         next(error);
