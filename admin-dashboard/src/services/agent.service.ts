@@ -8,6 +8,46 @@ export interface Agent {
     createdAt?: string;
 }
 
+export interface AgentStats {
+    totalAgents: number;
+    activeAgents: number;
+    avgVisitsPerDay: number;
+    avgResponseTime: number;
+    topPerformers: TopPerformer[];
+}
+
+export interface TopPerformer {
+    id: string;
+    name: string;
+    visitsThisMonth: number;
+    casesResolved: number;
+    avgResponseTime: number;
+}
+
+export interface AgentDetail {
+    agent: {
+        id: string;
+        name: string;
+        phone: string;
+        zone: string;
+    };
+    stats: {
+        totalVisits: number;
+        casesReported: number;
+        casesResolved: number;
+        avgResponseTime: number;
+        visitsByDay: { date: string; count: number }[];
+        casesByUrgency: { normal: number; urgent: number; critical: number };
+        performanceScore: number;
+    };
+}
+
+export interface AgentFilters {
+    startDate?: string;
+    endDate?: string;
+    zone?: string;
+}
+
 export const AgentService = {
     getAll: async (): Promise<Agent[]> => {
         try {
@@ -48,6 +88,26 @@ export const AgentService = {
             await api.delete(`/users/${id}`);
         } catch (error) {
             console.error("Error deleting agent:", error);
+            throw error;
+        }
+    },
+
+    getAgentStats: async (filters?: AgentFilters): Promise<AgentStats> => {
+        try {
+            const response = await api.get("/stats/agents", { params: filters });
+            return response.data.data || response.data;
+        } catch (error) {
+            console.error("Error fetching agent stats:", error);
+            throw error;
+        }
+    },
+
+    getAgentDetail: async (id: string, filters?: AgentFilters): Promise<AgentDetail> => {
+        try {
+            const response = await api.get(`/stats/agents/${id}`, { params: filters });
+            return response.data.data || response.data;
+        } catch (error) {
+            console.error("Error fetching agent detail:", error);
             throw error;
         }
     },
