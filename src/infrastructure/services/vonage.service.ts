@@ -49,7 +49,7 @@ export class VonageService {
                     status: 'SENT',
                 };
             } else {
-                throw new Error(`SMS failed: ${response.messages[0]['error-text']}`);
+                throw new Error(`SMS failed: ${response.messages[0].errorText}`);
             }
         } catch (error) {
             console.error('Vonage SMS error:', error);
