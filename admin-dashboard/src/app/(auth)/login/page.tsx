@@ -28,8 +28,20 @@ const formSchema = z.object({
 export default function LoginPage() {
     const router = useRouter();
     const login = useAuthStore((state) => state.login);
+    const token = useAuthStore((state) => state.token);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const [isHydrated, setIsHydrated] = useState(false);
+
+    useEffect(() => {
+        setIsHydrated(true);
+    }, []);
+
+    useEffect(() => {
+        if (isHydrated && token) {
+            router.push("/dashboard");
+        }
+    }, [token, isHydrated, router]);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -38,6 +50,8 @@ export default function LoginPage() {
             password: "",
         },
     });
+
+    if (!isHydrated) return null;
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true);

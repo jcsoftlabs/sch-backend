@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/auth.store";
 import { Sidebar } from "@/components/dashboard/Sidebar";
@@ -13,13 +13,33 @@ export default function DashboardLayout({
 }) {
     const { token } = useAuthStore();
     const router = useRouter();
+    const [isHydrated, setIsHydrated] = useState(false);
 
-    // Protect routes
+    // Wait for Zustand to hydrate from localStorage
     useEffect(() => {
-        if (!token) {
+        setIsHydrated(true);
+    }, []);
+
+    // Protect routes - only after hydration
+    useEffect(() => {
+        if (isHydrated && !token) {
             router.push("/login");
         }
-    }, [token, router]);
+    }, [token, router, isHydrated]);
+
+    // Show nothing during hydration to prevent flash
+    if (!isHydrated) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+        );
+    }
+
+    // Don't render dashboard if no token
+    if (!token) {
+        return null;
+    }
 
     return (
         <div className="h-full relative">
