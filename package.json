@@ -46,6 +46,9 @@
     "prisma": "^5.22.0",
     "zod": "^4.3.6"
   },
+  "overrides": {
+    "node-fetch": "^2.7.0"
+  },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   }
