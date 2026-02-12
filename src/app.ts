@@ -16,6 +16,9 @@ dotenv.config();
 
 const app = express();
 
+// Trust proxy - required for Railway/Heroku/etc
+app.set('trust proxy', 1);
+
 app.use(express.json({ limit: '10kb' })); // Body limit
 app.use(cors({
     origin: process.env.CORS_ORIGIN || '*', // Configure allowed origins
