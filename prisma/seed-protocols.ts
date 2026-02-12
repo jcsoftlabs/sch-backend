@@ -1,9 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, UrgencyLevel } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function seedMedicalProtocols() {
     console.log('🌱 Seeding medical protocols...');
+
+    // Delete existing protocols first
+    await prisma.medicalProtocol.deleteMany({});
 
     const protocols = [
         {
@@ -15,7 +18,7 @@ async function seedMedicalProtocols() {
                 traitement: 'Artéméther-Luméfantrine (Coartem) selon poids',
                 referral: 'Paludisme grave, femme enceinte, enfant < 5 ans avec complications',
             }),
-            urgencyLevel: 'URGENT',
+            urgencyLevel: 'URGENT' as UrgencyLevel,
             category: 'Maladies infectieuses',
         },
         {
@@ -27,7 +30,7 @@ async function seedMedicalProtocols() {
                 traitement: 'Réhydratation orale (SRO), Zinc pour enfants < 5 ans',
                 referral: 'Déshydratation sévère, sang dans les selles, fièvre > 39°C',
             }),
-            urgencyLevel: 'URGENT',
+            urgencyLevel: 'URGENT' as UrgencyLevel,
             category: 'Maladies infectieuses',
         },
         {
@@ -39,7 +42,7 @@ async function seedMedicalProtocols() {
                 traitement: 'Amoxicilline 50mg/kg/jour si pneumonie',
                 referral: 'Tirage sévère, cyanose, saturation O2 < 90%',
             }),
-            urgencyLevel: 'CRITICAL',
+            urgencyLevel: 'CRITICAL' as UrgencyLevel,
             category: 'Urgences respiratoires',
         },
         {
@@ -51,7 +54,7 @@ async function seedMedicalProtocols() {
                 traitement: 'ATPE (Aliment Thérapeutique Prêt à l\'Emploi)',
                 referral: 'Complications médicales, refus de manger',
             }),
-            urgencyLevel: 'CRITICAL',
+            urgencyLevel: 'CRITICAL' as UrgencyLevel,
             category: 'Nutrition',
         },
         {
@@ -63,20 +66,16 @@ async function seedMedicalProtocols() {
                 traitement: 'Phase intensive (2 mois) RHZE, Phase continuation (4 mois) RH',
                 referral: 'Tout cas suspect pour confirmation diagnostique',
             }),
-            urgencyLevel: 'URGENT',
+            urgencyLevel: 'URGENT' as UrgencyLevel,
             category: 'Maladies infectieuses',
         },
     ];
 
-    for (const protocol of protocols) {
-        await prisma.medicalProtocol.upsert({
-            where: { name: protocol.name },
-            update: protocol,
-            create: protocol,
-        });
-    }
+    await prisma.medicalProtocol.createMany({
+        data: protocols,
+    });
 
-    console.log(`✅ ${protocols.length} protocoles médicaux créés/mis à jour`);
+    console.log(`✅ ${protocols.length} protocoles médicaux créés`);
 }
 
 async function main() {

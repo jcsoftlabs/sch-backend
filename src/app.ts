@@ -17,6 +17,7 @@ import maternalCareRoutes from './interfaces/http/routes/maternal-care.routes';
 import appointmentRoutes from './interfaces/http/routes/appointment.routes';
 import medicalProtocolRoutes from './interfaces/http/routes/medical-protocol.routes';
 import epidemiologicalAlertRoutes from './interfaces/http/routes/epidemiological-alert.routes';
+import smsRoutes from './interfaces/http/routes/sms.routes';
 import { errorHandler } from './interfaces/http/middlewares/errorHandler';
 import { authLimiter, apiLimiter } from './interfaces/http/middlewares/rateLimiter.middleware';
 
@@ -56,6 +57,7 @@ app.use('/api/maternal-care', maternalCareRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/medical-protocols', medicalProtocolRoutes);
 app.use('/api/epidemiological-alerts', epidemiologicalAlertRoutes);
+app.use('/api/sms', smsRoutes);
 
 app.get('/health', (req, res) => {
 

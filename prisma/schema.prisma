@@ -79,6 +79,18 @@ enum AlertStatus {
   DISMISSED
 }
 
+enum SMSDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum SMSStatus {
+  PENDING
+  SENT
+  DELIVERED
+  FAILED
+}
+
 // ========================
 // MODELS EXISTANTS ENRICHIS
 // ========================
@@ -102,6 +114,7 @@ model User {
   caseReportsAgent  CaseReport[]      @relation("CaseReportAgent")
   caseReportsDoctor CaseReport[]      @relation("CaseReportDoctor")
   appointmentsDoctor Appointment[]    @relation("AppointmentDoctor")
+  smsMessages       SMSMessage[]      @relation("SMSAgent")
 }
 
 model HealthCenter {
@@ -143,6 +156,7 @@ model Patient {
   nutritionRecords NutritionRecord[]
   caseReports      CaseReport[]
   appointments     Appointment[]
+  smsMessages      SMSMessage[]
 }
 
 model Consultation {
@@ -284,6 +298,7 @@ model CaseReport {
   resolvedAt  DateTime?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+  smsMessages SMSMessage[]
 }
 
 // Protocoles médicaux standardisés
@@ -333,4 +348,28 @@ model EpidemiologicalAlert {
   resolvedAt  DateTime?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+}
+
+// Messages SMS (Vonage)
+model SMSMessage {
+  id           String       @id @default(uuid())
+  messageId    String?      // Vonage message ID
+  direction    SMSDirection
+  from         String       // numéro expéditeur (format international)
+  to           String       // numéro destinataire
+  content      String       @db.Text
+  status       SMSStatus    @default(PENDING)
+  agentId      String?
+  agent        User?        @relation("SMSAgent", fields: [agentId], references: [id])
+  patientId    String?
+  patient      Patient?     @relation(fields: [patientId], references: [id])
+  caseReportId String?
+  caseReport   CaseReport?  @relation(fields: [caseReportId], references: [id])
+  createdAt    DateTime     @default(now())
+  deliveredAt  DateTime?
+  
+  @@index([agentId])
+  @@index([patientId])
+  @@index([caseReportId])
+  @@index([createdAt])
 }
