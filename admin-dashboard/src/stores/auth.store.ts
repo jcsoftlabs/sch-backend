@@ -5,7 +5,9 @@ interface User {
     id: string;
     email: string;
     name: string;
-    role: 'ADMIN' | 'AGENT' | 'DOCTOR';
+    role: 'ADMIN' | 'AGENT' | 'DOCTOR' | 'NURSE';
+    zone?: string;
+    phone?: string;
 }
 
 interface AuthState {

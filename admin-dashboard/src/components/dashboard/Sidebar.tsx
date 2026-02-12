@@ -12,6 +12,7 @@ import {
     LogOut,
     Menu,
     UserCog,
+    User,
     Map,
     BarChart3,
     AlertTriangle,

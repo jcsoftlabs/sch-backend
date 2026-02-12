@@ -4,17 +4,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, CreditCard, DollarSign, Users, Loader2, UserCog } from "lucide-react";
 import { ConsultationChart } from "@/components/dashboard/ConsultationChart";
 import { StatsService, DashboardStats } from "@/services/stats.service";
+import { ConsultationService } from "@/services/consultation.service";
 import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
     const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [recentConsultations, setRecentConsultations] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const data = await StatsService.getOverview();
-                setStats(data);
+                const [statsData, consultationsData] = await Promise.all([
+                    StatsService.getOverview(),
+                    ConsultationService.getAll()
+                ]);
+                setStats(statsData);
+                // Sort by date desc and take top 5
+                const sorted = consultationsData
+                    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                    .slice(0, 5);
+                setRecentConsultations(sorted);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -104,14 +114,29 @@ export default function DashboardPage() {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-8">
-                            {/* Could be populated similarly with a service call */}
-                            <div className="flex items-center">
-                                <div className="space-y-1">
-                                    <p className="text-sm font-medium leading-none">
-                                        Chargement...
-                                    </p>
+                            {loading ? (
+                                <div className="flex items-center justify-center py-4">
+                                    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                                 </div>
-                            </div>
+                            ) : recentConsultations.length === 0 ? (
+                                <p className="text-sm text-muted-foreground text-center py-4">Aucune consultation récente</p>
+                            ) : (
+                                recentConsultations.map((consultation) => (
+                                    <div key={consultation.id} className="flex items-center">
+                                        <div className="space-y-1">
+                                            <p className="text-sm font-medium leading-none">
+                                                {consultation.patient.firstName} {consultation.patient.lastName}
+                                            </p>
+                                            <p className="text-xs text-muted-foreground">
+                                                {consultation.doctor?.name || "Médecin non assigné"}
+                                            </p>
+                                        </div>
+                                        <div className="ml-auto font-medium text-xs text-muted-foreground">
+                                            {new Date(consultation.createdAt).toLocaleDateString()}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </CardContent>
                 </Card>
