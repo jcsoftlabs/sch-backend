@@ -47,7 +47,8 @@
     "zod": "^4.3.6"
   },
   "overrides": {
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "uuid": "^9.0.0"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
