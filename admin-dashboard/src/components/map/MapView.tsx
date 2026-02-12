@@ -1,6 +1,6 @@
 "use client";
 
-import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import { useState } from "react";
 import { HealthCenter } from "@/services/map.service";
 
@@ -24,58 +24,79 @@ export function MapView({ healthCenters, center = defaultCenter, zoom = 10 }: Ma
     const [selectedCenter, setSelectedCenter] = useState<HealthCenter | null>(null);
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
-    return (
-        <LoadScript googleMapsApiKey={apiKey}>
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={zoom}
-                options={{
-                    streetViewControl: false,
-                    mapTypeControl: true,
-                }}
-            >
-                {healthCenters.map((healthCenter) => (
-                    <Marker
-                        key={healthCenter.id}
-                        position={{
-                            lat: healthCenter.latitude,
-                            lng: healthCenter.longitude,
-                        }}
-                        onClick={() => setSelectedCenter(healthCenter)}
-                        icon={{
-                            url: getMarkerIcon(healthCenter.type),
-                            scaledSize: new window.google.maps.Size(40, 40),
-                        }}
-                    />
-                ))}
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: apiKey,
+    });
 
-                {selectedCenter && (
-                    <InfoWindow
-                        position={{
-                            lat: selectedCenter.latitude,
-                            lng: selectedCenter.longitude,
-                        }}
-                        onCloseClick={() => setSelectedCenter(null)}
-                    >
-                        <div className="p-2">
-                            <h3 className="font-bold text-lg">{selectedCenter.name}</h3>
-                            <p className="text-sm text-gray-600">{selectedCenter.type}</p>
-                            <div className="mt-2 space-y-1">
-                                <p className="text-sm">
-                                    <span className="font-semibold">Agents actifs:</span>{" "}
-                                    {selectedCenter.activeAgents}
-                                </p>
-                                <p className="text-sm">
-                                    <span className="font-semibold">Consultations:</span>{" "}
-                                    {selectedCenter.totalConsultations}
-                                </p>
-                            </div>
+    if (loadError) {
+        return (
+            <div className="flex items-center justify-center h-[600px] bg-gray-100">
+                <p className="text-red-600">Erreur de chargement de Google Maps</p>
+            </div>
+        );
+    }
+
+    if (!isLoaded) {
+        return (
+            <div className="flex items-center justify-center h-[600px] bg-gray-100">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+                    <p className="text-muted-foreground">Chargement de la carte...</p>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={zoom}
+            options={{
+                streetViewControl: false,
+                mapTypeControl: true,
+            }}
+        >
+            {healthCenters.map((healthCenter) => (
+                <Marker
+                    key={healthCenter.id}
+                    position={{
+                        lat: healthCenter.latitude,
+                        lng: healthCenter.longitude,
+                    }}
+                    onClick={() => setSelectedCenter(healthCenter)}
+                    icon={{
+                        url: getMarkerIcon(healthCenter.type),
+                        scaledSize: new google.maps.Size(40, 40),
+                    }}
+                />
+            ))}
+
+            {selectedCenter && (
+                <InfoWindow
+                    position={{
+                        lat: selectedCenter.latitude,
+                        lng: selectedCenter.longitude,
+                    }}
+                    onCloseClick={() => setSelectedCenter(null)}
+                >
+                    <div className="p-2">
+                        <h3 className="font-bold text-lg">{selectedCenter.name}</h3>
+                        <p className="text-sm text-gray-600">{selectedCenter.type}</p>
+                        <div className="mt-2 space-y-1">
+                            <p className="text-sm">
+                                <span className="font-semibold">Agents actifs:</span>{" "}
+                                {selectedCenter.activeAgents}
+                            </p>
+                            <p className="text-sm">
+                                <span className="font-semibold">Consultations:</span>{" "}
+                                {selectedCenter.totalConsultations}
+                            </p>
                         </div>
-                    </InfoWindow>
-                )}
-            </GoogleMap>
-        </LoadScript>
+                    </div>
+                </InfoWindow>
+            )}
+        </GoogleMap>
     );
 }
 
@@ -94,3 +115,4 @@ function getMarkerIcon(type: string): string {
             return `${baseUrl}blue-dot.png`;
     }
 }
+
