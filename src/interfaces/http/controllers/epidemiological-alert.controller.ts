@@ -4,27 +4,7 @@ import { prisma } from '../../../infrastructure/database/prisma';
 
 const service = new EpidemiologicalAlertService();
 
-// Default alert configuration
-const DEFAULT_CONFIG = {
-    diseases: [
-        {
-            name: 'Cholera',
-            thresholds: { low: 5, medium: 10, high: 20, critical: 30 }
-        },
-        {
-            name: 'Dengue',
-            thresholds: { low: 3, medium: 7, high: 15, critical: 25 }
-        },
-        {
-            name: 'Malaria',
-            thresholds: { low: 10, medium: 20, high: 40, critical: 60 }
-        },
-        {
-            name: 'COVID-19',
-            thresholds: { low: 5, medium: 15, high: 30, critical: 50 }
-        }
-    ]
-};
+
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -101,11 +81,10 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getConfig = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // In a real implementation, this would be stored in database
-        // For now, return default config
+        const config = await service.getConfig();
         res.json({
             status: 'success',
-            data: DEFAULT_CONFIG
+            data: config
         });
     } catch (error) {
         next(error);
@@ -114,17 +93,18 @@ export const getConfig = async (req: Request, res: Response, next: NextFunction)
 
 export const updateConfig = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // In a real implementation, this would update database
-        // For now, just validate and return
-        const { diseases } = req.body;
+        const userId = (req as any).user?.id;
+        const config = req.body;
 
-        if (!diseases || !Array.isArray(diseases)) {
+        if (!config.diseases || !Array.isArray(config.diseases)) {
             return res.status(400).json({ message: 'Invalid config format' });
         }
 
+        await service.updateConfig(config, userId);
+
         res.json({
             status: 'success',
-            data: { diseases },
+            data: config,
             message: 'Configuration updated successfully'
         });
     } catch (error) {

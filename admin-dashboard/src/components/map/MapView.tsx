@@ -57,26 +57,33 @@ export function MapView({ healthCenters, center = defaultCenter, zoom = 10 }: Ma
                 mapTypeControl: true,
             }}
         >
-            {healthCenters.map((healthCenter) => (
-                <Marker
-                    key={healthCenter.id}
-                    position={{
-                        lat: healthCenter.latitude,
-                        lng: healthCenter.longitude,
-                    }}
-                    onClick={() => setSelectedCenter(healthCenter)}
-                    icon={{
-                        url: getMarkerIcon(healthCenter.type),
-                        scaledSize: new google.maps.Size(40, 40),
-                    }}
-                />
-            ))}
+            {healthCenters
+                .filter(hc =>
+                    hc.latitude != null &&
+                    hc.longitude != null &&
+                    !isNaN(Number(hc.latitude)) &&
+                    !isNaN(Number(hc.longitude))
+                )
+                .map((healthCenter) => (
+                    <Marker
+                        key={healthCenter.id}
+                        position={{
+                            lat: healthCenter.latitude,
+                            lng: healthCenter.longitude,
+                        }}
+                        onClick={() => setSelectedCenter(healthCenter)}
+                        icon={{
+                            url: getMarkerIcon(healthCenter.type),
+                            scaledSize: new google.maps.Size(40, 40),
+                        }}
+                    />
+                ))}
 
             {selectedCenter && (
                 <InfoWindow
                     position={{
-                        lat: selectedCenter.latitude,
-                        lng: selectedCenter.longitude,
+                        lat: Number(selectedCenter.latitude),
+                        lng: Number(selectedCenter.longitude),
                     }}
                     onCloseClick={() => setSelectedCenter(null)}
                 >

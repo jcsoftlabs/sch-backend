@@ -98,6 +98,24 @@ enum HealthCenterType {
   HEALTH_POST
 }
 
+enum PrescriptionStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+enum LabTestType {
+  MALARIA_RDT      // Test rapide paludisme
+  HIV_RDT          // Test rapide VIH
+  BLOOD_GLUCOSE    // Glycémie
+  HEMOGLOBIN       // Hémoglobine
+  PREGNANCY_TEST   // Test de grossesse
+  URINALYSIS       // Analyse d'urine
+  STOOL_EXAM       // Examen de selles
+  OTHER
+}
+
 // ========================
 // MODELS EXISTANTS ENRICHIS
 // ========================
@@ -124,6 +142,8 @@ model User {
   caseReportsDoctor  CaseReport[]      @relation("CaseReportDoctor")
   appointmentsDoctor Appointment[]     @relation("AppointmentDoctor")
   smsMessages        SMSMessage[]      @relation("SMSAgent")
+  prescriptionsDoctor Prescription[]   @relation("PrescriptionDoctor")
+  diagnosesDoctor    Diagnosis[]       @relation("DiagnosisDoctor")
 }
 
 model HealthCenter {
@@ -161,14 +181,18 @@ model Patient {
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
-  consultations    Consultation[]
-  medicalRecord    MedicalRecord?
-  vaccinations     Vaccination[]
-  maternalCares    MaternalCare[]
-  nutritionRecords NutritionRecord[]
-  caseReports      CaseReport[]
-  appointments     Appointment[]
-  smsMessages      SMSMessage[]
+  consultations     Consultation[]
+  medicalRecord     MedicalRecord?
+  vaccinations      Vaccination[]
+  maternalCares     MaternalCare[]
+  nutritionRecords  NutritionRecord[]
+  caseReports       CaseReport[]
+  appointments      Appointment[]
+  smsMessages       SMSMessage[]
+  prescriptions     Prescription[]
+  emergencyContacts EmergencyContact[]
+  diagnoses         Diagnosis[]
+  labResults        LabResult[]
 }
 
 model Consultation {
@@ -390,3 +414,82 @@ model SMSMessage {
   @@index([caseReportId])
   @@index([createdAt])
 }
+
+// Configuration du système (Alertes, etc.)
+model AlertConfiguration {
+  id        String   @id @default(uuid())
+  config    String   @db.Text // JSON: { diseases: [...] }
+  updatedBy String?  // ID de l'utilisateur qui a modifié
+  updatedAt DateTime @updatedAt
+}
+
+// Prescriptions médicales
+model Prescription {
+  id          String             @id @default(uuid())
+  patientId   String
+  patient     Patient            @relation(fields: [patientId], references: [id])
+  doctorId    String?
+  doctor      User?              @relation("PrescriptionDoctor", fields: [doctorId], references: [id])
+  medication  String             // nom du médicament
+  dosage      String             // posologie (ex: "500mg")
+  frequency   String             // fréquence (ex: "2x/jour")
+  duration    String             // durée (ex: "7 jours")
+  instructions String?           // instructions spéciales
+  startDate   DateTime           @default(now())
+  endDate     DateTime?          // date de fin prévue
+  status      PrescriptionStatus @default(ACTIVE)
+  notes       String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+// Contact d'urgence du patient
+model EmergencyContact {
+  id           String   @id @default(uuid())
+  patientId    String
+  patient      Patient  @relation(fields: [patientId], references: [id])
+  name         String   // nom du contact
+  relationship String   // relation (mère, père, conjoint, ami, etc.)
+  phone        String   // numéro de téléphone
+  address      String?  // adresse du contact
+  isPrimary    Boolean  @default(false) // contact principal?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Diagnostics structurés
+model Diagnosis {
+  id          String   @id @default(uuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  doctorId    String?
+  doctor      User?    @relation("DiagnosisDoctor", fields: [doctorId], references: [id])
+  disease     String   // nom de la maladie/condition
+  icd10Code   String?  // code CIM-10 (optionnel)
+  severity    String?  // léger, modéré, sévère
+  status      String   @default("ACTIVE") // ACTIVE, RESOLVED, CHRONIC
+  diagnosedAt DateTime @default(now())
+  resolvedAt  DateTime?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Résultats de laboratoire
+model LabResult {
+  id          String      @id @default(uuid())
+  patientId   String
+  patient     Patient     @relation(fields: [patientId], references: [id])
+  testType    LabTestType
+  testName    String      // nom du test
+  result      String      // résultat (positif/négatif, valeur numérique, etc.)
+  unit        String?     // unité de mesure (mg/dL, g/dL, etc.)
+  referenceRange String?  // plage de référence normale
+  isAbnormal  Boolean     @default(false)
+  performedBy String?     // agent/technicien qui a effectué le test
+  performedAt DateTime    @default(now())
+  notes       String?
+  createdAt   DateTime    @default(now())
+}
+
+

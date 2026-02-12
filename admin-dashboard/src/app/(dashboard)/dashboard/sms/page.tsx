@@ -6,6 +6,7 @@ import { SMSHistoryTable } from "@/components/sms/SMSHistoryTable";
 import { SendSMSDialog } from "@/components/sms/SendSMSDialog";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Plus } from "lucide-react";
+import { TableSkeleton } from "@/components/skeletons";
 
 export default function SMSPage() {
     const { messages, loading, fetchMyHistory, sendSMS } = useSMS();
@@ -37,9 +38,7 @@ export default function SMSPage() {
                 </div>
 
                 {loading && messages.length === 0 ? (
-                    <div className="flex justify-center items-center py-8">
-                        Chargement...
-                    </div>
+                    <TableSkeleton />
                 ) : (
                     <SMSHistoryTable data={messages} />
                 )}

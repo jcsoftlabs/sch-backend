@@ -5,6 +5,7 @@ import { Activity, CreditCard, DollarSign, Users, Loader2, UserCog } from "lucid
 import { ConsultationChart } from "@/components/dashboard/ConsultationChart";
 import { StatsService, DashboardStats } from "@/services/stats.service";
 import { ConsultationService } from "@/services/consultation.service";
+import { DashboardSkeleton } from "@/components/skeletons";
 import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
@@ -35,7 +36,7 @@ export default function DashboardPage() {
     }, []);
 
     if (loading) {
-        return <div className="flex h-full items-center justify-center"><Loader2 className="h-8 w-8 animate-spin" /></div>
+        return <DashboardSkeleton />
     }
 
     return (

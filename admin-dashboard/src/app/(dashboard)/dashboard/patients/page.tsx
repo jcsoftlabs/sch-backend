@@ -4,6 +4,7 @@ import { Patient, createColumns } from "@/components/dashboard/PatientTable";
 import { DataTable } from "@/components/ui/data-table";
 import { PatientService } from "@/services/patient.service";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Loader2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PatientForm } from "@/components/dashboard/PatientForm";
@@ -11,6 +12,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/hooks/use-toast";
 
 export default function PatientsPage() {
+    const router = useRouter();
     const [data, setData] = useState<Patient[]>([]);
     const [loading, setLoading] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
@@ -136,7 +138,12 @@ export default function PatientsPage() {
                     Nouveau patient
                 </Button>
             </div>
-            <DataTable data={data} columns={columns} searchKey="lastName" />
+            <DataTable
+                data={data}
+                columns={columns}
+                searchKey="lastName"
+                onRowClick={(patient) => router.push(`/dashboard/patients/${patient.id}`)}
+            />
 
             <PatientForm
                 open={formOpen}
