@@ -12,6 +12,10 @@ import {
     LogOut,
     Menu,
     UserCog,
+    Map,
+    BarChart3,
+    AlertTriangle,
+    FileText,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { useRouter } from "next/navigation";
@@ -48,6 +52,30 @@ const routes = [
         icon: Video,
         href: "/dashboard/consultations",
         color: "text-orange-700",
+    },
+    {
+        label: "Carte Interactive",
+        icon: Map,
+        href: "/dashboard/map",
+        color: "text-blue-500",
+    },
+    {
+        label: "KPIs Agents",
+        icon: BarChart3,
+        href: "/dashboard/agents-kpi",
+        color: "text-cyan-500",
+    },
+    {
+        label: "Alertes",
+        icon: AlertTriangle,
+        href: "/dashboard/alerts",
+        color: "text-red-500",
+    },
+    {
+        label: "Rapports",
+        icon: FileText,
+        href: "/dashboard/reports",
+        color: "text-indigo-500",
     },
 ];
 
