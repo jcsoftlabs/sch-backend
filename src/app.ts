@@ -18,6 +18,8 @@ import appointmentRoutes from './interfaces/http/routes/appointment.routes';
 import medicalProtocolRoutes from './interfaces/http/routes/medical-protocol.routes';
 import epidemiologicalAlertRoutes from './interfaces/http/routes/epidemiological-alert.routes';
 import smsRoutes from './interfaces/http/routes/sms.routes';
+import statsRoutes from './interfaces/http/routes/stats.routes';
+import reportsRoutes from './interfaces/http/routes/reports.routes';
 import { errorHandler } from './interfaces/http/middlewares/errorHandler';
 import { authLimiter, apiLimiter } from './interfaces/http/middlewares/rateLimiter.middleware';
 
@@ -58,6 +60,10 @@ app.use('/api/appointments', appointmentRoutes);
 app.use('/api/medical-protocols', medicalProtocolRoutes);
 app.use('/api/epidemiological-alerts', epidemiologicalAlertRoutes);
 app.use('/api/sms', smsRoutes);
+
+// Phase 3: MSPP Dashboard routes
+app.use('/api/stats', statsRoutes);
+app.use('/api/reports', reportsRoutes);
 
 app.get('/health', (req, res) => {
 
