@@ -18,7 +18,7 @@ export const StatsService = {
             const [patients, consultations, centers, users] = await Promise.all([
                 api.get('/patients'),
                 api.get('/consultations'),
-                api.get('/centers'),
+                api.get('/health-centers'),
                 api.get('/users')
             ]);
 
