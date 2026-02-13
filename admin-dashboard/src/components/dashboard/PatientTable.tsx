@@ -43,6 +43,7 @@ export const createColumns = (
                     <Button
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="font-bold text-slate-700 hover:text-slate-900"
                     >
                         Nom
                         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -58,7 +59,7 @@ export const createColumns = (
             accessorKey: "status",
             header: "Statut",
             cell: ({ row }) => (
-                <div className={row.getValue("status") === "Actif" ? "text-green-600" : "text-gray-500"}>
+                <div className={row.getValue("status") === "Actif" ? "font-medium text-green-700 bg-green-50 px-2 py-1 rounded-full inline-block text-xs" : "font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded-full inline-block text-xs"}>
                     {row.getValue("status")}
                 </div>
             )

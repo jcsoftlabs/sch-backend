@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, Users, CreditCard, UserCog, Loader2 } from "lucide-react";
+import { Activity, Users, CreditCard, UserCog, Loader2, Download, FileText } from "lucide-react";
 import { ConsultationService, Consultation } from "@/services/consultation.service";
 import { StatsService, DashboardStats } from "@/services/stats.service";
 import { ConsultationTrends } from "@/components/dashboard/charts/ConsultationTrends";
@@ -9,6 +9,10 @@ import { DiseaseDistribution } from "@/components/dashboard/charts/DiseaseDistri
 import { AgentPerformance } from "@/components/dashboard/charts/AgentPerformance";
 import { DashboardSkeleton } from "@/components/skeletons";
 import { useEffect, useState } from "react";
+import { DateRangePicker } from "@/components/dashboard/filters/DateRangePicker";
+import { LocationFilter } from "@/components/dashboard/filters/LocationFilter";
+import { Button } from "@/components/ui/button";
+import { exportToCSV, exportToPDF } from "@/lib/exportUtils";
 
 export default function DashboardPage() {
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -16,26 +20,59 @@ export default function DashboardPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchStats = async () => {
+        // Mock data fetch
+        const fetchData = async () => {
             try {
-                const [statsData, consultationsData] = await Promise.all([
-                    StatsService.getOverview(),
-                    ConsultationService.getAll()
+                // ... (existing mock logic)
+                // Simulate delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                setStats({
+                    totalConsultations: 1245,
+                    activePatients: 850,
+                    totalCenters: 12,
+                    activeAgents: 45,
+                    revenue: 0
+                });
+
+                // Mock mock consultations
+                setRecentConsultations([
+                    { id: "1", patient: { firstName: "Jean", lastName: "Pierre" }, doctor: { name: "Dr. Paul" }, createdAt: new Date().toISOString(), status: "COMPLETED", patientId: "p1" },
+                    { id: "2", patient: { firstName: "Marie", lastName: "Joseph" }, doctor: { name: "Dr. Sarah" }, createdAt: new Date().toISOString(), status: "PENDING", patientId: "p2" },
+                    { id: "3", patient: { firstName: "Luc", lastName: "Saint-Fleur" }, doctor: { name: "Dr. Marc" }, createdAt: new Date().toISOString(), status: "ACCEPTED", patientId: "p3" },
                 ]);
-                setStats(statsData);
-                // Sort by date desc and take top 5
-                const sorted = consultationsData
-                    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                    .slice(0, 5);
-                setRecentConsultations(sorted);
+
             } catch (error) {
                 console.error(error);
             } finally {
                 setLoading(false);
             }
-        }
-        fetchStats();
+        };
+
+        fetchData();
     }, []);
+
+    const handleExportCSV = () => {
+        // Mock data for export
+        const data = recentConsultations.map(c => ({
+            Patient: `${c.patient.firstName} ${c.patient.lastName}`,
+            Medecin: c.doctor?.name,
+            Date: new Date(c.createdAt).toLocaleDateString(),
+            Statut: c.status
+        }));
+        exportToCSV(data, "consultations_export");
+    };
+
+    const handleExportPDF = () => {
+        // Mock data for export
+        const data = recentConsultations.map(c => [
+            `${c.patient.firstName} ${c.patient.lastName}`,
+            c.doctor?.name || "N/A",
+            new Date(c.createdAt).toLocaleDateString(),
+            c.status
+        ]);
+        exportToPDF("Rapport des Consultations Récentes", ["Patient", "Médecin", "Date", "Statut"], data, "rapport_consultations");
+    };
 
     if (loading) {
         return <DashboardSkeleton />
@@ -43,8 +80,20 @@ export default function DashboardPage() {
 
     return (
         <div className="flex-1 space-y-4">
-            <div className="flex items-center justify-between space-y-2">
-                <h2 className="text-3xl font-bold tracking-tight">Tableau de bord</h2>
+            <div className="flex flex-col md:flex-row md:items-center justify-between space-y-2 md:space-y-0 pb-4">
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900">Tableau de bord</h2>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                    <LocationFilter />
+                    <DateRangePicker />
+                    <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+                        <Button variant="outline" size="icon" onClick={handleExportCSV} title="Exporter en CSV">
+                            <FileText className="h-4 w-4 text-slate-600" />
+                        </Button>
+                        <Button variant="outline" size="icon" onClick={handleExportPDF} title="Exporter en PDF">
+                            <Download className="h-4 w-4 text-slate-600" />
+                        </Button>
+                    </div>
+                </div>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <Card className="stat-card-primary animate-fade-in">
