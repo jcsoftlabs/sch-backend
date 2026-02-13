@@ -1,16 +1,18 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, CreditCard, DollarSign, Users, Loader2, UserCog } from "lucide-react";
-import { ConsultationChart } from "@/components/dashboard/ConsultationChart";
+import { Activity, Users, CreditCard, UserCog, Loader2 } from "lucide-react";
+import { ConsultationService, Consultation } from "@/services/consultation.service";
 import { StatsService, DashboardStats } from "@/services/stats.service";
-import { ConsultationService } from "@/services/consultation.service";
+import { ConsultationTrends } from "@/components/dashboard/charts/ConsultationTrends";
+import { DiseaseDistribution } from "@/components/dashboard/charts/DiseaseDistribution";
+import { AgentPerformance } from "@/components/dashboard/charts/AgentPerformance";
 import { DashboardSkeleton } from "@/components/skeletons";
 import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
     const [stats, setStats] = useState<DashboardStats | null>(null);
-    const [recentConsultations, setRecentConsultations] = useState<any[]>([]);
+    const [recentConsultations, setRecentConsultations] = useState<Consultation[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -145,39 +147,44 @@ export default function DashboardPage() {
                     </CardContent>
                 </Card>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4">
+            {/* Analytics Section */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7 pt-4">
+                <ConsultationTrends />
+                <DiseaseDistribution />
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+                <AgentPerformance />
+
+                <Card className="col-span-3 animate-fade-in card-elevated" style={{ animationDelay: '0.3s' }}>
                     <CardHeader>
-                        <CardTitle>Aperçu</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pl-2">
-                        <ConsultationChart />
-                    </CardContent>
-                </Card>
-                <Card className="col-span-3">
-                    <CardHeader>
-                        <CardTitle>Consultations Récentes</CardTitle>
+                        <CardTitle className="text-base font-semibold text-slate-900">Consultations Récentes</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-8">
+                        <div className="space-y-6">
                             {loading ? (
                                 <div className="flex items-center justify-center py-4">
                                     <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                                 </div>
                             ) : recentConsultations.length === 0 ? (
-                                <p className="text-sm text-muted-foreground text-center py-4">Aucune consultation récente</p>
+                                <p className="text-sm text-slate-500 text-center py-4">Aucune consultation récente</p>
                             ) : (
-                                recentConsultations.map((consultation) => (
+                                recentConsultations.slice(0, 5).map((consultation) => (
                                     <div key={consultation.id} className="flex items-center">
+                                        <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center mr-3">
+                                            <p className="text-xs font-bold text-slate-700">
+                                                {consultation.patient.firstName.charAt(0)}{consultation.patient.lastName.charAt(0)}
+                                            </p>
+                                        </div>
                                         <div className="space-y-1">
-                                            <p className="text-sm font-medium leading-none">
+                                            <p className="text-sm font-medium leading-none text-slate-900">
                                                 {consultation.patient.firstName} {consultation.patient.lastName}
                                             </p>
-                                            <p className="text-xs text-muted-foreground">
+                                            <p className="text-xs text-slate-500">
                                                 {consultation.doctor?.name || "Médecin non assigné"}
                                             </p>
                                         </div>
-                                        <div className="ml-auto font-medium text-xs text-muted-foreground">
+                                        <div className="ml-auto font-medium text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
                                             {new Date(consultation.createdAt).toLocaleDateString()}
                                         </div>
                                     </div>
