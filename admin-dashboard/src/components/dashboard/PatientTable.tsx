@@ -19,6 +19,13 @@ export type Patient = {
     email: string;
     status: "Actif" | "Inactif";
     lastVisit: string;
+    // Additional fields for patient details page
+    dateOfBirth?: string;
+    gender?: "MALE" | "FEMALE";
+    phone?: string;
+    address?: string;
+    bloodType?: string;
+    allergies?: string;
 };
 
 export const createColumns = (

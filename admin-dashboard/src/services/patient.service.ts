@@ -1,6 +1,9 @@
 import api from "@/lib/api";
 import { Patient } from "@/components/dashboard/PatientTable";
 
+// Re-export Patient type for use in other components
+export type { Patient };
+
 export const PatientService = {
     getAll: async (): Promise<Patient[]> => {
         try {
@@ -10,6 +13,16 @@ export const PatientService = {
             return response.data.data?.patients || response.data.patients || response.data.data || response.data;
         } catch (error) {
             console.error("Error fetching patients:", error);
+            throw error;
+        }
+    },
+
+    getById: async (id: string): Promise<Patient> => {
+        try {
+            const response = await api.get(`/patients/${id}`);
+            return response.data.data?.patient || response.data.patient || response.data.data || response.data;
+        } catch (error) {
+            console.error("Error fetching patient:", error);
             throw error;
         }
     },
