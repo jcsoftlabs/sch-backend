@@ -47,7 +47,7 @@ export default function DashboardPage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <Card className="stat-card-primary animate-fade-in">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-medium text-slate-600">
+                        <CardTitle className="text-sm font-semibold text-slate-900">
                             Consultations Totales
                         </CardTitle>
                         <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -65,14 +65,14 @@ export default function DashboardPage() {
                                 </svg>
                                 <span>+12.5%</span>
                             </div>
-                            <p className="text-xs text-slate-500">vs. mois dernier</p>
+                            <p className="text-xs text-slate-700 font-medium">vs. mois dernier</p>
                         </div>
                     </CardContent>
                 </Card>
 
                 <Card className="stat-card-secondary animate-fade-in" style={{ animationDelay: '0.1s' }}>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-medium text-slate-600">
+                        <CardTitle className="text-sm font-semibold text-slate-900">
                             Patients Actifs
                         </CardTitle>
                         <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
@@ -90,14 +90,14 @@ export default function DashboardPage() {
                                 </svg>
                                 <span>+8.2%</span>
                             </div>
-                            <p className="text-xs text-slate-500">nouveaux patients</p>
+                            <p className="text-xs text-slate-700 font-medium">nouveaux patients</p>
                         </div>
                     </CardContent>
                 </Card>
 
                 <Card className="stat-card-accent animate-fade-in" style={{ animationDelay: '0.2s' }}>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-medium text-slate-600">
+                        <CardTitle className="text-sm font-semibold text-slate-900">
                             Centres de Santé
                         </CardTitle>
                         <div className="h-10 w-10 rounded-lg bg-orange-100 flex items-center justify-center">
@@ -115,14 +115,14 @@ export default function DashboardPage() {
                                 </svg>
                                 <span>Stable</span>
                             </div>
-                            <p className="text-xs text-slate-500">partenaires actifs</p>
+                            <p className="text-xs text-slate-700 font-medium">partenaires actifs</p>
                         </div>
                     </CardContent>
                 </Card>
 
                 <Card className="stat-card-warning animate-fade-in" style={{ animationDelay: '0.3s' }}>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-medium text-slate-600">
+                        <CardTitle className="text-sm font-semibold text-slate-900">
                             Agents Actifs
                         </CardTitle>
                         <div className="h-10 w-10 rounded-lg bg-amber-100 flex items-center justify-center">
@@ -140,7 +140,7 @@ export default function DashboardPage() {
                                 </svg>
                                 <span>+5.1%</span>
                             </div>
-                            <p className="text-xs text-slate-500">personnel actif</p>
+                            <p className="text-xs text-slate-700 font-medium">personnel actif</p>
                         </div>
                     </CardContent>
                 </Card>
