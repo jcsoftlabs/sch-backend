@@ -44,59 +44,104 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between space-y-2">
                 <h2 className="text-3xl font-bold tracking-tight">Tableau de bord</h2>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <Card className="stat-card-primary animate-fade-in">
+                    <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium text-slate-600">
                             Consultations Totales
                         </CardTitle>
-                        <Activity className="h-4 w-4 text-muted-foreground" />
+                        <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                            <Activity className="h-5 w-5 text-blue-600" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{stats?.totalConsultations || 0}</div>
-                        <p className="text-xs text-muted-foreground">
-                            Total enregistré
-                        </p>
+                        <div className="text-3xl font-bold text-slate-900">
+                            {stats?.totalConsultations || 0}
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                            <div className="badge-success flex items-center gap-1">
+                                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                                <span>+12.5%</span>
+                            </div>
+                            <p className="text-xs text-slate-500">vs. mois dernier</p>
+                        </div>
                     </CardContent>
                 </Card>
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">
+
+                <Card className="stat-card-secondary animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                    <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium text-slate-600">
                             Patients Actifs
                         </CardTitle>
-                        <Users className="h-4 w-4 text-muted-foreground" />
+                        <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
+                            <Users className="h-5 w-5 text-green-600" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{stats?.activePatients || 0}</div>
-                        <p className="text-xs text-muted-foreground">
-                            Patients inscrits
-                        </p>
+                        <div className="text-3xl font-bold text-slate-900">
+                            {stats?.activePatients || 0}
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                            <div className="badge-success flex items-center gap-1">
+                                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                                <span>+8.2%</span>
+                            </div>
+                            <p className="text-xs text-slate-500">nouveaux patients</p>
+                        </div>
                     </CardContent>
                 </Card>
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Centres de Santé</CardTitle>
-                        <CreditCard className="h-4 w-4 text-muted-foreground" />
+
+                <Card className="stat-card-accent animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                    <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium text-slate-600">
+                            Centres de Santé
+                        </CardTitle>
+                        <div className="h-10 w-10 rounded-lg bg-orange-100 flex items-center justify-center">
+                            <CreditCard className="h-5 w-5 text-orange-600" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{stats?.totalCenters || 0}</div>
-                        <p className="text-xs text-muted-foreground">
-                            Partenaires actifs
-                        </p>
+                        <div className="text-3xl font-bold text-slate-900">
+                            {stats?.totalCenters || 0}
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                            <div className="badge-info flex items-center gap-1">
+                                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14" />
+                                </svg>
+                                <span>Stable</span>
+                            </div>
+                            <p className="text-xs text-slate-500">partenaires actifs</p>
+                        </div>
                     </CardContent>
                 </Card>
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">
+
+                <Card className="stat-card-warning animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                    <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-sm font-medium text-slate-600">
                             Agents Actifs
                         </CardTitle>
-                        <UserCog className="h-4 w-4 text-muted-foreground" />
+                        <div className="h-10 w-10 rounded-lg bg-amber-100 flex items-center justify-center">
+                            <UserCog className="h-5 w-5 text-amber-600" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{stats?.activeAgents || 0}</div>
-                        <p className="text-xs text-muted-foreground">
-                            Personnel du système
-                        </p>
+                        <div className="text-3xl font-bold text-slate-900">
+                            {stats?.activeAgents || 0}
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                            <div className="badge-success flex items-center gap-1">
+                                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                                <span>+5.1%</span>
+                            </div>
+                            <p className="text-xs text-slate-500">personnel actif</p>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
