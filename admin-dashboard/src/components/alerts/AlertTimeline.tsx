@@ -55,7 +55,7 @@ export function AlertTimeline({ alerts, onResolve }: AlertTimelineProps) {
             </CardHeader>
             <CardContent>
                 {activeAlerts.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground">
+                    <div className="text-center py-8 text-slate-500">
                         <CheckCircle className="h-12 w-12 mx-auto mb-2 text-green-500" />
                         <p>Aucune alerte active</p>
                     </div>
@@ -71,11 +71,11 @@ export function AlertTimeline({ alerts, onResolve }: AlertTimelineProps) {
                                         {getSeverityIcon(alert.severity)}
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-1">
-                                                <h4 className="font-semibold">{alert.disease}</h4>
+                                                <h4 className="font-semibold text-slate-900">{alert.disease}</h4>
                                                 <Badge variant="outline">{alert.severity}</Badge>
                                             </div>
-                                            <p className="text-sm mb-2">{alert.description}</p>
-                                            <div className="flex items-center gap-4 text-xs">
+                                            <p className="text-sm mb-2 text-slate-700">{alert.description}</p>
+                                            <div className="flex items-center gap-4 text-xs text-slate-600">
                                                 <span>Zone: {alert.zone}</span>
                                                 <span>Cas: {alert.currentCases}/{alert.threshold}</span>
                                                 <span>
@@ -86,13 +86,26 @@ export function AlertTimeline({ alerts, onResolve }: AlertTimelineProps) {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => onResolve(alert.id)}
-                                    >
-                                        Résoudre
-                                    </Button>
+                                    <div className="flex flex-col gap-2">
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => onResolve(alert.id)}
+                                            className="w-full"
+                                        >
+                                            <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
+                                            Résoudre
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="destructive"
+                                            className="w-full bg-red-50 text-red-600 border-red-200 hover:bg-red-100 hover:text-red-700 hover:border-red-300"
+                                            onClick={() => console.log("Escalate", alert.id)} // Mock action
+                                        >
+                                            <AlertTriangle className="mr-2 h-4 w-4" />
+                                            Escalader
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         ))}

@@ -61,7 +61,7 @@ export function EpidemiologyStatsDisplay({ startDate, endDate }: EpidemiologySta
             </CardHeader>
             <CardContent>
                 {stats.length === 0 ? (
-                    <p className="text-center py-8 text-muted-foreground">
+                    <p className="text-center py-8 text-slate-500">
                         Aucune donnée disponible pour cette période
                     </p>
                 ) : (
@@ -70,7 +70,7 @@ export function EpidemiologyStatsDisplay({ startDate, endDate }: EpidemiologySta
                             <div key={zoneStat.zone} className="border-b pb-4 last:border-b-0">
                                 <div className="flex items-center justify-between mb-3">
                                     <h3 className="font-semibold text-lg">{zoneStat.zone}</h3>
-                                    <span className="text-sm text-muted-foreground">
+                                    <span className="text-sm text-slate-500">
                                         {zoneStat.totalCases} cas total
                                     </span>
                                 </div>
@@ -86,7 +86,7 @@ export function EpidemiologyStatsDisplay({ startDate, endDate }: EpidemiologySta
                                             </div>
                                             <div className="flex items-center gap-1">
                                                 {getTrendIcon(disease.trend)}
-                                                <span className="text-xs text-muted-foreground">
+                                                <span className="text-xs text-slate-500">
                                                     {disease.trend}
                                                 </span>
                                             </div>

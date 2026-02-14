@@ -44,7 +44,7 @@ export function AgentRankingTable({ topPerformers, onViewDetails }: AgentRanking
                                     {index === 0 && <Badge variant="default">🥇</Badge>}
                                     {index === 1 && <Badge variant="secondary">🥈</Badge>}
                                     {index === 2 && <Badge variant="outline">🥉</Badge>}
-                                    {index > 2 && <span className="text-muted-foreground">{index + 1}</span>}
+                                    {index > 2 && <span className="text-slate-500">{index + 1}</span>}
                                 </TableCell>
                                 <TableCell className="font-medium">{agent.name}</TableCell>
                                 <TableCell className="text-right">{agent.visitsThisMonth}</TableCell>

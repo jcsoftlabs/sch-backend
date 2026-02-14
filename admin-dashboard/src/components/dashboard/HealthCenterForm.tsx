@@ -65,7 +65,7 @@ export function HealthCenterForm({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                    <DialogTitle>
+                    <DialogTitle className="text-slate-900">
                         {initialData ? "Modifier le centre" : "Nouveau centre de santé"}
                     </DialogTitle>
                 </DialogHeader>
@@ -76,7 +76,7 @@ export function HealthCenterForm({
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nom *</FormLabel>
+                                    <FormLabel className="text-slate-900">Nom *</FormLabel>
                                     <FormControl>
                                         <Input {...field} placeholder="Hôpital de l'Université d'État d'Haïti" />
                                     </FormControl>
@@ -89,7 +89,7 @@ export function HealthCenterForm({
                             name="address"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Adresse *</FormLabel>
+                                    <FormLabel className="text-slate-900">Adresse *</FormLabel>
                                     <FormControl>
                                         <Input {...field} placeholder="Port-au-Prince, Haïti" />
                                     </FormControl>
@@ -103,7 +103,7 @@ export function HealthCenterForm({
                                 name="phone"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Téléphone</FormLabel>
+                                        <FormLabel className="text-slate-900">Téléphone</FormLabel>
                                         <FormControl>
                                             <Input {...field} placeholder="+509 XXXX XXXX" />
                                         </FormControl>
@@ -116,7 +116,7 @@ export function HealthCenterForm({
                                 name="capacity"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Capacité</FormLabel>
+                                        <FormLabel className="text-slate-900">Capacité</FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="number"

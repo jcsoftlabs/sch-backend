@@ -16,4 +16,10 @@ router.post('/', validate(createHouseholdSchema), ctrl.create);
 router.put('/:id', validate(updateHouseholdSchema), ctrl.update);
 router.delete('/:id', authorize(['ADMIN']), ctrl.remove);
 
+// Household members routes
+router.get('/:id/members', ctrl.getMembers);
+router.post('/:id/members', ctrl.addMember);
+router.put('/:id/members/:memberId', ctrl.updateMember);
+router.delete('/:id/members/:memberId', ctrl.removeMember);
+
 export default router;

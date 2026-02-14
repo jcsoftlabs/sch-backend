@@ -81,9 +81,9 @@ export function PrescriptionList({ patientId }: PrescriptionListProps) {
                 </CardHeader>
                 <CardContent>
                     {loading ? (
-                        <p className="text-muted-foreground">Chargement...</p>
+                        <p className="text-slate-500">Chargement...</p>
                     ) : prescriptions.length === 0 ? (
-                        <p className="text-muted-foreground">Aucune prescription enregistrée</p>
+                        <p className="text-slate-500">Aucune prescription enregistrée</p>
                     ) : (
                         <div className="space-y-4">
                             {prescriptions.map((prescription) => (
@@ -98,14 +98,14 @@ export function PrescriptionList({ patientId }: PrescriptionListProps) {
                                         </div>
                                         <div className="space-y-1">
                                             <div className="flex items-center gap-2">
-                                                <p className="font-semibold">{prescription.medication}</p>
+                                                <p className="font-semibold text-slate-900">{prescription.medication}</p>
                                                 {getStatusBadge(prescription.status)}
                                             </div>
-                                            <p className="text-sm text-muted-foreground">
+                                            <p className="text-sm text-slate-500">
                                                 {prescription.dosage} • {prescription.frequency} • {prescription.duration}
                                             </p>
                                             {prescription.instructions && (
-                                                <p className="text-sm text-muted-foreground italic">
+                                                <p className="text-sm text-slate-500 italic">
                                                     {prescription.instructions}
                                                 </p>
                                             )}

@@ -68,9 +68,9 @@ export function EmergencyContactList({ patientId }: EmergencyContactListProps) {
                 </CardHeader>
                 <CardContent>
                     {loading ? (
-                        <p className="text-muted-foreground">Chargement...</p>
+                        <p className="text-slate-500">Chargement...</p>
                     ) : contacts.length === 0 ? (
-                        <p className="text-muted-foreground">Aucun contact d'urgence enregistré</p>
+                        <p className="text-slate-500">Aucun contact d'urgence enregistré</p>
                     ) : (
                         <div className="grid gap-4 md:grid-cols-2">
                             {contacts.map((contact) => (
@@ -85,7 +85,7 @@ export function EmergencyContactList({ patientId }: EmergencyContactListProps) {
                                         </div>
                                         <div className="space-y-1">
                                             <div className="flex items-center gap-2">
-                                                <p className="font-semibold">{contact.name}</p>
+                                                <p className="font-semibold text-slate-900">{contact.name}</p>
                                                 {contact.isPrimary && (
                                                     <Badge variant="default" className="flex items-center gap-1">
                                                         <Star className="h-3 w-3" />
@@ -93,12 +93,12 @@ export function EmergencyContactList({ patientId }: EmergencyContactListProps) {
                                                     </Badge>
                                                 )}
                                             </div>
-                                            <p className="text-sm text-muted-foreground">
+                                            <p className="text-sm text-slate-500">
                                                 {contact.relationship}
                                             </p>
-                                            <p className="text-sm font-medium">{contact.phone}</p>
+                                            <p className="text-sm font-medium text-slate-900">{contact.phone}</p>
                                             {contact.address && (
-                                                <p className="text-sm text-muted-foreground">
+                                                <p className="text-sm text-slate-500">
                                                     {contact.address}
                                                 </p>
                                             )}

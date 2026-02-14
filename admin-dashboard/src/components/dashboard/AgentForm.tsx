@@ -63,7 +63,7 @@ export function AgentForm({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                    <DialogTitle>
+                    <DialogTitle className="text-slate-900">
                         {initialData ? "Modifier l'agent" : "Nouvel agent"}
                     </DialogTitle>
                 </DialogHeader>
@@ -74,7 +74,7 @@ export function AgentForm({
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nom complet *</FormLabel>
+                                    <FormLabel className="text-slate-900">Nom complet *</FormLabel>
                                     <FormControl>
                                         <Input {...field} placeholder="Jean Dupont" />
                                     </FormControl>
@@ -87,7 +87,7 @@ export function AgentForm({
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email *</FormLabel>
+                                    <FormLabel className="text-slate-900">Email *</FormLabel>
                                     <FormControl>
                                         <Input {...field} type="email" placeholder="agent@sch.ht" />
                                     </FormControl>
@@ -101,7 +101,7 @@ export function AgentForm({
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Mot de passe *</FormLabel>
+                                        <FormLabel className="text-slate-900">Mot de passe *</FormLabel>
                                         <FormControl>
                                             <Input {...field} type="password" placeholder="••••••" />
                                         </FormControl>

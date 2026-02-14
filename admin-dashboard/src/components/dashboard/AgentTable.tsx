@@ -27,12 +27,17 @@ export const createColumns = (
                     <Button
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="font-bold text-slate-700 hover:text-slate-900"
                     >
                         Nom
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </Button>
                 )
             },
+            cell: ({ row }) => {
+                const agent = row.original;
+                return <span className="font-medium">{agent.name}</span>
+            }
         },
         {
             accessorKey: "email",

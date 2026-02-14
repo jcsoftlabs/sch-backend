@@ -72,7 +72,7 @@ export function ConsultationForm({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                    <DialogTitle>
+                    <DialogTitle className="text-slate-900">
                         {initialData ? "Modifier la consultation" : "Nouvelle consultation"}
                     </DialogTitle>
                 </DialogHeader>
@@ -83,7 +83,7 @@ export function ConsultationForm({
                             name="patientId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Patient *</FormLabel>
+                                    <FormLabel className="text-slate-900">Patient *</FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
@@ -107,7 +107,7 @@ export function ConsultationForm({
                             name="doctorId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>ID Médecin (optionnel)</FormLabel>
+                                    <FormLabel className="text-slate-900">ID Médecin (optionnel)</FormLabel>
                                     <FormControl>
                                         <Input {...field} placeholder="UUID du médecin" />
                                     </FormControl>
@@ -120,7 +120,7 @@ export function ConsultationForm({
                             name="status"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Statut</FormLabel>
+                                    <FormLabel className="text-slate-900">Statut</FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>

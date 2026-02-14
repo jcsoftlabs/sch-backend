@@ -71,7 +71,7 @@ export default function PatientDetailPage() {
             {/* Patient Header */}
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">{fullName}</h1>
-                <p className="text-muted-foreground">
+                <p className="text-slate-500">
                     {age ? `${age} ans` : "Âge inconnu"} • {patient.gender === "MALE" ? "Homme" : "Femme"}
                     {patient.phone && ` • ${patient.phone}`}
                 </p>
@@ -113,32 +113,32 @@ export default function PatientDetailPage() {
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p className="text-sm font-medium text-muted-foreground">
+                                    <p className="text-sm font-medium text-slate-500">
                                         Date de naissance
                                     </p>
-                                    <p className="text-base">
+                                    <p className="text-base text-slate-900 font-medium">
                                         {patient.dateOfBirth
                                             ? new Date(patient.dateOfBirth).toLocaleDateString("fr-FR")
                                             : "Non renseignée"}
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-muted-foreground">Genre</p>
-                                    <p className="text-base">
+                                    <p className="text-sm font-medium text-slate-500">Genre</p>
+                                    <p className="text-base text-slate-900 font-medium">
                                         {patient.gender === "MALE" ? "Homme" : "Femme"}
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-muted-foreground">
+                                    <p className="text-sm font-medium text-slate-500">
                                         Téléphone
                                     </p>
-                                    <p className="text-base">{patient.phone || "Non renseigné"}</p>
+                                    <p className="text-base text-slate-900 font-medium">{patient.phone || "Non renseigné"}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-muted-foreground">
+                                    <p className="text-sm font-medium text-slate-500">
                                         Adresse
                                     </p>
-                                    <p className="text-base">{patient.address || "Non renseignée"}</p>
+                                    <p className="text-base text-slate-900 font-medium">{patient.address || "Non renseignée"}</p>
                                 </div>
                             </div>
                         </CardContent>

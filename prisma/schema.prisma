@@ -225,16 +225,27 @@ model AuditLog {
 
 // Recensement des ménages
 model Household {
-  id        String   @id @default(uuid())
-  address   String
-  gpsLat    Float?
-  gpsLng    Float?
-  zone      String   // zone géographique
-  agentId   String   // ASCP responsable
-  agent     User     @relation(fields: [agentId], references: [id])
-  members   Patient[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 String   @id @default(uuid())
+  householdHeadName  String   // Nom du chef de ménage
+  address            String
+  neighborhood       String?  // Quartier
+  commune            String?  // Commune
+  phone              String?  // Téléphone de contact
+  gpsLat             Float?   // Latitude GPS
+  gpsLng             Float?   // Longitude GPS
+  gpsAccuracy        Float?   // Précision GPS en mètres
+  zone               String   // zone géographique
+  housingType        String?  // Type de logement (Maison, Appartement, etc.)
+  numberOfRooms      Int?     // Nombre de pièces
+  waterSource        String?  // Source d'eau
+  sanitationType     String?  // Type de sanitaire
+  hasElectricity     Boolean  @default(false) // Accès à l'électricité
+  memberCount        Int      @default(0) // Nombre de membres
+  agentId            String   // ASCP responsable
+  agent              User     @relation(fields: [agentId], references: [id])
+  members            Patient[]
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 // Dossier médical enrichi (1 par patient)

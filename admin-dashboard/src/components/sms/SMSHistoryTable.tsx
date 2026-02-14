@@ -58,7 +58,7 @@ export const columns: ColumnDef<SMS>[] = [
                 <div>
                     <div className="font-medium">{row.getValue("to")}</div>
                     {patient && (
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-slate-500">
                             {patient.firstName} {patient.lastName}
                         </div>
                     )}

@@ -18,6 +18,8 @@ export type HealthCenter = {
     address: string;
     phone?: string;
     capacity?: number;
+    lat?: number;
+    lng?: number;
 };
 
 export const createColumns = (
@@ -31,12 +33,14 @@ export const createColumns = (
                     <Button
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="font-bold text-slate-700 hover:text-slate-900"
                     >
                         Nom
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </Button>
                 )
             },
+            cell: ({ row }) => <span className="font-medium text-slate-900">{row.getValue("name")}</span>
         },
         {
             accessorKey: "address",

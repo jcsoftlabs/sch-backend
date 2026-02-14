@@ -24,13 +24,13 @@ export function AlertHistoryTable({ alerts }: AlertHistoryTableProps) {
     const getSeverityBadge = (severity: string) => {
         switch (severity) {
             case "CRITICAL":
-                return <Badge variant="destructive">{severity}</Badge>;
+                return <Badge variant="destructive" className="bg-red-600 hover:bg-red-700">{severity}</Badge>;
             case "HIGH":
-                return <Badge className="bg-orange-500">{severity}</Badge>;
+                return <Badge className="bg-orange-500 hover:bg-orange-600">{severity}</Badge>;
             case "MEDIUM":
-                return <Badge className="bg-yellow-500">{severity}</Badge>;
+                return <Badge className="bg-yellow-500 hover:bg-yellow-600">{severity}</Badge>;
             case "LOW":
-                return <Badge variant="secondary">{severity}</Badge>;
+                return <Badge variant="secondary" className="bg-blue-100 text-blue-800 hover:bg-blue-200">{severity}</Badge>;
             default:
                 return <Badge variant="outline">{severity}</Badge>;
         }
@@ -43,7 +43,7 @@ export function AlertHistoryTable({ alerts }: AlertHistoryTableProps) {
             </CardHeader>
             <CardContent>
                 {resolvedAlerts.length === 0 ? (
-                    <p className="text-center py-8 text-muted-foreground">
+                    <p className="text-center py-8 text-slate-500">
                         Aucune alerte résolue
                     </p>
                 ) : (

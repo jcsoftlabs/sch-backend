@@ -68,12 +68,12 @@ export default function AlertsPage() {
         <div className="space-y-6 p-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold">Alertes Épidémiologiques</h1>
-                    <p className="text-muted-foreground">
+                    <h1 className="text-3xl font-bold text-slate-900">Alertes Épidémiologiques</h1>
+                    <p className="text-slate-500">
                         Gestion et configuration des alertes sanitaires
                     </p>
                 </div>
-                <Button onClick={() => setCreateDialogOpen(true)}>
+                <Button onClick={() => setCreateDialogOpen(true)} className="bg-slate-900 text-white hover:bg-slate-800">
                     <Plus className="h-4 w-4 mr-2" />
                     Créer une Alerte
                 </Button>

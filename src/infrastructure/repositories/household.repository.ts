@@ -24,4 +24,34 @@ export class HouseholdRepository implements IHouseholdRepository {
     async delete(id: string): Promise<Household> {
         return prisma.household.delete({ where: { id } });
     }
+
+    // Household members methods (using Patient model)
+    async findMembers(householdId: string) {
+        return prisma.patient.findMany({
+            where: { householdId },
+            orderBy: { createdAt: 'desc' }
+        });
+    }
+
+    async addMember(householdId: string, memberData: any) {
+        return prisma.patient.create({
+            data: {
+                ...memberData,
+                householdId
+            }
+        });
+    }
+
+    async updateMember(memberId: string, memberData: any) {
+        return prisma.patient.update({
+            where: { id: memberId },
+            data: memberData
+        });
+    }
+
+    async removeMember(memberId: string) {
+        return prisma.patient.delete({
+            where: { id: memberId }
+        });
+    }
 }

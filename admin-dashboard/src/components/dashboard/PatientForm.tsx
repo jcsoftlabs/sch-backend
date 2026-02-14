@@ -67,7 +67,7 @@ export function PatientForm({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                    <DialogTitle>
+                    <DialogTitle className="text-slate-900">
                         {initialData ? "Modifier le patient" : "Nouveau patient"}
                     </DialogTitle>
                 </DialogHeader>
@@ -79,7 +79,7 @@ export function PatientForm({
                                 name="firstName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Prénom *</FormLabel>
+                                        <FormLabel className="text-slate-900">Prénom *</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -92,7 +92,7 @@ export function PatientForm({
                                 name="lastName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Nom *</FormLabel>
+                                        <FormLabel className="text-slate-900">Nom *</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -106,7 +106,7 @@ export function PatientForm({
                             name="dateOfBirth"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Date de naissance</FormLabel>
+                                    <FormLabel className="text-slate-900">Date de naissance</FormLabel>
                                     <FormControl>
                                         <Input type="date" {...field} />
                                     </FormControl>
@@ -119,7 +119,7 @@ export function PatientForm({
                             name="phone"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Téléphone</FormLabel>
+                                    <FormLabel className="text-slate-900">Téléphone</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
@@ -132,7 +132,7 @@ export function PatientForm({
                             name="address"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Adresse</FormLabel>
+                                    <FormLabel className="text-slate-900">Adresse</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>

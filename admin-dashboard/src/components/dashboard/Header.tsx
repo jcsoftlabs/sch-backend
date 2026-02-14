@@ -72,7 +72,7 @@ export function Header() {
                             <DropdownMenuLabel className="font-normal">
                                 <div className="flex flex-col space-y-2">
                                     <p className="text-sm font-medium leading-none">{user?.name || "Admin"}</p>
-                                    <p className="text-xs leading-none text-muted-foreground">
+                                    <p className="text-xs leading-none text-slate-500">
                                         {user?.email || "admin@mspp.ht"}
                                     </p>
                                     <Badge variant="secondary" className="w-fit text-xs">

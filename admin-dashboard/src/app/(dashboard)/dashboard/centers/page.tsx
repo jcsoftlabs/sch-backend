@@ -10,19 +10,45 @@ import { HealthCenterForm } from "@/components/dashboard/HealthCenterForm";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/hooks/use-toast";
 
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
 export default function CentersPage() {
+    const router = useRouter();
     const [data, setData] = useState<HealthCenter[]>([]);
     const [loading, setLoading] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
     const [editingCenter, setEditingCenter] = useState<HealthCenter | undefined>();
     const [deleteId, setDeleteId] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
     const { toast } = useToast();
+
+    // Map component needs to be imported dynamically inside the component to work with recent NextJS/Leaflet patterns 
+    // or we use the existing dynamic import pattern for the whole component if applicable. 
+    // Here we reuse the pattern from map/page.tsx but importing the refactored HaitiMap
+
+    const MapWithNoSSR = dynamic(
+        () => import("@/components/dashboard/map/HaitiMap"),
+        {
+            ssr: false,
+            loading: () => <Loader2 className="h-8 w-8 animate-spin" />,
+        }
+    );
 
     const fetchData = async () => {
         try {
             const centers = await CenterService.getAll();
-            setData(centers);
+
+            // MOCK COORDINATES FOR DEMO - Distribute them randomly across Haiti
+            // Haiti approx: Lat 18.0 - 20.0, Lng -74.5 - -71.5
+            const centersWithCoords = centers.map((c, i) => ({
+                ...c,
+                lat: c.lat || (18.5 + (Math.random() * 1.2)),
+                lng: c.lng || (-74.0 + (Math.random() * 2.0))
+            }));
+
+            setData(centersWithCoords);
         } catch (error) {
             console.error("Failed to load centers", error);
             toast({
@@ -123,12 +149,44 @@ export default function CentersPage() {
                         Liste complète des centres de santé enregistrés.
                     </p>
                 </div>
-                <Button onClick={() => { setEditingCenter(undefined); setFormOpen(true); }}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Nouveau centre
-                </Button>
+                <div className="flex items-center space-x-2">
+                    <div className="flex bg-slate-100 p-1 rounded-lg">
+                        <Button
+                            variant={viewMode === 'list' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('list')}
+                            className="h-8"
+                        >
+                            Liste
+                        </Button>
+                        <Button
+                            variant={viewMode === 'map' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('map')}
+                            className="h-8"
+                        >
+                            Carte
+                        </Button>
+                    </div>
+                    <Button onClick={() => { setEditingCenter(undefined); setFormOpen(true); }}>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Nouveau centre
+                    </Button>
+                </div>
             </div>
-            <DataTable data={data} columns={columns} searchKey="name" />
+
+            {viewMode === 'list' ? (
+                <DataTable
+                    data={data}
+                    columns={columns}
+                    searchKey="name"
+                    onRowClick={(center) => router.push(`/dashboard/centers/${center.id}`)}
+                />
+            ) : (
+                <div className="h-[600px] w-full border rounded-lg overflow-hidden relative z-0">
+                    <MapWithNoSSR centers={data} />
+                </div>
+            )}
 
             <HealthCenterForm
                 open={formOpen}

@@ -80,9 +80,9 @@ export function DiagnosisList({ patientId }: DiagnosisListProps) {
                 </CardHeader>
                 <CardContent>
                     {loading ? (
-                        <p className="text-muted-foreground">Chargement...</p>
+                        <p className="text-slate-500">Chargement...</p>
                     ) : diagnoses.length === 0 ? (
-                        <p className="text-muted-foreground">Aucun diagnostic enregistré</p>
+                        <p className="text-slate-500">Aucun diagnostic enregistré</p>
                     ) : (
                         <div className="space-y-4">
                             {diagnoses.map((diagnosis) => (
@@ -97,21 +97,21 @@ export function DiagnosisList({ patientId }: DiagnosisListProps) {
                                         </div>
                                         <div className="space-y-1">
                                             <div className="flex items-center gap-2">
-                                                <p className="font-semibold">{diagnosis.disease}</p>
+                                                <p className="font-semibold text-slate-900">{diagnosis.disease}</p>
                                                 {getStatusBadge(diagnosis.status)}
                                             </div>
                                             {diagnosis.icd10Code && (
-                                                <p className="text-sm text-muted-foreground">
+                                                <p className="text-sm text-slate-500">
                                                     Code CIM-10: {diagnosis.icd10Code}
                                                 </p>
                                             )}
                                             {diagnosis.severity && (
-                                                <p className="text-sm text-muted-foreground">
+                                                <p className="text-sm text-slate-500">
                                                     Sévérité: {diagnosis.severity}
                                                 </p>
                                             )}
                                             {diagnosis.notes && (
-                                                <p className="text-sm text-muted-foreground italic">
+                                                <p className="text-sm text-slate-500 italic">
                                                     {diagnosis.notes}
                                                 </p>
                                             )}

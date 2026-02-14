@@ -1,0 +1,80 @@
+name: sch_mobile
+description: "ASCP-Connect - Mobile app for community health workers in Haiti"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  
+  # Local Database (Offline-first)
+  drift: ^2.22.0
+  sqlite3_flutter_libs: ^0.5.24
+  path_provider: ^2.1.5
+  path: ^1.9.0
+  
+  # HTTP & API
+  dio: ^5.7.0
+  json_annotation: ^4.9.0
+  
+  # Navigation
+  go_router: ^14.6.2
+  
+  # Storage
+  shared_preferences: ^2.3.3
+  flutter_secure_storage: ^9.2.2
+  
+  # Location & Sensors
+  geolocator: ^13.0.2
+  permission_handler: ^11.3.1
+  google_maps_flutter: ^2.5.0
+  geocoding: ^3.0.0
+  
+  # UI Components
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.14
+  cached_network_image: ^3.4.1
+  image_picker: ^1.1.2
+  
+  # Utils
+  intl: ^0.20.1
+  uuid: ^4.5.1
+  logger: ^2.5.0
+  connectivity_plus: ^6.1.1
+  
+  # Background Services
+  workmanager: ^0.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  
+  # Code Generation
+  build_runner: ^2.4.13
+  riverpod_generator: ^2.6.2
+  drift_dev: ^2.22.0
+  json_serializable: ^6.9.2
+
+flutter:
+  uses-material-design: true
+  
+  # Assets
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/logos/
+  
+  # Fonts
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.otf

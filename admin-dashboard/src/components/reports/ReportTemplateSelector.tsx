@@ -43,8 +43,8 @@ export function ReportTemplateSelector({
                         <div
                             key={template.id}
                             className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${selectedTemplate?.id === template.id
-                                    ? "border-primary bg-primary/5"
-                                    : "border-gray-200 hover:border-primary/50"
+                                ? "border-primary bg-primary/5"
+                                : "border-gray-200 hover:border-primary/50"
                                 }`}
                             onClick={() => onSelect(template)}
                         >
@@ -54,7 +54,7 @@ export function ReportTemplateSelector({
                                 </div>
                                 <div className="flex-1">
                                     <h3 className="font-semibold">{template.name}</h3>
-                                    <p className="text-sm text-muted-foreground mt-1">
+                                    <p className="text-sm text-slate-500 mt-1">
                                         {template.description}
                                     </p>
                                     <span className="inline-block mt-2 px-2 py-1 text-xs bg-gray-100 rounded">

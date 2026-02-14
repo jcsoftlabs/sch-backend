@@ -10,7 +10,10 @@ import { AgentForm } from "@/components/dashboard/AgentForm";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/hooks/use-toast";
 
+import { useRouter } from "next/navigation";
+
 export default function AgentsPage() {
+    const router = useRouter();
     const [data, setData] = useState<Agent[]>([]);
     const [loading, setLoading] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
@@ -118,8 +121,8 @@ export default function AgentsPage() {
         <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
             <div className="flex items-center justify-between space-y-2">
                 <div>
-                    <h2 className="text-2xl font-bold tracking-tight">Gestion des Agents</h2>
-                    <p className="text-muted-foreground">
+                    <h2 className="text-2xl font-bold tracking-tight text-slate-900">Gestion des Agents</h2>
+                    <p className="text-slate-500">
                         Liste complète des agents du système.
                     </p>
                 </div>
@@ -128,7 +131,12 @@ export default function AgentsPage() {
                     Nouvel agent
                 </Button>
             </div>
-            <DataTable data={data} columns={columns} searchKey="name" />
+            <DataTable
+                data={data}
+                columns={columns}
+                searchKey="name"
+                onRowClick={(agent) => router.push(`/dashboard/agents/${agent.id}`)}
+            />
 
             <AgentForm
                 open={formOpen}

@@ -53,3 +53,36 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
         res.status(204).send();
     } catch (error) { next(error); }
 };
+
+// Household members endpoints
+export const getMembers = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const members = await service.getHouseholdMembers(req.params.id as string);
+        res.status(200).json({ status: 'success', data: members });
+    } catch (error) { next(error); }
+};
+
+export const addMember = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const member = await service.addHouseholdMember(req.params.id as string, req.body);
+        res.status(201).json({ status: 'success', data: member });
+    } catch (error) { next(error); }
+};
+
+export const updateMember = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const member = await service.updateHouseholdMember(
+            req.params.id as string,
+            req.params.memberId as string,
+            req.body
+        );
+        res.status(200).json({ status: 'success', data: member });
+    } catch (error) { next(error); }
+};
+
+export const removeMember = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await service.removeHouseholdMember(req.params.id as string, req.params.memberId as string);
+        res.status(204).send();
+    } catch (error) { next(error); }
+};

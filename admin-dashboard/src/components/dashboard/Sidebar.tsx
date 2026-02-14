@@ -160,10 +160,10 @@ export function Sidebar() {
 
             {/* Footer */}
             <div className="px-6 py-4 border-t border-slate-700/50">
-                <div className="text-xs text-slate-500 space-y-1">
+                <div className="text-xs text-slate-400 space-y-1">
                     <p className="font-medium">Version 1.0.0</p>
                     <p>© 2026 MSPP Haiti</p>
-                    <p className="text-slate-600">Ministère de la Santé Publique</p>
+                    <p className="text-slate-500">Ministère de la Santé Publique</p>
                 </div>
             </div>
         </div>

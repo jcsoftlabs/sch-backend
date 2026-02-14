@@ -104,7 +104,7 @@ export function SendSMSDialog({
                                             {...field}
                                         />
                                     </FormControl>
-                                    <div className="text-xs text-muted-foreground text-right">
+                                    <div className="text-xs text-slate-500 text-right">
                                         {field.value?.length || 0}/160
                                     </div>
                                     <FormMessage />

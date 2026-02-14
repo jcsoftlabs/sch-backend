@@ -35,4 +35,25 @@ export class HouseholdService {
         await this.getHouseholdById(id);
         return this.householdRepo.delete(id);
     }
+
+    // Household members methods
+    async getHouseholdMembers(householdId: string) {
+        await this.getHouseholdById(householdId); // Verify household exists
+        return this.householdRepo.findMembers(householdId);
+    }
+
+    async addHouseholdMember(householdId: string, memberData: any) {
+        await this.getHouseholdById(householdId); // Verify household exists
+        return this.householdRepo.addMember(householdId, memberData);
+    }
+
+    async updateHouseholdMember(householdId: string, memberId: string, memberData: any) {
+        await this.getHouseholdById(householdId); // Verify household exists
+        return this.householdRepo.updateMember(memberId, memberData);
+    }
+
+    async removeHouseholdMember(householdId: string, memberId: string) {
+        await this.getHouseholdById(householdId); // Verify household exists
+        return this.householdRepo.removeMember(memberId);
+    }
 }

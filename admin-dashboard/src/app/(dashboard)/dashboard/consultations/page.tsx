@@ -12,7 +12,10 @@ import { ConsultationForm } from "@/components/dashboard/ConsultationForm";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/hooks/use-toast";
 
+import { useRouter } from "next/navigation";
+
 export default function ConsultationsPage() {
+    const router = useRouter();
     const [data, setData] = useState<Consultation[]>([]);
     const [patients, setPatients] = useState<Array<{ id: string; firstName: string; lastName: string }>>([]);
     const [loading, setLoading] = useState(true);
@@ -125,8 +128,8 @@ export default function ConsultationsPage() {
         <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
             <div className="flex items-center justify-between space-y-2">
                 <div>
-                    <h2 className="text-2xl font-bold tracking-tight">Téléconsultations</h2>
-                    <p className="text-muted-foreground">
+                    <h2 className="text-2xl font-bold tracking-tight text-slate-900">Téléconsultations</h2>
+                    <p className="text-slate-500">
                         Gestion des demandes de téléconsultation.
                     </p>
                 </div>
@@ -135,7 +138,12 @@ export default function ConsultationsPage() {
                     Nouvelle consultation
                 </Button>
             </div>
-            <DataTable data={data} columns={columns} searchKey="patient" />
+            <DataTable
+                data={data}
+                columns={columns}
+                searchKey="patient"
+                onRowClick={(consultation) => router.push(`/dashboard/consultations/${consultation.id}`)}
+            />
 
             <ConsultationForm
                 open={formOpen}

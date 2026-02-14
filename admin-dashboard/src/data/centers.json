@@ -1,0 +1,22 @@
+[
+    {
+        "id": "c1",
+        "name": "Centre de Santé de Delmas 32",
+        "type": "Centre de Santé",
+        "coordinates": [
+            -72.302,
+            18.552
+        ],
+        "cases": 25
+    },
+    {
+        "id": "c2",
+        "name": "Hôpital Universitaire de Mirebalais",
+        "type": "Hôpital",
+        "coordinates": [
+            -72.103,
+            18.835
+        ],
+        "cases": 45
+    }
+]

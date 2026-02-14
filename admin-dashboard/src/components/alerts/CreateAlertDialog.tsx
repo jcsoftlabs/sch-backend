@@ -75,8 +75,8 @@ export function CreateAlertDialog({ open, onClose, onSuccess }: CreateAlertDialo
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Créer une Alerte Manuelle</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-slate-900">Créer une Alerte Manuelle</DialogTitle>
+                    <DialogDescription className="text-slate-500">
                         Créer une nouvelle alerte épidémiologique pour une maladie spécifique
                     </DialogDescription>
                 </DialogHeader>

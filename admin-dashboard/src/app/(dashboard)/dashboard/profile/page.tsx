@@ -119,14 +119,14 @@ export default function ProfilePage() {
     return (
         <div className="flex-1 space-y-4 p-8 pt-6">
             <div className="flex items-center justify-between space-y-2">
-                <h2 className="text-3xl font-bold tracking-tight">Profil Utilisateur</h2>
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900">Profil Utilisateur</h2>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Informations Personnelles</CardTitle>
-                        <CardDescription>
+                        <CardTitle className="text-slate-900">Informations Personnelles</CardTitle>
+                        <CardDescription className="text-slate-500">
                             Modifiez vos informations de contact et de connexion.
                         </CardDescription>
                     </CardHeader>
@@ -138,7 +138,7 @@ export default function ProfilePage() {
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Nom complet</FormLabel>
+                                            <FormLabel className="text-slate-900">Nom complet</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="Jean Valjean" {...field} />
                                             </FormControl>
@@ -152,7 +152,7 @@ export default function ProfilePage() {
                                     name="email"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Email</FormLabel>
+                                            <FormLabel className="text-slate-900">Email</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="jean@example.com" {...field} />
                                             </FormControl>
@@ -166,7 +166,7 @@ export default function ProfilePage() {
                                     name="phone"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Téléphone</FormLabel>
+                                            <FormLabel className="text-slate-900">Téléphone</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="+509..." {...field} />
                                             </FormControl>
@@ -180,11 +180,11 @@ export default function ProfilePage() {
                                     name="password"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Nouveau mot de passe (optionnel)</FormLabel>
+                                            <FormLabel className="text-slate-900">Nouveau mot de passe (optionnel)</FormLabel>
                                             <FormControl>
                                                 <Input type="password" placeholder="******" {...field} />
                                             </FormControl>
-                                            <FormDescription>
+                                            <FormDescription className="text-slate-500">
                                                 Laissez vide pour conserver le mot de passe actuel.
                                             </FormDescription>
                                             <FormMessage />
@@ -192,7 +192,7 @@ export default function ProfilePage() {
                                     )}
                                 />
 
-                                <Button type="submit" disabled={loading}>
+                                <Button type="submit" disabled={loading} className="bg-slate-900 text-white hover:bg-slate-800">
                                     {loading ? (
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                     ) : (
@@ -207,29 +207,29 @@ export default function ProfilePage() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Rôle et Accès</CardTitle>
-                        <CardDescription>
+                        <CardTitle className="text-slate-900">Rôle et Accès</CardTitle>
+                        <CardDescription className="text-slate-500">
                             Informations sur votre niveau d'accès (Lecture seule).
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="space-y-1">
-                            <h3 className="font-medium">Rôle</h3>
-                            <p className="text-sm text-muted-foreground capitalize">
+                            <h3 className="font-medium text-slate-900">Rôle</h3>
+                            <p className="text-sm text-slate-500 capitalize">
                                 {authUser?.role.toLowerCase()}
                             </p>
                         </div>
                         {authUser?.zone && (
                             <div className="space-y-1">
-                                <h3 className="font-medium">Zone assignée</h3>
-                                <p className="text-sm text-muted-foreground">
+                                <h3 className="font-medium text-slate-900">Zone assignée</h3>
+                                <p className="text-sm text-slate-500">
                                     {authUser.zone}
                                 </p>
                             </div>
                         )}
                         <div className="space-y-1">
-                            <h3 className="font-medium">ID Utilisateur</h3>
-                            <p className="text-xs font-mono text-muted-foreground bg-muted p-2 rounded">
+                            <h3 className="font-medium text-slate-900">ID Utilisateur</h3>
+                            <p className="text-xs font-mono text-slate-500 bg-slate-100 p-2 rounded">
                                 {authUser?.id}
                             </p>
                         </div>

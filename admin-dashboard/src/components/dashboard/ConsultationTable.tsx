@@ -23,7 +23,7 @@ export const createColumns = (
             header: "Patient",
             cell: ({ row }) => {
                 const patient = row.original.patient;
-                return patient ? `${patient.firstName} ${patient.lastName}` : "N/A";
+                return <span className="font-medium text-slate-900">{patient ? `${patient.firstName} ${patient.lastName}` : "N/A"}</span>
             },
         },
         {

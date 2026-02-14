@@ -70,9 +70,9 @@ export function LabResultsList({ patientId }: LabResultsListProps) {
                 </CardHeader>
                 <CardContent>
                     {loading ? (
-                        <p className="text-muted-foreground">Chargement...</p>
+                        <p className="text-slate-500">Chargement...</p>
                     ) : results.length === 0 ? (
-                        <p className="text-muted-foreground">Aucun résultat enregistré</p>
+                        <p className="text-slate-500">Aucun résultat enregistré</p>
                     ) : (
                         <div className="space-y-4">
                             {results.map((result) => (
@@ -87,7 +87,7 @@ export function LabResultsList({ patientId }: LabResultsListProps) {
                                         </div>
                                         <div className="space-y-1">
                                             <div className="flex items-center gap-2">
-                                                <p className="font-semibold">{result.testName}</p>
+                                                <p className="font-semibold text-slate-900">{result.testName}</p>
                                                 {result.isAbnormal && (
                                                     <Badge variant="destructive" className="flex items-center gap-1">
                                                         <AlertTriangle className="h-3 w-3" />
@@ -95,17 +95,17 @@ export function LabResultsList({ patientId }: LabResultsListProps) {
                                                     </Badge>
                                                 )}
                                             </div>
-                                            <p className="text-sm text-muted-foreground">
-                                                Résultat: <span className="font-medium">{result.result}</span>
+                                            <p className="text-sm text-slate-500">
+                                                Résultat: <span className="font-medium text-slate-900">{result.result}</span>
                                                 {result.unit && ` ${result.unit}`}
                                             </p>
                                             {result.referenceRange && (
-                                                <p className="text-sm text-muted-foreground">
+                                                <p className="text-sm text-slate-500">
                                                     Plage normale: {result.referenceRange}
                                                 </p>
                                             )}
                                             {result.notes && (
-                                                <p className="text-sm text-muted-foreground italic">
+                                                <p className="text-sm text-slate-500 italic">
                                                     {result.notes}
                                                 </p>
                                             )}

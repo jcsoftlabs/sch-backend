@@ -107,8 +107,8 @@ export function AlertConfigPanel() {
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div>
-                        <CardTitle>Configuration des Seuils</CardTitle>
-                        <CardDescription>
+                        <CardTitle className="text-slate-900">Configuration des Seuils</CardTitle>
+                        <CardDescription className="text-slate-500">
                             Définir les seuils d'alerte pour chaque maladie
                         </CardDescription>
                     </div>
