@@ -20,10 +20,10 @@ import epidemiologicalAlertRoutes from './interfaces/http/routes/epidemiological
 import smsRoutes from './interfaces/http/routes/sms.routes';
 import statsRoutes from './interfaces/http/routes/stats.routes';
 import reportsRoutes from './interfaces/http/routes/reports.routes';
-import prescriptionRoutes from './interfaces/http/routes/prescriptionRoutes';
-import emergencyContactRoutes from './interfaces/http/routes/emergencyContactRoutes';
-import diagnosisRoutes from './interfaces/http/routes/diagnosisRoutes';
-import labResultRoutes from './interfaces/http/routes/labResultRoutes';
+import prescriptionRoutes from './interfaces/http/routes/prescription.routes';
+import emergencyContactRoutes from './interfaces/http/routes/emergency-contact.routes';
+import diagnosisRoutes from './interfaces/http/routes/diagnosis.routes';
+import labResultRoutes from './interfaces/http/routes/lab-result.routes';
 import { errorHandler } from './interfaces/http/middlewares/errorHandler';
 import { authLimiter, apiLimiter } from './interfaces/http/middlewares/rateLimiter.middleware';
 
