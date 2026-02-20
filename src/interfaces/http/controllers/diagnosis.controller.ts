@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { DiagnosisService } from '../../../application/services/diagnosisService';
-import { DiagnosisRepository } from '../../../infrastructure/repositories/diagnosisRepository';
+import { DiagnosisService } from '../../../application/services/diagnosis.service';
+import { DiagnosisRepository } from '../../../infrastructure/repositories/diagnosis.repository';
 
 const diagnosisService = new DiagnosisService(new DiagnosisRepository());
 

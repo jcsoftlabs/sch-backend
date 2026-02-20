@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrescriptionService } from '../../../application/services/prescriptionService';
-import { PrescriptionRepository } from '../../../infrastructure/repositories/prescriptionRepository';
+import { PrescriptionService } from '../../../application/services/prescription.service';
+import { PrescriptionRepository } from '../../../infrastructure/repositories/prescription.repository';
 
 const prescriptionService = new PrescriptionService(new PrescriptionRepository());
 

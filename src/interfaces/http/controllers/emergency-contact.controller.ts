@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { EmergencyContactService } from '../../../application/services/emergencyContactService';
-import { EmergencyContactRepository } from '../../../infrastructure/repositories/emergencyContactRepository';
+import { EmergencyContactService } from '../../../application/services/emergency-contact.service';
+import { EmergencyContactRepository } from '../../../infrastructure/repositories/emergency-contact.repository';
 
 const contactService = new EmergencyContactService(new EmergencyContactRepository());
 

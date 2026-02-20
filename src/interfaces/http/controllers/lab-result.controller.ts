@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { LabResultService } from '../../../application/services/labResultService';
-import { LabResultRepository } from '../../../infrastructure/repositories/labResultRepository';
+import { LabResultService } from '../../../application/services/lab-result.service';
+import { LabResultRepository } from '../../../infrastructure/repositories/lab-result.repository';
 import { LabTestType } from '@prisma/client';
 
 const labResultService = new LabResultService(new LabResultRepository());
