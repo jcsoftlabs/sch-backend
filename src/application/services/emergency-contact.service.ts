@@ -2,7 +2,7 @@ import {
     EmergencyContactRepository,
     CreateEmergencyContactDTO,
     UpdateEmergencyContactDTO,
-} from '../../infrastructure/repositories/emergencyContactRepository';
+} from '../../infrastructure/repositories/emergency-contact.repository';
 import { EmergencyContact } from '@prisma/client';
 import { AppError } from '../../utils/AppError';
 

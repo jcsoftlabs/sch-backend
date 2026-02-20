@@ -2,7 +2,7 @@ import {
     PrescriptionRepository,
     CreatePrescriptionDTO,
     UpdatePrescriptionDTO,
-} from '../../infrastructure/repositories/prescriptionRepository';
+} from '../../infrastructure/repositories/prescription.repository';
 import { Prescription, PrescriptionStatus } from '@prisma/client';
 import { AppError } from '../../utils/AppError';
 
