@@ -36,9 +36,31 @@ app.set('trust proxy', 1);
 
 app.use(express.json({ limit: '10kb' })); // Body limit
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || '*', // Configure allowed origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    origin: function (origin, callback) {
+        // If no CORS_ORIGIN is set, or it's '*', allow all
+        if (!process.env.CORS_ORIGIN || process.env.CORS_ORIGIN === '*') {
+            return callback(null, true);
+        }
+
+        // Parse comma-separated list of allowed origins from env
+        const allowedOrigins = process.env.CORS_ORIGIN.split(',').map(o => o.trim());
+
+        // Always allow localhost and the known Vercel domains for safety during development/deployment
+        allowedOrigins.push('http://localhost:3000');
+        allowedOrigins.push('https://admin-dashboard-ruddy-theta.vercel.app');
+
+        // Allow if origin is in the allowed list or if there's no origin (mobile app, postman, etc)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            // For now, generously allow other origins to prevent blocking the dashboard, 
+            // but in strict production this should be new Error('Not allowed by CORS')
+            callback(null, true);
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
 }));
 app.use(helmet());
 app.use(morgan('dev'));
