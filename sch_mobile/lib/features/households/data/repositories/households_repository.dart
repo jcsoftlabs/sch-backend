@@ -14,8 +14,39 @@ class HouseholdsRepository {
   Future<List<HouseholdModel>> getHouseholds() async {
     try {
       final response = await _apiClient.dio.get('/households');
-      final List<dynamic> data = response.data['data'] ?? response.data;
-      return data.map((json) => HouseholdModel.fromJson(json)).toList();
+      
+      // DEBUG: Print raw response
+      print('🔍 HOUSEHOLDS RAW RESPONSE: ${response.data}');
+      print('🔍 HOUSEHOLDS RESPONSE TYPE: ${response.data.runtimeType}');
+      
+      // Handle different response structures
+      dynamic rawData = response.data;
+      
+      // If response is wrapped in {status, data}, extract data
+      if (rawData is Map<String, dynamic> && rawData.containsKey('data')) {
+        print('🔍 HOUSEHOLDS: Extracting data from Map');
+        rawData = rawData['data'];
+        print('🔍 HOUSEHOLDS DATA TYPE: ${rawData.runtimeType}');
+        print('🔍 HOUSEHOLDS DATA: $rawData');
+      }
+      
+      // Backend returns {households: [...]} instead of [...]
+      // Extract the households array
+      if (rawData is Map<String, dynamic> && rawData.containsKey('households')) {
+        print('🔍 HOUSEHOLDS: Extracting households array from nested Map');
+        rawData = rawData['households'];
+        print('🔍 HOUSEHOLDS ARRAY: ${(rawData as List).length} items');
+      }
+      
+      // Ensure we have a List
+      if (rawData is! List) {
+        print('❌ HOUSEHOLDS ERROR: Expected List but got ${rawData.runtimeType}');
+        print('❌ HOUSEHOLDS DATA CONTENT: $rawData');
+        throw Exception('Expected List but got ${rawData.runtimeType}');
+      }
+      
+      print('✅ HOUSEHOLDS: Successfully got List with ${(rawData as List).length} items');
+      return (rawData as List).map((json) => HouseholdModel.fromJson(json)).toList();
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -78,8 +109,26 @@ class HouseholdsRepository {
     try {
       final response =
           await _apiClient.dio.get('/households/$householdId/members');
-      final List<dynamic> data = response.data['data'] ?? response.data;
-      return data.map((json) => HouseholdMemberModel.fromJson(json)).toList();
+      
+      // Handle different response structures
+      dynamic rawData = response.data;
+      
+      // If response is wrapped in {status, data}, extract data
+      if (rawData is Map<String, dynamic> && rawData.containsKey('data')) {
+        rawData = rawData['data'];
+      }
+      
+      // Backend might return {members: [...]} instead of [...]
+      if (rawData is Map<String, dynamic> && rawData.containsKey('members')) {
+        rawData = rawData['members'];
+      }
+      
+      // Ensure we have a List
+      if (rawData is! List) {
+        throw Exception('Expected List but got ${rawData.runtimeType}');
+      }
+      
+      return (rawData as List).map((json) => HouseholdMemberModel.fromJson(json)).toList();
     } on DioException catch (e) {
       throw _handleError(e);
     }

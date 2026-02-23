@@ -3,6 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../patients/presentation/providers/patient_provider.dart';
 import '../../../patients/presentation/widgets/patient_card.dart';
+import '../../../patients/presentation/pages/patient_details_page.dart';
+import '../../../patients/data/models/patient_model.dart';
+import '../../../../core/widgets/empty_state.dart';
+import '../../../../core/theme/app_theme.dart';
 
 class PatientsPage extends ConsumerStatefulWidget {
   const PatientsPage({super.key});
@@ -14,6 +18,7 @@ class PatientsPage extends ConsumerStatefulWidget {
 class _PatientsPageState extends ConsumerState<PatientsPage> {
   final _searchController = TextEditingController();
   String? _searchQuery;
+  PatientModel? _selectedPatient;
 
   @override
   void dispose() {
@@ -67,72 +72,82 @@ class _PatientsPageState extends ConsumerState<PatientsPage> {
       body: patientsAsync.when(
         data: (patients) {
           if (patients.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.people_outline,
-                    size: 80,
-                    color: Colors.grey[400],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    _searchQuery != null
-                        ? 'Aucun patient trouvé'
-                        : 'Aucun patient enregistré',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _searchQuery != null
-                        ? 'Essayez une autre recherche'
-                        : 'Ajoutez votre premier patient',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey,
-                        ),
-                  ),
-                ],
-              ),
+            return EmptyStateWidget(
+              icon: _searchQuery != null ? Icons.search_off : Icons.group_outlined,
+              title: _searchQuery != null ? 'Aucun patient trouvé' : 'Aucun patient enregistré',
+              description: _searchQuery != null 
+                  ? 'Vérifiez l\'orthographe ou essayez d\'autres mots-clés.' 
+                  : 'Ajoutez votre premier patient pour commencer le suivi médical du ménage.',
+              actionLabel: _searchQuery == null ? 'Nouveau Patient' : null,
+              actionIcon: _searchQuery == null ? Icons.person_add : null,
+              onAction: _searchQuery == null ? () => context.push('/patients/create') : null,
             );
           }
 
 
           return LayoutBuilder(
             builder: (context, constraints) {
-              // Use grid for tablet/desktop, list for mobile
-              final useGrid = constraints.maxWidth >= 600;
+              final isTablet = constraints.maxWidth >= 600;
               
-              if (useGrid) {
-                // Grid layout for tablet/desktop
-                final columns = constraints.maxWidth >= 1024 ? 3 : 2;
-                return GridView.builder(
-                  padding: const EdgeInsets.all(16),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: columns,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 1.5,
-                  ),
-                  itemCount: patients.length,
-                  itemBuilder: (context, index) {
-                    final patient = patients[index];
-                    return PatientCard(
-                      patient: patient,
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Détails de ${patient.fullName}'),
-                          ),
-                        );
-                      },
-                    );
-                  },
+              if (isTablet) {
+                // ─── MASTER-DETAIL VIEW (TABLET) ───
+                return Row(
+                  children: [
+                    // MASTER (Left - 35%)
+                    SizedBox(
+                      width: constraints.maxWidth * 0.35,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            border: Border(right: BorderSide(color: AppColors.lightBorder, width: 1))),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(16),
+                          itemCount: patients.length,
+                          itemBuilder: (context, index) {
+                            final patient = patients[index];
+                            final isSelected = _selectedPatient?.id == patient.id;
+                            
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() => _selectedPatient = patient);
+                                },
+                                child: Container(
+                                  decoration: isSelected
+                                      ? BoxDecoration(
+                                          border: Border.all(color: AppColors.primary, width: 2),
+                                          borderRadius: BorderRadius.circular(AppRadius.lg),
+                                          boxShadow: AppShadows.coloredPrimary,
+                                        )
+                                      : null,
+                                  child: PatientCard(
+                                    patient: patient,
+                                    // On mobile this pushes, on tablet we handled it via the GestureDetector above
+                                    onTap: () {
+                                      setState(() => _selectedPatient = patient);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    
+                    // DETAIL (Right - 65%)
+                    Expanded(
+                      child: _selectedPatient != null
+                          ? PatientDetailsPage(
+                              key: ValueKey(_selectedPatient!.id),
+                              patient: _selectedPatient,
+                            )
+                          : const PatientDetailsPage(patient: null),
+                    ),
+                  ],
                 );
               } else {
-                // List layout for mobile
+                // ─── STACKED LIST VIEW (MOBILE) ───
                 return ListView.builder(
                   padding: const EdgeInsets.all(16),
                   itemCount: patients.length,
@@ -142,13 +157,8 @@ class _PatientsPageState extends ConsumerState<PatientsPage> {
                       padding: const EdgeInsets.only(bottom: 12),
                       child: PatientCard(
                         patient: patient,
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Détails de ${patient.fullName}'),
-                            ),
-                          );
-                        },
+                        // Mobile still pushes full screen (or currently create page as stub)
+                        onTap: () => context.push('/patients/create'),
                       ),
                     );
                   },

@@ -21,6 +21,8 @@ import {
     MessageSquare,
     Activity,
     Pill,
+    Home,
+    Brain,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { useRouter } from "next/navigation";
@@ -42,6 +44,12 @@ const navigationGroups = [
                 icon: Users,
                 href: "/dashboard/patients",
                 color: "text-violet-400",
+            },
+            {
+                label: "Ménages",
+                icon: Home,
+                href: "/dashboard/households",
+                color: "text-yellow-400",
             },
             {
                 label: "Téléconsultations",
@@ -94,6 +102,12 @@ const navigationGroups = [
                 icon: AlertTriangle,
                 href: "/dashboard/alerts",
                 color: "text-red-400",
+            },
+            {
+                label: "Triage IA",
+                icon: Brain,
+                href: "/dashboard/triage",
+                color: "text-rose-400",
             },
             {
                 label: "Rapports",

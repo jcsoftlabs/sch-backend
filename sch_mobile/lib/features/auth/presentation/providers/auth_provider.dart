@@ -60,17 +60,61 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final token = await _storage.read(key: AppConstants.keyAuthToken);
     if (token != null) {
       try {
+        // Try to get fresh user data from server
         final user = await _repository.getCurrentUser();
+        
+        // Cache user data for offline use
+        await _cacheUserData(user);
+        
         state = state.copyWith(
           user: user,
           isAuthenticated: true,
         );
       } catch (e) {
-        // Token invalid, clear it
-        await _storage.deleteAll();
-        state = state.copyWith(isAuthenticated: false);
+        // If online check fails, try to use cached user data for offline mode
+        final cachedUser = await _getCachedUserData();
+        
+        if (cachedUser != null) {
+          // Allow offline access with cached data
+          print('📴 Mode offline: Utilisation des données en cache');
+          state = state.copyWith(
+            user: cachedUser,
+            isAuthenticated: true,
+          );
+        } else {
+          // No cached data and can't reach server - logout
+          print('❌ Pas de données en cache et pas de connexion');
+          await _storage.deleteAll();
+          state = state.copyWith(isAuthenticated: false);
+        }
       }
     }
+  }
+
+  /// Cache user data for offline use
+  Future<void> _cacheUserData(UserModel user) async {
+    await _storage.write(key: 'cached_user_id', value: user.id);
+    await _storage.write(key: 'cached_user_email', value: user.email);
+    await _storage.write(key: 'cached_user_name', value: user.name);
+    await _storage.write(key: 'cached_user_role', value: user.role);
+  }
+
+  /// Get cached user data for offline mode
+  Future<UserModel?> _getCachedUserData() async {
+    final id = await _storage.read(key: 'cached_user_id');
+    final email = await _storage.read(key: 'cached_user_email');
+    final name = await _storage.read(key: 'cached_user_name');
+    final role = await _storage.read(key: 'cached_user_role');
+
+    if (id != null && email != null && name != null && role != null) {
+      return UserModel(
+        id: id,
+        email: email,
+        name: name,
+        role: role,
+      );
+    }
+    return null;
   }
 
   Future<void> login(String email, String password) async {
@@ -91,7 +135,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         );
       }
 
-      // Store user info
+      // Store user info (legacy keys)
       await _storage.write(
         key: AppConstants.keyUserId,
         value: response.user.id,
@@ -100,6 +144,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
         key: AppConstants.keyUserRole,
         value: response.user.role,
       );
+
+      // Cache user data for offline access
+      await _cacheUserData(response.user);
 
       state = state.copyWith(
         user: response.user,
@@ -124,7 +171,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       print('Logout error: $e');
     }
 
-    // Clear local storage
+    // Clear all local storage including cached user data
     await _storage.deleteAll();
 
     state = AuthState(isAuthenticated: false);

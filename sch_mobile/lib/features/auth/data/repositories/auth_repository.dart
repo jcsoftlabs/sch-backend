@@ -44,7 +44,26 @@ class AuthRepository {
   Future<UserModel> getCurrentUser() async {
     try {
       final response = await _apiClient.dio.get('/auth/me');
-      return UserModel.fromJson(response.data);
+
+      print('🔍 GET USER RAW RESPONSE: ${response.data}');
+
+      dynamic userData = response.data;
+
+      // New format: {status: 'success', data: {id, email, name, role, zone}}
+      if (userData is Map<String, dynamic> && userData.containsKey('data')) {
+        userData = userData['data'];
+      }
+      // Old fallback: {user: {id, email, role, ...}}
+      else if (userData is Map<String, dynamic> && userData.containsKey('user')) {
+        userData = userData['user'];
+      }
+
+      if (userData is! Map<String, dynamic>) {
+        throw Exception('Unexpected response format: ${userData.runtimeType}');
+      }
+
+      print('🔍 GET USER PARSED: $userData');
+      return UserModel.fromJson(userData as Map<String, dynamic>);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -53,19 +72,25 @@ class AuthRepository {
   String _handleError(DioException error) {
     if (error.response != null) {
       final statusCode = error.response!.statusCode;
-      final message = error.response!.data['message'] ?? 'Une erreur est survenue';
+      
+      String message = 'Une erreur est survenue';
+      if (error.response!.data is Map<String, dynamic>) {
+        message = error.response!.data['message'] ?? message;
+      }
 
       switch (statusCode) {
         case 400:
-          return 'Données invalides';
+          return 'Données invalides : $message';
         case 401:
           return 'Email ou mot de passe incorrect';
         case 403:
           return 'Accès refusé';
         case 404:
-          return 'Service non disponible';
+          return 'Service non disponible (404)';
+        case 429:
+          return 'Trop de tentatives (429). Veuillez patienter.';
         case 500:
-          return 'Erreur serveur. Veuillez réessayer.';
+          return 'Erreur serveur interne (500)';
         default:
           return message;
       }
@@ -75,7 +100,7 @@ class AuthRepository {
     } else if (error.type == DioExceptionType.connectionError) {
       return 'Pas de connexion internet. Mode offline activé.';
     } else {
-      return 'Une erreur est survenue';
+      return 'Une erreur est survenue (${error.message})';
     }
   }
 }

@@ -24,8 +24,38 @@ class PatientRepository {
         queryParameters: queryParams,
       );
 
-      final List<dynamic> data = response.data['data'] ?? response.data;
-      return data.map((json) => PatientModel.fromJson(json)).toList();
+      // DEBUG: Print raw response
+      print('🔍 PATIENTS RAW RESPONSE: ${response.data}');
+      print('🔍 PATIENTS RESPONSE TYPE: ${response.data.runtimeType}');
+      
+      // Handle different response structures
+      dynamic rawData = response.data;
+      
+      // If response is wrapped in {status, data}, extract data
+      if (rawData is Map<String, dynamic> && rawData.containsKey('data')) {
+        print('🔍 PATIENTS: Extracting data from Map');
+        rawData = rawData['data'];
+        print('🔍 PATIENTS DATA TYPE: ${rawData.runtimeType}');
+        print('🔍 PATIENTS DATA: $rawData');
+      }
+      
+      // Backend returns {patients: [...]} instead of [...]
+      // Extract the patients array
+      if (rawData is Map<String, dynamic> && rawData.containsKey('patients')) {
+        print('🔍 PATIENTS: Extracting patients array from nested Map');
+        rawData = rawData['patients'];
+        print('🔍 PATIENTS ARRAY: ${(rawData as List).length} items');
+      }
+      
+      // Ensure we have a List
+      if (rawData is! List) {
+        print('❌ PATIENTS ERROR: Expected List but got ${rawData.runtimeType}');
+        print('❌ PATIENTS DATA CONTENT: $rawData');
+        throw Exception('Expected List but got ${rawData.runtimeType}');
+      }
+      
+      print('✅ PATIENTS: Successfully got List with ${(rawData as List).length} items');
+      return (rawData as List).map((json) => PatientModel.fromJson(json)).toList();
     } on DioException catch (e) {
       throw _handleError(e);
     }

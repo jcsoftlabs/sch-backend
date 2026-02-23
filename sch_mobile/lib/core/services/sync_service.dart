@@ -111,6 +111,9 @@ class SyncService {
       case 'Consultation':
         await _syncConsultation(op.operation, op.entityId, payload);
         break;
+      case 'CaseReport':
+        await _syncCaseReport(op.operation, op.entityId, payload);
+        break;
       default:
         throw Exception('Unknown entity type: ${op.entityType}');
     }
@@ -169,6 +172,25 @@ class SyncService {
         break;
       case 'DELETE':
         await _apiClient.dio.delete('/consultations/$entityId');
+        break;
+    }
+  }
+
+  // Sync case report operations
+  Future<void> _syncCaseReport(
+    String operation,
+    String entityId,
+    Map<String, dynamic> payload,
+  ) async {
+    switch (operation) {
+      case 'CREATE':
+        await _apiClient.dio.post('/case-reports', data: payload);
+        break;
+      case 'UPDATE':
+        await _apiClient.dio.put('/case-reports/$entityId', data: payload);
+        break;
+      case 'DELETE':
+        await _apiClient.dio.delete('/case-reports/$entityId');
         break;
     }
   }

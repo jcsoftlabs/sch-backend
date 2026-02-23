@@ -28,7 +28,7 @@ class AppConstants {
   
   // Database
   static const String databaseName = 'sch_mobile.db';
-  static const int databaseVersion = 1;
+  static const int databaseVersion = 2;
   
   // Validation
   static const String haitianPhoneRegex = r'^\+?509[0-9]{8}$';

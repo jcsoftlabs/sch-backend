@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { prisma } from '../../../infrastructure/database/prisma';
 import { AppError } from '../../../utils/AppError';
+import { ReportService } from '../../../application/services/report.service';
+
+const reportService = new ReportService();
 
 export class ReportsController {
     /**
@@ -134,24 +137,32 @@ export class ReportsController {
                 ? patients.filter(p => p.household?.zone === zone)
                 : patients;
 
-            // Mock report generation (in production, use jspdf or csv library)
-            const reportId = `RPT-${Date.now()}`;
-            const downloadUrl = `/api/reports/download/${reportId}.${format.toLowerCase()}`;
+            const summary = {
+                totalConsultations: filteredConsultations.length,
+                totalCaseReports: filteredCaseReports.length,
+                totalPatients: filteredPatients.length,
+                period: { startDate, endDate },
+                zone: zone || 'ALL'
+            };
 
-            res.json({
-                status: 'success',
-                data: {
-                    reportId,
-                    downloadUrl,
-                    summary: {
-                        totalConsultations: filteredConsultations.length,
-                        totalCaseReports: filteredCaseReports.length,
-                        totalPatients: filteredPatients.length,
-                        period: { startDate, endDate },
-                        zone: zone || 'ALL'
-                    }
-                }
-            });
+            const reportData = {
+                consultations: filteredConsultations,
+                caseReports: filteredCaseReports,
+                patients: filteredPatients
+            };
+
+            if (format === 'PDF') {
+                const pdfBuffer = await reportService.generatePdfReport(reportData, summary);
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', `attachment; filename=rapport-sch-${Date.now()}.pdf`);
+                res.send(pdfBuffer);
+            } else if (format === 'CSV') {
+                // For a general report CSV, we'll export the case reports as the primary data
+                const csvString = reportService.generateCsvReport(filteredCaseReports, 'caseReport');
+                res.setHeader('Content-Type', 'text/csv');
+                res.setHeader('Content-Disposition', `attachment; filename=rapport-sch-${Date.now()}.csv`);
+                res.send(csvString);
+            }
         } catch (error) {
             console.error('Report generation error:', error);
             if (error instanceof AppError) throw error;
@@ -250,19 +261,11 @@ export class ReportsController {
                 });
             }
 
-            // Mock CSV generation (in production, use papaparse or csv-writer)
-            const csvId = `CSV-${Date.now()}`;
-            const downloadUrl = `/api/reports/download/${csvId}.csv`;
+            const csvString = reportService.generateCsvReport(data, entity as string);
 
-            res.json({
-                status: 'success',
-                data: {
-                    csvId,
-                    downloadUrl,
-                    recordCount: data.length,
-                    entity,
-                }
-            });
+            res.setHeader('Content-Type', 'text/csv');
+            res.setHeader('Content-Disposition', `attachment; filename=export-${entity}-${Date.now()}.csv`);
+            res.send(csvString);
         } catch (error) {
             console.error('Export error:', error);
             if (error instanceof AppError) throw error;
