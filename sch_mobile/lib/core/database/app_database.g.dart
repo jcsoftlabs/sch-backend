@@ -2321,51 +2321,29 @@ class $ConsultationsTable extends Consultations
   late final GeneratedColumn<String> patientId = GeneratedColumn<String>(
       'patient_id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _agentIdMeta =
-      const VerificationMeta('agentId');
+  static const VerificationMeta _doctorIdMeta =
+      const VerificationMeta('doctorId');
   @override
-  late final GeneratedColumn<String> agentId = GeneratedColumn<String>(
-      'agent_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _dateMeta = const VerificationMeta('date');
-  @override
-  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
-      'date', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _chiefComplaintMeta =
-      const VerificationMeta('chiefComplaint');
-  @override
-  late final GeneratedColumn<String> chiefComplaint = GeneratedColumn<String>(
-      'chief_complaint', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _symptomsMeta =
-      const VerificationMeta('symptoms');
-  @override
-  late final GeneratedColumn<String> symptoms = GeneratedColumn<String>(
-      'symptoms', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _diagnosisMeta =
-      const VerificationMeta('diagnosis');
-  @override
-  late final GeneratedColumn<String> diagnosis = GeneratedColumn<String>(
-      'diagnosis', aliasedName, true,
+  late final GeneratedColumn<String> doctorId = GeneratedColumn<String>(
+      'doctor_id', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _treatmentMeta =
-      const VerificationMeta('treatment');
+  static const VerificationMeta _healthCenterIdMeta =
+      const VerificationMeta('healthCenterId');
   @override
-  late final GeneratedColumn<String> treatment = GeneratedColumn<String>(
-      'treatment', aliasedName, true,
+  late final GeneratedColumn<String> healthCenterId = GeneratedColumn<String>(
+      'health_center_id', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _vitalSignsMeta =
-      const VerificationMeta('vitalSigns');
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
   @override
-  late final GeneratedColumn<String> vitalSigns = GeneratedColumn<String>(
-      'vital_signs', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _photosMeta = const VerificationMeta('photos');
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('PENDING'));
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
   @override
-  late final GeneratedColumn<String> photos = GeneratedColumn<String>(
-      'photos', aliasedName, true,
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
@@ -2377,8 +2355,14 @@ class $ConsultationsTable extends Consultations
       const VerificationMeta('updatedAt');
   @override
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-      'updated_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      'updated_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _doctorNameMeta =
+      const VerificationMeta('doctorName');
+  @override
+  late final GeneratedColumn<String> doctorName = GeneratedColumn<String>(
+      'doctor_name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _syncStatusMeta =
       const VerificationMeta('syncStatus');
   @override
@@ -2391,16 +2375,13 @@ class $ConsultationsTable extends Consultations
   List<GeneratedColumn> get $columns => [
         id,
         patientId,
-        agentId,
-        date,
-        chiefComplaint,
-        symptoms,
-        diagnosis,
-        treatment,
-        vitalSigns,
-        photos,
+        doctorId,
+        healthCenterId,
+        status,
+        notes,
         createdAt,
         updatedAt,
+        doctorName,
         syncStatus
       ];
   @override
@@ -2424,49 +2405,23 @@ class $ConsultationsTable extends Consultations
     } else if (isInserting) {
       context.missing(_patientIdMeta);
     }
-    if (data.containsKey('agent_id')) {
-      context.handle(_agentIdMeta,
-          agentId.isAcceptableOrUnknown(data['agent_id']!, _agentIdMeta));
-    } else if (isInserting) {
-      context.missing(_agentIdMeta);
+    if (data.containsKey('doctor_id')) {
+      context.handle(_doctorIdMeta,
+          doctorId.isAcceptableOrUnknown(data['doctor_id']!, _doctorIdMeta));
     }
-    if (data.containsKey('date')) {
+    if (data.containsKey('health_center_id')) {
       context.handle(
-          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
-    } else if (isInserting) {
-      context.missing(_dateMeta);
+          _healthCenterIdMeta,
+          healthCenterId.isAcceptableOrUnknown(
+              data['health_center_id']!, _healthCenterIdMeta));
     }
-    if (data.containsKey('chief_complaint')) {
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    }
+    if (data.containsKey('notes')) {
       context.handle(
-          _chiefComplaintMeta,
-          chiefComplaint.isAcceptableOrUnknown(
-              data['chief_complaint']!, _chiefComplaintMeta));
-    } else if (isInserting) {
-      context.missing(_chiefComplaintMeta);
-    }
-    if (data.containsKey('symptoms')) {
-      context.handle(_symptomsMeta,
-          symptoms.isAcceptableOrUnknown(data['symptoms']!, _symptomsMeta));
-    } else if (isInserting) {
-      context.missing(_symptomsMeta);
-    }
-    if (data.containsKey('diagnosis')) {
-      context.handle(_diagnosisMeta,
-          diagnosis.isAcceptableOrUnknown(data['diagnosis']!, _diagnosisMeta));
-    }
-    if (data.containsKey('treatment')) {
-      context.handle(_treatmentMeta,
-          treatment.isAcceptableOrUnknown(data['treatment']!, _treatmentMeta));
-    }
-    if (data.containsKey('vital_signs')) {
-      context.handle(
-          _vitalSignsMeta,
-          vitalSigns.isAcceptableOrUnknown(
-              data['vital_signs']!, _vitalSignsMeta));
-    }
-    if (data.containsKey('photos')) {
-      context.handle(_photosMeta,
-          photos.isAcceptableOrUnknown(data['photos']!, _photosMeta));
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -2477,8 +2432,12 @@ class $ConsultationsTable extends Consultations
     if (data.containsKey('updated_at')) {
       context.handle(_updatedAtMeta,
           updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('doctor_name')) {
+      context.handle(
+          _doctorNameMeta,
+          doctorName.isAcceptableOrUnknown(
+              data['doctor_name']!, _doctorNameMeta));
     }
     if (data.containsKey('sync_status')) {
       context.handle(
@@ -2499,26 +2458,20 @@ class $ConsultationsTable extends Consultations
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       patientId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}patient_id'])!,
-      agentId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}agent_id'])!,
-      date: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
-      chiefComplaint: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}chief_complaint'])!,
-      symptoms: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}symptoms'])!,
-      diagnosis: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}diagnosis']),
-      treatment: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}treatment']),
-      vitalSigns: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}vital_signs']),
-      photos: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}photos']),
+      doctorId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}doctor_id']),
+      healthCenterId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}health_center_id']),
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
       updatedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at']),
+      doctorName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}doctor_name']),
       syncStatus: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
     );
@@ -2533,54 +2486,47 @@ class $ConsultationsTable extends Consultations
 class Consultation extends DataClass implements Insertable<Consultation> {
   final String id;
   final String patientId;
-  final String agentId;
-  final DateTime date;
-  final String chiefComplaint;
-  final String symptoms;
-  final String? diagnosis;
-  final String? treatment;
-  final String? vitalSigns;
-  final String? photos;
+  final String? doctorId;
+  final String? healthCenterId;
+  final String status;
+  final String? notes;
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
+  final String? doctorName;
   final String syncStatus;
   const Consultation(
       {required this.id,
       required this.patientId,
-      required this.agentId,
-      required this.date,
-      required this.chiefComplaint,
-      required this.symptoms,
-      this.diagnosis,
-      this.treatment,
-      this.vitalSigns,
-      this.photos,
+      this.doctorId,
+      this.healthCenterId,
+      required this.status,
+      this.notes,
       required this.createdAt,
-      required this.updatedAt,
+      this.updatedAt,
+      this.doctorName,
       required this.syncStatus});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['patient_id'] = Variable<String>(patientId);
-    map['agent_id'] = Variable<String>(agentId);
-    map['date'] = Variable<DateTime>(date);
-    map['chief_complaint'] = Variable<String>(chiefComplaint);
-    map['symptoms'] = Variable<String>(symptoms);
-    if (!nullToAbsent || diagnosis != null) {
-      map['diagnosis'] = Variable<String>(diagnosis);
+    if (!nullToAbsent || doctorId != null) {
+      map['doctor_id'] = Variable<String>(doctorId);
     }
-    if (!nullToAbsent || treatment != null) {
-      map['treatment'] = Variable<String>(treatment);
+    if (!nullToAbsent || healthCenterId != null) {
+      map['health_center_id'] = Variable<String>(healthCenterId);
     }
-    if (!nullToAbsent || vitalSigns != null) {
-      map['vital_signs'] = Variable<String>(vitalSigns);
-    }
-    if (!nullToAbsent || photos != null) {
-      map['photos'] = Variable<String>(photos);
+    map['status'] = Variable<String>(status);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
     }
     map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || updatedAt != null) {
+      map['updated_at'] = Variable<DateTime>(updatedAt);
+    }
+    if (!nullToAbsent || doctorName != null) {
+      map['doctor_name'] = Variable<String>(doctorName);
+    }
     map['sync_status'] = Variable<String>(syncStatus);
     return map;
   }
@@ -2589,23 +2535,22 @@ class Consultation extends DataClass implements Insertable<Consultation> {
     return ConsultationsCompanion(
       id: Value(id),
       patientId: Value(patientId),
-      agentId: Value(agentId),
-      date: Value(date),
-      chiefComplaint: Value(chiefComplaint),
-      symptoms: Value(symptoms),
-      diagnosis: diagnosis == null && nullToAbsent
+      doctorId: doctorId == null && nullToAbsent
           ? const Value.absent()
-          : Value(diagnosis),
-      treatment: treatment == null && nullToAbsent
+          : Value(doctorId),
+      healthCenterId: healthCenterId == null && nullToAbsent
           ? const Value.absent()
-          : Value(treatment),
-      vitalSigns: vitalSigns == null && nullToAbsent
-          ? const Value.absent()
-          : Value(vitalSigns),
-      photos:
-          photos == null && nullToAbsent ? const Value.absent() : Value(photos),
+          : Value(healthCenterId),
+      status: Value(status),
+      notes:
+          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
       createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
+      doctorName: doctorName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doctorName),
       syncStatus: Value(syncStatus),
     );
   }
@@ -2616,16 +2561,13 @@ class Consultation extends DataClass implements Insertable<Consultation> {
     return Consultation(
       id: serializer.fromJson<String>(json['id']),
       patientId: serializer.fromJson<String>(json['patientId']),
-      agentId: serializer.fromJson<String>(json['agentId']),
-      date: serializer.fromJson<DateTime>(json['date']),
-      chiefComplaint: serializer.fromJson<String>(json['chiefComplaint']),
-      symptoms: serializer.fromJson<String>(json['symptoms']),
-      diagnosis: serializer.fromJson<String?>(json['diagnosis']),
-      treatment: serializer.fromJson<String?>(json['treatment']),
-      vitalSigns: serializer.fromJson<String?>(json['vitalSigns']),
-      photos: serializer.fromJson<String?>(json['photos']),
+      doctorId: serializer.fromJson<String?>(json['doctorId']),
+      healthCenterId: serializer.fromJson<String?>(json['healthCenterId']),
+      status: serializer.fromJson<String>(json['status']),
+      notes: serializer.fromJson<String?>(json['notes']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
+      doctorName: serializer.fromJson<String?>(json['doctorName']),
       syncStatus: serializer.fromJson<String>(json['syncStatus']),
     );
   }
@@ -2635,16 +2577,13 @@ class Consultation extends DataClass implements Insertable<Consultation> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'patientId': serializer.toJson<String>(patientId),
-      'agentId': serializer.toJson<String>(agentId),
-      'date': serializer.toJson<DateTime>(date),
-      'chiefComplaint': serializer.toJson<String>(chiefComplaint),
-      'symptoms': serializer.toJson<String>(symptoms),
-      'diagnosis': serializer.toJson<String?>(diagnosis),
-      'treatment': serializer.toJson<String?>(treatment),
-      'vitalSigns': serializer.toJson<String?>(vitalSigns),
-      'photos': serializer.toJson<String?>(photos),
+      'doctorId': serializer.toJson<String?>(doctorId),
+      'healthCenterId': serializer.toJson<String?>(healthCenterId),
+      'status': serializer.toJson<String>(status),
+      'notes': serializer.toJson<String?>(notes),
       'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'updatedAt': serializer.toJson<DateTime?>(updatedAt),
+      'doctorName': serializer.toJson<String?>(doctorName),
       'syncStatus': serializer.toJson<String>(syncStatus),
     };
   }
@@ -2652,49 +2591,41 @@ class Consultation extends DataClass implements Insertable<Consultation> {
   Consultation copyWith(
           {String? id,
           String? patientId,
-          String? agentId,
-          DateTime? date,
-          String? chiefComplaint,
-          String? symptoms,
-          Value<String?> diagnosis = const Value.absent(),
-          Value<String?> treatment = const Value.absent(),
-          Value<String?> vitalSigns = const Value.absent(),
-          Value<String?> photos = const Value.absent(),
+          Value<String?> doctorId = const Value.absent(),
+          Value<String?> healthCenterId = const Value.absent(),
+          String? status,
+          Value<String?> notes = const Value.absent(),
           DateTime? createdAt,
-          DateTime? updatedAt,
+          Value<DateTime?> updatedAt = const Value.absent(),
+          Value<String?> doctorName = const Value.absent(),
           String? syncStatus}) =>
       Consultation(
         id: id ?? this.id,
         patientId: patientId ?? this.patientId,
-        agentId: agentId ?? this.agentId,
-        date: date ?? this.date,
-        chiefComplaint: chiefComplaint ?? this.chiefComplaint,
-        symptoms: symptoms ?? this.symptoms,
-        diagnosis: diagnosis.present ? diagnosis.value : this.diagnosis,
-        treatment: treatment.present ? treatment.value : this.treatment,
-        vitalSigns: vitalSigns.present ? vitalSigns.value : this.vitalSigns,
-        photos: photos.present ? photos.value : this.photos,
+        doctorId: doctorId.present ? doctorId.value : this.doctorId,
+        healthCenterId:
+            healthCenterId.present ? healthCenterId.value : this.healthCenterId,
+        status: status ?? this.status,
+        notes: notes.present ? notes.value : this.notes,
         createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+        updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
+        doctorName: doctorName.present ? doctorName.value : this.doctorName,
         syncStatus: syncStatus ?? this.syncStatus,
       );
   Consultation copyWithCompanion(ConsultationsCompanion data) {
     return Consultation(
       id: data.id.present ? data.id.value : this.id,
       patientId: data.patientId.present ? data.patientId.value : this.patientId,
-      agentId: data.agentId.present ? data.agentId.value : this.agentId,
-      date: data.date.present ? data.date.value : this.date,
-      chiefComplaint: data.chiefComplaint.present
-          ? data.chiefComplaint.value
-          : this.chiefComplaint,
-      symptoms: data.symptoms.present ? data.symptoms.value : this.symptoms,
-      diagnosis: data.diagnosis.present ? data.diagnosis.value : this.diagnosis,
-      treatment: data.treatment.present ? data.treatment.value : this.treatment,
-      vitalSigns:
-          data.vitalSigns.present ? data.vitalSigns.value : this.vitalSigns,
-      photos: data.photos.present ? data.photos.value : this.photos,
+      doctorId: data.doctorId.present ? data.doctorId.value : this.doctorId,
+      healthCenterId: data.healthCenterId.present
+          ? data.healthCenterId.value
+          : this.healthCenterId,
+      status: data.status.present ? data.status.value : this.status,
+      notes: data.notes.present ? data.notes.value : this.notes,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      doctorName:
+          data.doctorName.present ? data.doctorName.value : this.doctorName,
       syncStatus:
           data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
     );
@@ -2705,138 +2636,100 @@ class Consultation extends DataClass implements Insertable<Consultation> {
     return (StringBuffer('Consultation(')
           ..write('id: $id, ')
           ..write('patientId: $patientId, ')
-          ..write('agentId: $agentId, ')
-          ..write('date: $date, ')
-          ..write('chiefComplaint: $chiefComplaint, ')
-          ..write('symptoms: $symptoms, ')
-          ..write('diagnosis: $diagnosis, ')
-          ..write('treatment: $treatment, ')
-          ..write('vitalSigns: $vitalSigns, ')
-          ..write('photos: $photos, ')
+          ..write('doctorId: $doctorId, ')
+          ..write('healthCenterId: $healthCenterId, ')
+          ..write('status: $status, ')
+          ..write('notes: $notes, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('doctorName: $doctorName, ')
           ..write('syncStatus: $syncStatus')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id,
-      patientId,
-      agentId,
-      date,
-      chiefComplaint,
-      symptoms,
-      diagnosis,
-      treatment,
-      vitalSigns,
-      photos,
-      createdAt,
-      updatedAt,
-      syncStatus);
+  int get hashCode => Object.hash(id, patientId, doctorId, healthCenterId,
+      status, notes, createdAt, updatedAt, doctorName, syncStatus);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Consultation &&
           other.id == this.id &&
           other.patientId == this.patientId &&
-          other.agentId == this.agentId &&
-          other.date == this.date &&
-          other.chiefComplaint == this.chiefComplaint &&
-          other.symptoms == this.symptoms &&
-          other.diagnosis == this.diagnosis &&
-          other.treatment == this.treatment &&
-          other.vitalSigns == this.vitalSigns &&
-          other.photos == this.photos &&
+          other.doctorId == this.doctorId &&
+          other.healthCenterId == this.healthCenterId &&
+          other.status == this.status &&
+          other.notes == this.notes &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
+          other.doctorName == this.doctorName &&
           other.syncStatus == this.syncStatus);
 }
 
 class ConsultationsCompanion extends UpdateCompanion<Consultation> {
   final Value<String> id;
   final Value<String> patientId;
-  final Value<String> agentId;
-  final Value<DateTime> date;
-  final Value<String> chiefComplaint;
-  final Value<String> symptoms;
-  final Value<String?> diagnosis;
-  final Value<String?> treatment;
-  final Value<String?> vitalSigns;
-  final Value<String?> photos;
+  final Value<String?> doctorId;
+  final Value<String?> healthCenterId;
+  final Value<String> status;
+  final Value<String?> notes;
   final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
+  final Value<DateTime?> updatedAt;
+  final Value<String?> doctorName;
   final Value<String> syncStatus;
   final Value<int> rowid;
   const ConsultationsCompanion({
     this.id = const Value.absent(),
     this.patientId = const Value.absent(),
-    this.agentId = const Value.absent(),
-    this.date = const Value.absent(),
-    this.chiefComplaint = const Value.absent(),
-    this.symptoms = const Value.absent(),
-    this.diagnosis = const Value.absent(),
-    this.treatment = const Value.absent(),
-    this.vitalSigns = const Value.absent(),
-    this.photos = const Value.absent(),
+    this.doctorId = const Value.absent(),
+    this.healthCenterId = const Value.absent(),
+    this.status = const Value.absent(),
+    this.notes = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.doctorName = const Value.absent(),
     this.syncStatus = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ConsultationsCompanion.insert({
     required String id,
     required String patientId,
-    required String agentId,
-    required DateTime date,
-    required String chiefComplaint,
-    required String symptoms,
-    this.diagnosis = const Value.absent(),
-    this.treatment = const Value.absent(),
-    this.vitalSigns = const Value.absent(),
-    this.photos = const Value.absent(),
+    this.doctorId = const Value.absent(),
+    this.healthCenterId = const Value.absent(),
+    this.status = const Value.absent(),
+    this.notes = const Value.absent(),
     required DateTime createdAt,
-    required DateTime updatedAt,
+    this.updatedAt = const Value.absent(),
+    this.doctorName = const Value.absent(),
     this.syncStatus = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         patientId = Value(patientId),
-        agentId = Value(agentId),
-        date = Value(date),
-        chiefComplaint = Value(chiefComplaint),
-        symptoms = Value(symptoms),
-        createdAt = Value(createdAt),
-        updatedAt = Value(updatedAt);
+        createdAt = Value(createdAt);
   static Insertable<Consultation> custom({
     Expression<String>? id,
     Expression<String>? patientId,
-    Expression<String>? agentId,
-    Expression<DateTime>? date,
-    Expression<String>? chiefComplaint,
-    Expression<String>? symptoms,
-    Expression<String>? diagnosis,
-    Expression<String>? treatment,
-    Expression<String>? vitalSigns,
-    Expression<String>? photos,
+    Expression<String>? doctorId,
+    Expression<String>? healthCenterId,
+    Expression<String>? status,
+    Expression<String>? notes,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
+    Expression<String>? doctorName,
     Expression<String>? syncStatus,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (patientId != null) 'patient_id': patientId,
-      if (agentId != null) 'agent_id': agentId,
-      if (date != null) 'date': date,
-      if (chiefComplaint != null) 'chief_complaint': chiefComplaint,
-      if (symptoms != null) 'symptoms': symptoms,
-      if (diagnosis != null) 'diagnosis': diagnosis,
-      if (treatment != null) 'treatment': treatment,
-      if (vitalSigns != null) 'vital_signs': vitalSigns,
-      if (photos != null) 'photos': photos,
+      if (doctorId != null) 'doctor_id': doctorId,
+      if (healthCenterId != null) 'health_center_id': healthCenterId,
+      if (status != null) 'status': status,
+      if (notes != null) 'notes': notes,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (doctorName != null) 'doctor_name': doctorName,
       if (syncStatus != null) 'sync_status': syncStatus,
       if (rowid != null) 'rowid': rowid,
     });
@@ -2845,31 +2738,25 @@ class ConsultationsCompanion extends UpdateCompanion<Consultation> {
   ConsultationsCompanion copyWith(
       {Value<String>? id,
       Value<String>? patientId,
-      Value<String>? agentId,
-      Value<DateTime>? date,
-      Value<String>? chiefComplaint,
-      Value<String>? symptoms,
-      Value<String?>? diagnosis,
-      Value<String?>? treatment,
-      Value<String?>? vitalSigns,
-      Value<String?>? photos,
+      Value<String?>? doctorId,
+      Value<String?>? healthCenterId,
+      Value<String>? status,
+      Value<String?>? notes,
       Value<DateTime>? createdAt,
-      Value<DateTime>? updatedAt,
+      Value<DateTime?>? updatedAt,
+      Value<String?>? doctorName,
       Value<String>? syncStatus,
       Value<int>? rowid}) {
     return ConsultationsCompanion(
       id: id ?? this.id,
       patientId: patientId ?? this.patientId,
-      agentId: agentId ?? this.agentId,
-      date: date ?? this.date,
-      chiefComplaint: chiefComplaint ?? this.chiefComplaint,
-      symptoms: symptoms ?? this.symptoms,
-      diagnosis: diagnosis ?? this.diagnosis,
-      treatment: treatment ?? this.treatment,
-      vitalSigns: vitalSigns ?? this.vitalSigns,
-      photos: photos ?? this.photos,
+      doctorId: doctorId ?? this.doctorId,
+      healthCenterId: healthCenterId ?? this.healthCenterId,
+      status: status ?? this.status,
+      notes: notes ?? this.notes,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      doctorName: doctorName ?? this.doctorName,
       syncStatus: syncStatus ?? this.syncStatus,
       rowid: rowid ?? this.rowid,
     );
@@ -2884,35 +2771,26 @@ class ConsultationsCompanion extends UpdateCompanion<Consultation> {
     if (patientId.present) {
       map['patient_id'] = Variable<String>(patientId.value);
     }
-    if (agentId.present) {
-      map['agent_id'] = Variable<String>(agentId.value);
+    if (doctorId.present) {
+      map['doctor_id'] = Variable<String>(doctorId.value);
     }
-    if (date.present) {
-      map['date'] = Variable<DateTime>(date.value);
+    if (healthCenterId.present) {
+      map['health_center_id'] = Variable<String>(healthCenterId.value);
     }
-    if (chiefComplaint.present) {
-      map['chief_complaint'] = Variable<String>(chiefComplaint.value);
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
     }
-    if (symptoms.present) {
-      map['symptoms'] = Variable<String>(symptoms.value);
-    }
-    if (diagnosis.present) {
-      map['diagnosis'] = Variable<String>(diagnosis.value);
-    }
-    if (treatment.present) {
-      map['treatment'] = Variable<String>(treatment.value);
-    }
-    if (vitalSigns.present) {
-      map['vital_signs'] = Variable<String>(vitalSigns.value);
-    }
-    if (photos.present) {
-      map['photos'] = Variable<String>(photos.value);
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (doctorName.present) {
+      map['doctor_name'] = Variable<String>(doctorName.value);
     }
     if (syncStatus.present) {
       map['sync_status'] = Variable<String>(syncStatus.value);
@@ -2928,17 +2806,691 @@ class ConsultationsCompanion extends UpdateCompanion<Consultation> {
     return (StringBuffer('ConsultationsCompanion(')
           ..write('id: $id, ')
           ..write('patientId: $patientId, ')
-          ..write('agentId: $agentId, ')
-          ..write('date: $date, ')
-          ..write('chiefComplaint: $chiefComplaint, ')
-          ..write('symptoms: $symptoms, ')
-          ..write('diagnosis: $diagnosis, ')
-          ..write('treatment: $treatment, ')
-          ..write('vitalSigns: $vitalSigns, ')
-          ..write('photos: $photos, ')
+          ..write('doctorId: $doctorId, ')
+          ..write('healthCenterId: $healthCenterId, ')
+          ..write('status: $status, ')
+          ..write('notes: $notes, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('doctorName: $doctorName, ')
           ..write('syncStatus: $syncStatus, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VitalSignsTable extends VitalSigns
+    with TableInfo<$VitalSignsTable, VitalSign> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VitalSignsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
+  @override
+  late final GeneratedColumn<String> patientId = GeneratedColumn<String>(
+      'patient_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _medicalRecordIdMeta =
+      const VerificationMeta('medicalRecordId');
+  @override
+  late final GeneratedColumn<String> medicalRecordId = GeneratedColumn<String>(
+      'medical_record_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _temperatureMeta =
+      const VerificationMeta('temperature');
+  @override
+  late final GeneratedColumn<double> temperature = GeneratedColumn<double>(
+      'temperature', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _bloodPressureSysMeta =
+      const VerificationMeta('bloodPressureSys');
+  @override
+  late final GeneratedColumn<int> bloodPressureSys = GeneratedColumn<int>(
+      'blood_pressure_sys', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _bloodPressureDiaMeta =
+      const VerificationMeta('bloodPressureDia');
+  @override
+  late final GeneratedColumn<int> bloodPressureDia = GeneratedColumn<int>(
+      'blood_pressure_dia', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _heartRateMeta =
+      const VerificationMeta('heartRate');
+  @override
+  late final GeneratedColumn<int> heartRate = GeneratedColumn<int>(
+      'heart_rate', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _respiratoryRateMeta =
+      const VerificationMeta('respiratoryRate');
+  @override
+  late final GeneratedColumn<int> respiratoryRate = GeneratedColumn<int>(
+      'respiratory_rate', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _oxygenSaturationMeta =
+      const VerificationMeta('oxygenSaturation');
+  @override
+  late final GeneratedColumn<double> oxygenSaturation = GeneratedColumn<double>(
+      'oxygen_saturation', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _agentIdMeta =
+      const VerificationMeta('agentId');
+  @override
+  late final GeneratedColumn<String> agentId = GeneratedColumn<String>(
+      'agent_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _recordedAtMeta =
+      const VerificationMeta('recordedAt');
+  @override
+  late final GeneratedColumn<DateTime> recordedAt = GeneratedColumn<DateTime>(
+      'recorded_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('pending'));
+  static const VerificationMeta _isSyncedMeta =
+      const VerificationMeta('isSynced');
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+      'is_synced', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        patientId,
+        medicalRecordId,
+        temperature,
+        bloodPressureSys,
+        bloodPressureDia,
+        heartRate,
+        respiratoryRate,
+        oxygenSaturation,
+        agentId,
+        recordedAt,
+        syncStatus,
+        isSynced
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vital_signs';
+  @override
+  VerificationContext validateIntegrity(Insertable<VitalSign> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
+    } else if (isInserting) {
+      context.missing(_patientIdMeta);
+    }
+    if (data.containsKey('medical_record_id')) {
+      context.handle(
+          _medicalRecordIdMeta,
+          medicalRecordId.isAcceptableOrUnknown(
+              data['medical_record_id']!, _medicalRecordIdMeta));
+    }
+    if (data.containsKey('temperature')) {
+      context.handle(
+          _temperatureMeta,
+          temperature.isAcceptableOrUnknown(
+              data['temperature']!, _temperatureMeta));
+    }
+    if (data.containsKey('blood_pressure_sys')) {
+      context.handle(
+          _bloodPressureSysMeta,
+          bloodPressureSys.isAcceptableOrUnknown(
+              data['blood_pressure_sys']!, _bloodPressureSysMeta));
+    }
+    if (data.containsKey('blood_pressure_dia')) {
+      context.handle(
+          _bloodPressureDiaMeta,
+          bloodPressureDia.isAcceptableOrUnknown(
+              data['blood_pressure_dia']!, _bloodPressureDiaMeta));
+    }
+    if (data.containsKey('heart_rate')) {
+      context.handle(_heartRateMeta,
+          heartRate.isAcceptableOrUnknown(data['heart_rate']!, _heartRateMeta));
+    }
+    if (data.containsKey('respiratory_rate')) {
+      context.handle(
+          _respiratoryRateMeta,
+          respiratoryRate.isAcceptableOrUnknown(
+              data['respiratory_rate']!, _respiratoryRateMeta));
+    }
+    if (data.containsKey('oxygen_saturation')) {
+      context.handle(
+          _oxygenSaturationMeta,
+          oxygenSaturation.isAcceptableOrUnknown(
+              data['oxygen_saturation']!, _oxygenSaturationMeta));
+    }
+    if (data.containsKey('agent_id')) {
+      context.handle(_agentIdMeta,
+          agentId.isAcceptableOrUnknown(data['agent_id']!, _agentIdMeta));
+    } else if (isInserting) {
+      context.missing(_agentIdMeta);
+    }
+    if (data.containsKey('recorded_at')) {
+      context.handle(
+          _recordedAtMeta,
+          recordedAt.isAcceptableOrUnknown(
+              data['recorded_at']!, _recordedAtMeta));
+    } else if (isInserting) {
+      context.missing(_recordedAtMeta);
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(_isSyncedMeta,
+          isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VitalSign map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VitalSign(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}patient_id'])!,
+      medicalRecordId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}medical_record_id']),
+      temperature: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}temperature']),
+      bloodPressureSys: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}blood_pressure_sys']),
+      bloodPressureDia: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}blood_pressure_dia']),
+      heartRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}heart_rate']),
+      respiratoryRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}respiratory_rate']),
+      oxygenSaturation: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}oxygen_saturation']),
+      agentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}agent_id'])!,
+      recordedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}recorded_at'])!,
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+      isSynced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
+    );
+  }
+
+  @override
+  $VitalSignsTable createAlias(String alias) {
+    return $VitalSignsTable(attachedDatabase, alias);
+  }
+}
+
+class VitalSign extends DataClass implements Insertable<VitalSign> {
+  final String id;
+  final String patientId;
+  final String? medicalRecordId;
+  final double? temperature;
+  final int? bloodPressureSys;
+  final int? bloodPressureDia;
+  final int? heartRate;
+  final int? respiratoryRate;
+  final double? oxygenSaturation;
+  final String agentId;
+  final DateTime recordedAt;
+  final String syncStatus;
+  final bool isSynced;
+  const VitalSign(
+      {required this.id,
+      required this.patientId,
+      this.medicalRecordId,
+      this.temperature,
+      this.bloodPressureSys,
+      this.bloodPressureDia,
+      this.heartRate,
+      this.respiratoryRate,
+      this.oxygenSaturation,
+      required this.agentId,
+      required this.recordedAt,
+      required this.syncStatus,
+      required this.isSynced});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['patient_id'] = Variable<String>(patientId);
+    if (!nullToAbsent || medicalRecordId != null) {
+      map['medical_record_id'] = Variable<String>(medicalRecordId);
+    }
+    if (!nullToAbsent || temperature != null) {
+      map['temperature'] = Variable<double>(temperature);
+    }
+    if (!nullToAbsent || bloodPressureSys != null) {
+      map['blood_pressure_sys'] = Variable<int>(bloodPressureSys);
+    }
+    if (!nullToAbsent || bloodPressureDia != null) {
+      map['blood_pressure_dia'] = Variable<int>(bloodPressureDia);
+    }
+    if (!nullToAbsent || heartRate != null) {
+      map['heart_rate'] = Variable<int>(heartRate);
+    }
+    if (!nullToAbsent || respiratoryRate != null) {
+      map['respiratory_rate'] = Variable<int>(respiratoryRate);
+    }
+    if (!nullToAbsent || oxygenSaturation != null) {
+      map['oxygen_saturation'] = Variable<double>(oxygenSaturation);
+    }
+    map['agent_id'] = Variable<String>(agentId);
+    map['recorded_at'] = Variable<DateTime>(recordedAt);
+    map['sync_status'] = Variable<String>(syncStatus);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  VitalSignsCompanion toCompanion(bool nullToAbsent) {
+    return VitalSignsCompanion(
+      id: Value(id),
+      patientId: Value(patientId),
+      medicalRecordId: medicalRecordId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(medicalRecordId),
+      temperature: temperature == null && nullToAbsent
+          ? const Value.absent()
+          : Value(temperature),
+      bloodPressureSys: bloodPressureSys == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bloodPressureSys),
+      bloodPressureDia: bloodPressureDia == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bloodPressureDia),
+      heartRate: heartRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(heartRate),
+      respiratoryRate: respiratoryRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(respiratoryRate),
+      oxygenSaturation: oxygenSaturation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(oxygenSaturation),
+      agentId: Value(agentId),
+      recordedAt: Value(recordedAt),
+      syncStatus: Value(syncStatus),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory VitalSign.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VitalSign(
+      id: serializer.fromJson<String>(json['id']),
+      patientId: serializer.fromJson<String>(json['patientId']),
+      medicalRecordId: serializer.fromJson<String?>(json['medicalRecordId']),
+      temperature: serializer.fromJson<double?>(json['temperature']),
+      bloodPressureSys: serializer.fromJson<int?>(json['bloodPressureSys']),
+      bloodPressureDia: serializer.fromJson<int?>(json['bloodPressureDia']),
+      heartRate: serializer.fromJson<int?>(json['heartRate']),
+      respiratoryRate: serializer.fromJson<int?>(json['respiratoryRate']),
+      oxygenSaturation: serializer.fromJson<double?>(json['oxygenSaturation']),
+      agentId: serializer.fromJson<String>(json['agentId']),
+      recordedAt: serializer.fromJson<DateTime>(json['recordedAt']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'patientId': serializer.toJson<String>(patientId),
+      'medicalRecordId': serializer.toJson<String?>(medicalRecordId),
+      'temperature': serializer.toJson<double?>(temperature),
+      'bloodPressureSys': serializer.toJson<int?>(bloodPressureSys),
+      'bloodPressureDia': serializer.toJson<int?>(bloodPressureDia),
+      'heartRate': serializer.toJson<int?>(heartRate),
+      'respiratoryRate': serializer.toJson<int?>(respiratoryRate),
+      'oxygenSaturation': serializer.toJson<double?>(oxygenSaturation),
+      'agentId': serializer.toJson<String>(agentId),
+      'recordedAt': serializer.toJson<DateTime>(recordedAt),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  VitalSign copyWith(
+          {String? id,
+          String? patientId,
+          Value<String?> medicalRecordId = const Value.absent(),
+          Value<double?> temperature = const Value.absent(),
+          Value<int?> bloodPressureSys = const Value.absent(),
+          Value<int?> bloodPressureDia = const Value.absent(),
+          Value<int?> heartRate = const Value.absent(),
+          Value<int?> respiratoryRate = const Value.absent(),
+          Value<double?> oxygenSaturation = const Value.absent(),
+          String? agentId,
+          DateTime? recordedAt,
+          String? syncStatus,
+          bool? isSynced}) =>
+      VitalSign(
+        id: id ?? this.id,
+        patientId: patientId ?? this.patientId,
+        medicalRecordId: medicalRecordId.present
+            ? medicalRecordId.value
+            : this.medicalRecordId,
+        temperature: temperature.present ? temperature.value : this.temperature,
+        bloodPressureSys: bloodPressureSys.present
+            ? bloodPressureSys.value
+            : this.bloodPressureSys,
+        bloodPressureDia: bloodPressureDia.present
+            ? bloodPressureDia.value
+            : this.bloodPressureDia,
+        heartRate: heartRate.present ? heartRate.value : this.heartRate,
+        respiratoryRate: respiratoryRate.present
+            ? respiratoryRate.value
+            : this.respiratoryRate,
+        oxygenSaturation: oxygenSaturation.present
+            ? oxygenSaturation.value
+            : this.oxygenSaturation,
+        agentId: agentId ?? this.agentId,
+        recordedAt: recordedAt ?? this.recordedAt,
+        syncStatus: syncStatus ?? this.syncStatus,
+        isSynced: isSynced ?? this.isSynced,
+      );
+  VitalSign copyWithCompanion(VitalSignsCompanion data) {
+    return VitalSign(
+      id: data.id.present ? data.id.value : this.id,
+      patientId: data.patientId.present ? data.patientId.value : this.patientId,
+      medicalRecordId: data.medicalRecordId.present
+          ? data.medicalRecordId.value
+          : this.medicalRecordId,
+      temperature:
+          data.temperature.present ? data.temperature.value : this.temperature,
+      bloodPressureSys: data.bloodPressureSys.present
+          ? data.bloodPressureSys.value
+          : this.bloodPressureSys,
+      bloodPressureDia: data.bloodPressureDia.present
+          ? data.bloodPressureDia.value
+          : this.bloodPressureDia,
+      heartRate: data.heartRate.present ? data.heartRate.value : this.heartRate,
+      respiratoryRate: data.respiratoryRate.present
+          ? data.respiratoryRate.value
+          : this.respiratoryRate,
+      oxygenSaturation: data.oxygenSaturation.present
+          ? data.oxygenSaturation.value
+          : this.oxygenSaturation,
+      agentId: data.agentId.present ? data.agentId.value : this.agentId,
+      recordedAt:
+          data.recordedAt.present ? data.recordedAt.value : this.recordedAt,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VitalSign(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('medicalRecordId: $medicalRecordId, ')
+          ..write('temperature: $temperature, ')
+          ..write('bloodPressureSys: $bloodPressureSys, ')
+          ..write('bloodPressureDia: $bloodPressureDia, ')
+          ..write('heartRate: $heartRate, ')
+          ..write('respiratoryRate: $respiratoryRate, ')
+          ..write('oxygenSaturation: $oxygenSaturation, ')
+          ..write('agentId: $agentId, ')
+          ..write('recordedAt: $recordedAt, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      patientId,
+      medicalRecordId,
+      temperature,
+      bloodPressureSys,
+      bloodPressureDia,
+      heartRate,
+      respiratoryRate,
+      oxygenSaturation,
+      agentId,
+      recordedAt,
+      syncStatus,
+      isSynced);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VitalSign &&
+          other.id == this.id &&
+          other.patientId == this.patientId &&
+          other.medicalRecordId == this.medicalRecordId &&
+          other.temperature == this.temperature &&
+          other.bloodPressureSys == this.bloodPressureSys &&
+          other.bloodPressureDia == this.bloodPressureDia &&
+          other.heartRate == this.heartRate &&
+          other.respiratoryRate == this.respiratoryRate &&
+          other.oxygenSaturation == this.oxygenSaturation &&
+          other.agentId == this.agentId &&
+          other.recordedAt == this.recordedAt &&
+          other.syncStatus == this.syncStatus &&
+          other.isSynced == this.isSynced);
+}
+
+class VitalSignsCompanion extends UpdateCompanion<VitalSign> {
+  final Value<String> id;
+  final Value<String> patientId;
+  final Value<String?> medicalRecordId;
+  final Value<double?> temperature;
+  final Value<int?> bloodPressureSys;
+  final Value<int?> bloodPressureDia;
+  final Value<int?> heartRate;
+  final Value<int?> respiratoryRate;
+  final Value<double?> oxygenSaturation;
+  final Value<String> agentId;
+  final Value<DateTime> recordedAt;
+  final Value<String> syncStatus;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const VitalSignsCompanion({
+    this.id = const Value.absent(),
+    this.patientId = const Value.absent(),
+    this.medicalRecordId = const Value.absent(),
+    this.temperature = const Value.absent(),
+    this.bloodPressureSys = const Value.absent(),
+    this.bloodPressureDia = const Value.absent(),
+    this.heartRate = const Value.absent(),
+    this.respiratoryRate = const Value.absent(),
+    this.oxygenSaturation = const Value.absent(),
+    this.agentId = const Value.absent(),
+    this.recordedAt = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VitalSignsCompanion.insert({
+    required String id,
+    required String patientId,
+    this.medicalRecordId = const Value.absent(),
+    this.temperature = const Value.absent(),
+    this.bloodPressureSys = const Value.absent(),
+    this.bloodPressureDia = const Value.absent(),
+    this.heartRate = const Value.absent(),
+    this.respiratoryRate = const Value.absent(),
+    this.oxygenSaturation = const Value.absent(),
+    required String agentId,
+    required DateTime recordedAt,
+    this.syncStatus = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        patientId = Value(patientId),
+        agentId = Value(agentId),
+        recordedAt = Value(recordedAt);
+  static Insertable<VitalSign> custom({
+    Expression<String>? id,
+    Expression<String>? patientId,
+    Expression<String>? medicalRecordId,
+    Expression<double>? temperature,
+    Expression<int>? bloodPressureSys,
+    Expression<int>? bloodPressureDia,
+    Expression<int>? heartRate,
+    Expression<int>? respiratoryRate,
+    Expression<double>? oxygenSaturation,
+    Expression<String>? agentId,
+    Expression<DateTime>? recordedAt,
+    Expression<String>? syncStatus,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (patientId != null) 'patient_id': patientId,
+      if (medicalRecordId != null) 'medical_record_id': medicalRecordId,
+      if (temperature != null) 'temperature': temperature,
+      if (bloodPressureSys != null) 'blood_pressure_sys': bloodPressureSys,
+      if (bloodPressureDia != null) 'blood_pressure_dia': bloodPressureDia,
+      if (heartRate != null) 'heart_rate': heartRate,
+      if (respiratoryRate != null) 'respiratory_rate': respiratoryRate,
+      if (oxygenSaturation != null) 'oxygen_saturation': oxygenSaturation,
+      if (agentId != null) 'agent_id': agentId,
+      if (recordedAt != null) 'recorded_at': recordedAt,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VitalSignsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? patientId,
+      Value<String?>? medicalRecordId,
+      Value<double?>? temperature,
+      Value<int?>? bloodPressureSys,
+      Value<int?>? bloodPressureDia,
+      Value<int?>? heartRate,
+      Value<int?>? respiratoryRate,
+      Value<double?>? oxygenSaturation,
+      Value<String>? agentId,
+      Value<DateTime>? recordedAt,
+      Value<String>? syncStatus,
+      Value<bool>? isSynced,
+      Value<int>? rowid}) {
+    return VitalSignsCompanion(
+      id: id ?? this.id,
+      patientId: patientId ?? this.patientId,
+      medicalRecordId: medicalRecordId ?? this.medicalRecordId,
+      temperature: temperature ?? this.temperature,
+      bloodPressureSys: bloodPressureSys ?? this.bloodPressureSys,
+      bloodPressureDia: bloodPressureDia ?? this.bloodPressureDia,
+      heartRate: heartRate ?? this.heartRate,
+      respiratoryRate: respiratoryRate ?? this.respiratoryRate,
+      oxygenSaturation: oxygenSaturation ?? this.oxygenSaturation,
+      agentId: agentId ?? this.agentId,
+      recordedAt: recordedAt ?? this.recordedAt,
+      syncStatus: syncStatus ?? this.syncStatus,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (patientId.present) {
+      map['patient_id'] = Variable<String>(patientId.value);
+    }
+    if (medicalRecordId.present) {
+      map['medical_record_id'] = Variable<String>(medicalRecordId.value);
+    }
+    if (temperature.present) {
+      map['temperature'] = Variable<double>(temperature.value);
+    }
+    if (bloodPressureSys.present) {
+      map['blood_pressure_sys'] = Variable<int>(bloodPressureSys.value);
+    }
+    if (bloodPressureDia.present) {
+      map['blood_pressure_dia'] = Variable<int>(bloodPressureDia.value);
+    }
+    if (heartRate.present) {
+      map['heart_rate'] = Variable<int>(heartRate.value);
+    }
+    if (respiratoryRate.present) {
+      map['respiratory_rate'] = Variable<int>(respiratoryRate.value);
+    }
+    if (oxygenSaturation.present) {
+      map['oxygen_saturation'] = Variable<double>(oxygenSaturation.value);
+    }
+    if (agentId.present) {
+      map['agent_id'] = Variable<String>(agentId.value);
+    }
+    if (recordedAt.present) {
+      map['recorded_at'] = Variable<DateTime>(recordedAt.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VitalSignsCompanion(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('medicalRecordId: $medicalRecordId, ')
+          ..write('temperature: $temperature, ')
+          ..write('bloodPressureSys: $bloodPressureSys, ')
+          ..write('bloodPressureDia: $bloodPressureDia, ')
+          ..write('heartRate: $heartRate, ')
+          ..write('respiratoryRate: $respiratoryRate, ')
+          ..write('oxygenSaturation: $oxygenSaturation, ')
+          ..write('agentId: $agentId, ')
+          ..write('recordedAt: $recordedAt, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('isSynced: $isSynced, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -5307,6 +5859,752 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
   }
 }
 
+class $MaternalCaresTable extends MaternalCares
+    with TableInfo<$MaternalCaresTable, MaternalCare> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MaternalCaresTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
+  @override
+  late final GeneratedColumn<String> patientId = GeneratedColumn<String>(
+      'patient_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _pregnancyStartMeta =
+      const VerificationMeta('pregnancyStart');
+  @override
+  late final GeneratedColumn<DateTime> pregnancyStart =
+      GeneratedColumn<DateTime>('pregnancy_start', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _expectedDeliveryMeta =
+      const VerificationMeta('expectedDelivery');
+  @override
+  late final GeneratedColumn<DateTime> expectedDelivery =
+      GeneratedColumn<DateTime>('expected_delivery', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _prenatalVisitsMeta =
+      const VerificationMeta('prenatalVisits');
+  @override
+  late final GeneratedColumn<int> prenatalVisits = GeneratedColumn<int>(
+      'prenatal_visits', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _riskLevelMeta =
+      const VerificationMeta('riskLevel');
+  @override
+  late final GeneratedColumn<String> riskLevel = GeneratedColumn<String>(
+      'risk_level', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('NORMAL'));
+  static const VerificationMeta _deliveryDateMeta =
+      const VerificationMeta('deliveryDate');
+  @override
+  late final GeneratedColumn<DateTime> deliveryDate = GeneratedColumn<DateTime>(
+      'delivery_date', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _deliveryTypeMeta =
+      const VerificationMeta('deliveryType');
+  @override
+  late final GeneratedColumn<String> deliveryType = GeneratedColumn<String>(
+      'delivery_type', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _outcomeMeta =
+      const VerificationMeta('outcome');
+  @override
+  late final GeneratedColumn<String> outcome = GeneratedColumn<String>(
+      'outcome', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _newbornWeightMeta =
+      const VerificationMeta('newbornWeight');
+  @override
+  late final GeneratedColumn<double> newbornWeight = GeneratedColumn<double>(
+      'newborn_weight', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _agentIdMeta =
+      const VerificationMeta('agentId');
+  @override
+  late final GeneratedColumn<String> agentId = GeneratedColumn<String>(
+      'agent_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('pending'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        patientId,
+        pregnancyStart,
+        expectedDelivery,
+        prenatalVisits,
+        riskLevel,
+        deliveryDate,
+        deliveryType,
+        outcome,
+        newbornWeight,
+        agentId,
+        notes,
+        createdAt,
+        updatedAt,
+        syncStatus
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'maternal_cares';
+  @override
+  VerificationContext validateIntegrity(Insertable<MaternalCare> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
+    } else if (isInserting) {
+      context.missing(_patientIdMeta);
+    }
+    if (data.containsKey('pregnancy_start')) {
+      context.handle(
+          _pregnancyStartMeta,
+          pregnancyStart.isAcceptableOrUnknown(
+              data['pregnancy_start']!, _pregnancyStartMeta));
+    }
+    if (data.containsKey('expected_delivery')) {
+      context.handle(
+          _expectedDeliveryMeta,
+          expectedDelivery.isAcceptableOrUnknown(
+              data['expected_delivery']!, _expectedDeliveryMeta));
+    }
+    if (data.containsKey('prenatal_visits')) {
+      context.handle(
+          _prenatalVisitsMeta,
+          prenatalVisits.isAcceptableOrUnknown(
+              data['prenatal_visits']!, _prenatalVisitsMeta));
+    }
+    if (data.containsKey('risk_level')) {
+      context.handle(_riskLevelMeta,
+          riskLevel.isAcceptableOrUnknown(data['risk_level']!, _riskLevelMeta));
+    }
+    if (data.containsKey('delivery_date')) {
+      context.handle(
+          _deliveryDateMeta,
+          deliveryDate.isAcceptableOrUnknown(
+              data['delivery_date']!, _deliveryDateMeta));
+    }
+    if (data.containsKey('delivery_type')) {
+      context.handle(
+          _deliveryTypeMeta,
+          deliveryType.isAcceptableOrUnknown(
+              data['delivery_type']!, _deliveryTypeMeta));
+    }
+    if (data.containsKey('outcome')) {
+      context.handle(_outcomeMeta,
+          outcome.isAcceptableOrUnknown(data['outcome']!, _outcomeMeta));
+    }
+    if (data.containsKey('newborn_weight')) {
+      context.handle(
+          _newbornWeightMeta,
+          newbornWeight.isAcceptableOrUnknown(
+              data['newborn_weight']!, _newbornWeightMeta));
+    }
+    if (data.containsKey('agent_id')) {
+      context.handle(_agentIdMeta,
+          agentId.isAcceptableOrUnknown(data['agent_id']!, _agentIdMeta));
+    } else if (isInserting) {
+      context.missing(_agentIdMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MaternalCare map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MaternalCare(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}patient_id'])!,
+      pregnancyStart: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}pregnancy_start']),
+      expectedDelivery: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}expected_delivery']),
+      prenatalVisits: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}prenatal_visits'])!,
+      riskLevel: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}risk_level'])!,
+      deliveryDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}delivery_date']),
+      deliveryType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}delivery_type']),
+      outcome: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}outcome']),
+      newbornWeight: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}newborn_weight']),
+      agentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}agent_id'])!,
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at']),
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+    );
+  }
+
+  @override
+  $MaternalCaresTable createAlias(String alias) {
+    return $MaternalCaresTable(attachedDatabase, alias);
+  }
+}
+
+class MaternalCare extends DataClass implements Insertable<MaternalCare> {
+  final String id;
+  final String patientId;
+  final DateTime? pregnancyStart;
+  final DateTime? expectedDelivery;
+  final int prenatalVisits;
+  final String riskLevel;
+  final DateTime? deliveryDate;
+  final String? deliveryType;
+  final String? outcome;
+  final double? newbornWeight;
+  final String agentId;
+  final String? notes;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  final String syncStatus;
+  const MaternalCare(
+      {required this.id,
+      required this.patientId,
+      this.pregnancyStart,
+      this.expectedDelivery,
+      required this.prenatalVisits,
+      required this.riskLevel,
+      this.deliveryDate,
+      this.deliveryType,
+      this.outcome,
+      this.newbornWeight,
+      required this.agentId,
+      this.notes,
+      required this.createdAt,
+      this.updatedAt,
+      required this.syncStatus});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['patient_id'] = Variable<String>(patientId);
+    if (!nullToAbsent || pregnancyStart != null) {
+      map['pregnancy_start'] = Variable<DateTime>(pregnancyStart);
+    }
+    if (!nullToAbsent || expectedDelivery != null) {
+      map['expected_delivery'] = Variable<DateTime>(expectedDelivery);
+    }
+    map['prenatal_visits'] = Variable<int>(prenatalVisits);
+    map['risk_level'] = Variable<String>(riskLevel);
+    if (!nullToAbsent || deliveryDate != null) {
+      map['delivery_date'] = Variable<DateTime>(deliveryDate);
+    }
+    if (!nullToAbsent || deliveryType != null) {
+      map['delivery_type'] = Variable<String>(deliveryType);
+    }
+    if (!nullToAbsent || outcome != null) {
+      map['outcome'] = Variable<String>(outcome);
+    }
+    if (!nullToAbsent || newbornWeight != null) {
+      map['newborn_weight'] = Variable<double>(newbornWeight);
+    }
+    map['agent_id'] = Variable<String>(agentId);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || updatedAt != null) {
+      map['updated_at'] = Variable<DateTime>(updatedAt);
+    }
+    map['sync_status'] = Variable<String>(syncStatus);
+    return map;
+  }
+
+  MaternalCaresCompanion toCompanion(bool nullToAbsent) {
+    return MaternalCaresCompanion(
+      id: Value(id),
+      patientId: Value(patientId),
+      pregnancyStart: pregnancyStart == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pregnancyStart),
+      expectedDelivery: expectedDelivery == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expectedDelivery),
+      prenatalVisits: Value(prenatalVisits),
+      riskLevel: Value(riskLevel),
+      deliveryDate: deliveryDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deliveryDate),
+      deliveryType: deliveryType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deliveryType),
+      outcome: outcome == null && nullToAbsent
+          ? const Value.absent()
+          : Value(outcome),
+      newbornWeight: newbornWeight == null && nullToAbsent
+          ? const Value.absent()
+          : Value(newbornWeight),
+      agentId: Value(agentId),
+      notes:
+          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
+      createdAt: Value(createdAt),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
+      syncStatus: Value(syncStatus),
+    );
+  }
+
+  factory MaternalCare.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MaternalCare(
+      id: serializer.fromJson<String>(json['id']),
+      patientId: serializer.fromJson<String>(json['patientId']),
+      pregnancyStart: serializer.fromJson<DateTime?>(json['pregnancyStart']),
+      expectedDelivery:
+          serializer.fromJson<DateTime?>(json['expectedDelivery']),
+      prenatalVisits: serializer.fromJson<int>(json['prenatalVisits']),
+      riskLevel: serializer.fromJson<String>(json['riskLevel']),
+      deliveryDate: serializer.fromJson<DateTime?>(json['deliveryDate']),
+      deliveryType: serializer.fromJson<String?>(json['deliveryType']),
+      outcome: serializer.fromJson<String?>(json['outcome']),
+      newbornWeight: serializer.fromJson<double?>(json['newbornWeight']),
+      agentId: serializer.fromJson<String>(json['agentId']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'patientId': serializer.toJson<String>(patientId),
+      'pregnancyStart': serializer.toJson<DateTime?>(pregnancyStart),
+      'expectedDelivery': serializer.toJson<DateTime?>(expectedDelivery),
+      'prenatalVisits': serializer.toJson<int>(prenatalVisits),
+      'riskLevel': serializer.toJson<String>(riskLevel),
+      'deliveryDate': serializer.toJson<DateTime?>(deliveryDate),
+      'deliveryType': serializer.toJson<String?>(deliveryType),
+      'outcome': serializer.toJson<String?>(outcome),
+      'newbornWeight': serializer.toJson<double?>(newbornWeight),
+      'agentId': serializer.toJson<String>(agentId),
+      'notes': serializer.toJson<String?>(notes),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime?>(updatedAt),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+    };
+  }
+
+  MaternalCare copyWith(
+          {String? id,
+          String? patientId,
+          Value<DateTime?> pregnancyStart = const Value.absent(),
+          Value<DateTime?> expectedDelivery = const Value.absent(),
+          int? prenatalVisits,
+          String? riskLevel,
+          Value<DateTime?> deliveryDate = const Value.absent(),
+          Value<String?> deliveryType = const Value.absent(),
+          Value<String?> outcome = const Value.absent(),
+          Value<double?> newbornWeight = const Value.absent(),
+          String? agentId,
+          Value<String?> notes = const Value.absent(),
+          DateTime? createdAt,
+          Value<DateTime?> updatedAt = const Value.absent(),
+          String? syncStatus}) =>
+      MaternalCare(
+        id: id ?? this.id,
+        patientId: patientId ?? this.patientId,
+        pregnancyStart:
+            pregnancyStart.present ? pregnancyStart.value : this.pregnancyStart,
+        expectedDelivery: expectedDelivery.present
+            ? expectedDelivery.value
+            : this.expectedDelivery,
+        prenatalVisits: prenatalVisits ?? this.prenatalVisits,
+        riskLevel: riskLevel ?? this.riskLevel,
+        deliveryDate:
+            deliveryDate.present ? deliveryDate.value : this.deliveryDate,
+        deliveryType:
+            deliveryType.present ? deliveryType.value : this.deliveryType,
+        outcome: outcome.present ? outcome.value : this.outcome,
+        newbornWeight:
+            newbornWeight.present ? newbornWeight.value : this.newbornWeight,
+        agentId: agentId ?? this.agentId,
+        notes: notes.present ? notes.value : this.notes,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
+        syncStatus: syncStatus ?? this.syncStatus,
+      );
+  MaternalCare copyWithCompanion(MaternalCaresCompanion data) {
+    return MaternalCare(
+      id: data.id.present ? data.id.value : this.id,
+      patientId: data.patientId.present ? data.patientId.value : this.patientId,
+      pregnancyStart: data.pregnancyStart.present
+          ? data.pregnancyStart.value
+          : this.pregnancyStart,
+      expectedDelivery: data.expectedDelivery.present
+          ? data.expectedDelivery.value
+          : this.expectedDelivery,
+      prenatalVisits: data.prenatalVisits.present
+          ? data.prenatalVisits.value
+          : this.prenatalVisits,
+      riskLevel: data.riskLevel.present ? data.riskLevel.value : this.riskLevel,
+      deliveryDate: data.deliveryDate.present
+          ? data.deliveryDate.value
+          : this.deliveryDate,
+      deliveryType: data.deliveryType.present
+          ? data.deliveryType.value
+          : this.deliveryType,
+      outcome: data.outcome.present ? data.outcome.value : this.outcome,
+      newbornWeight: data.newbornWeight.present
+          ? data.newbornWeight.value
+          : this.newbornWeight,
+      agentId: data.agentId.present ? data.agentId.value : this.agentId,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaternalCare(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('pregnancyStart: $pregnancyStart, ')
+          ..write('expectedDelivery: $expectedDelivery, ')
+          ..write('prenatalVisits: $prenatalVisits, ')
+          ..write('riskLevel: $riskLevel, ')
+          ..write('deliveryDate: $deliveryDate, ')
+          ..write('deliveryType: $deliveryType, ')
+          ..write('outcome: $outcome, ')
+          ..write('newbornWeight: $newbornWeight, ')
+          ..write('agentId: $agentId, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('syncStatus: $syncStatus')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      patientId,
+      pregnancyStart,
+      expectedDelivery,
+      prenatalVisits,
+      riskLevel,
+      deliveryDate,
+      deliveryType,
+      outcome,
+      newbornWeight,
+      agentId,
+      notes,
+      createdAt,
+      updatedAt,
+      syncStatus);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MaternalCare &&
+          other.id == this.id &&
+          other.patientId == this.patientId &&
+          other.pregnancyStart == this.pregnancyStart &&
+          other.expectedDelivery == this.expectedDelivery &&
+          other.prenatalVisits == this.prenatalVisits &&
+          other.riskLevel == this.riskLevel &&
+          other.deliveryDate == this.deliveryDate &&
+          other.deliveryType == this.deliveryType &&
+          other.outcome == this.outcome &&
+          other.newbornWeight == this.newbornWeight &&
+          other.agentId == this.agentId &&
+          other.notes == this.notes &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.syncStatus == this.syncStatus);
+}
+
+class MaternalCaresCompanion extends UpdateCompanion<MaternalCare> {
+  final Value<String> id;
+  final Value<String> patientId;
+  final Value<DateTime?> pregnancyStart;
+  final Value<DateTime?> expectedDelivery;
+  final Value<int> prenatalVisits;
+  final Value<String> riskLevel;
+  final Value<DateTime?> deliveryDate;
+  final Value<String?> deliveryType;
+  final Value<String?> outcome;
+  final Value<double?> newbornWeight;
+  final Value<String> agentId;
+  final Value<String?> notes;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> updatedAt;
+  final Value<String> syncStatus;
+  final Value<int> rowid;
+  const MaternalCaresCompanion({
+    this.id = const Value.absent(),
+    this.patientId = const Value.absent(),
+    this.pregnancyStart = const Value.absent(),
+    this.expectedDelivery = const Value.absent(),
+    this.prenatalVisits = const Value.absent(),
+    this.riskLevel = const Value.absent(),
+    this.deliveryDate = const Value.absent(),
+    this.deliveryType = const Value.absent(),
+    this.outcome = const Value.absent(),
+    this.newbornWeight = const Value.absent(),
+    this.agentId = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MaternalCaresCompanion.insert({
+    required String id,
+    required String patientId,
+    this.pregnancyStart = const Value.absent(),
+    this.expectedDelivery = const Value.absent(),
+    this.prenatalVisits = const Value.absent(),
+    this.riskLevel = const Value.absent(),
+    this.deliveryDate = const Value.absent(),
+    this.deliveryType = const Value.absent(),
+    this.outcome = const Value.absent(),
+    this.newbornWeight = const Value.absent(),
+    required String agentId,
+    this.notes = const Value.absent(),
+    required DateTime createdAt,
+    this.updatedAt = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        patientId = Value(patientId),
+        agentId = Value(agentId),
+        createdAt = Value(createdAt);
+  static Insertable<MaternalCare> custom({
+    Expression<String>? id,
+    Expression<String>? patientId,
+    Expression<DateTime>? pregnancyStart,
+    Expression<DateTime>? expectedDelivery,
+    Expression<int>? prenatalVisits,
+    Expression<String>? riskLevel,
+    Expression<DateTime>? deliveryDate,
+    Expression<String>? deliveryType,
+    Expression<String>? outcome,
+    Expression<double>? newbornWeight,
+    Expression<String>? agentId,
+    Expression<String>? notes,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? syncStatus,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (patientId != null) 'patient_id': patientId,
+      if (pregnancyStart != null) 'pregnancy_start': pregnancyStart,
+      if (expectedDelivery != null) 'expected_delivery': expectedDelivery,
+      if (prenatalVisits != null) 'prenatal_visits': prenatalVisits,
+      if (riskLevel != null) 'risk_level': riskLevel,
+      if (deliveryDate != null) 'delivery_date': deliveryDate,
+      if (deliveryType != null) 'delivery_type': deliveryType,
+      if (outcome != null) 'outcome': outcome,
+      if (newbornWeight != null) 'newborn_weight': newbornWeight,
+      if (agentId != null) 'agent_id': agentId,
+      if (notes != null) 'notes': notes,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MaternalCaresCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? patientId,
+      Value<DateTime?>? pregnancyStart,
+      Value<DateTime?>? expectedDelivery,
+      Value<int>? prenatalVisits,
+      Value<String>? riskLevel,
+      Value<DateTime?>? deliveryDate,
+      Value<String?>? deliveryType,
+      Value<String?>? outcome,
+      Value<double?>? newbornWeight,
+      Value<String>? agentId,
+      Value<String?>? notes,
+      Value<DateTime>? createdAt,
+      Value<DateTime?>? updatedAt,
+      Value<String>? syncStatus,
+      Value<int>? rowid}) {
+    return MaternalCaresCompanion(
+      id: id ?? this.id,
+      patientId: patientId ?? this.patientId,
+      pregnancyStart: pregnancyStart ?? this.pregnancyStart,
+      expectedDelivery: expectedDelivery ?? this.expectedDelivery,
+      prenatalVisits: prenatalVisits ?? this.prenatalVisits,
+      riskLevel: riskLevel ?? this.riskLevel,
+      deliveryDate: deliveryDate ?? this.deliveryDate,
+      deliveryType: deliveryType ?? this.deliveryType,
+      outcome: outcome ?? this.outcome,
+      newbornWeight: newbornWeight ?? this.newbornWeight,
+      agentId: agentId ?? this.agentId,
+      notes: notes ?? this.notes,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      syncStatus: syncStatus ?? this.syncStatus,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (patientId.present) {
+      map['patient_id'] = Variable<String>(patientId.value);
+    }
+    if (pregnancyStart.present) {
+      map['pregnancy_start'] = Variable<DateTime>(pregnancyStart.value);
+    }
+    if (expectedDelivery.present) {
+      map['expected_delivery'] = Variable<DateTime>(expectedDelivery.value);
+    }
+    if (prenatalVisits.present) {
+      map['prenatal_visits'] = Variable<int>(prenatalVisits.value);
+    }
+    if (riskLevel.present) {
+      map['risk_level'] = Variable<String>(riskLevel.value);
+    }
+    if (deliveryDate.present) {
+      map['delivery_date'] = Variable<DateTime>(deliveryDate.value);
+    }
+    if (deliveryType.present) {
+      map['delivery_type'] = Variable<String>(deliveryType.value);
+    }
+    if (outcome.present) {
+      map['outcome'] = Variable<String>(outcome.value);
+    }
+    if (newbornWeight.present) {
+      map['newborn_weight'] = Variable<double>(newbornWeight.value);
+    }
+    if (agentId.present) {
+      map['agent_id'] = Variable<String>(agentId.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaternalCaresCompanion(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('pregnancyStart: $pregnancyStart, ')
+          ..write('expectedDelivery: $expectedDelivery, ')
+          ..write('prenatalVisits: $prenatalVisits, ')
+          ..write('riskLevel: $riskLevel, ')
+          ..write('deliveryDate: $deliveryDate, ')
+          ..write('deliveryType: $deliveryType, ')
+          ..write('outcome: $outcome, ')
+          ..write('newbornWeight: $newbornWeight, ')
+          ..write('agentId: $agentId, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -5315,11 +6613,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $HouseholdMembersTable householdMembers =
       $HouseholdMembersTable(this);
   late final $ConsultationsTable consultations = $ConsultationsTable(this);
+  late final $VitalSignsTable vitalSigns = $VitalSignsTable(this);
   late final $SyncQueueTable syncQueue = $SyncQueueTable(this);
   late final $CaseReportsTable caseReports = $CaseReportsTable(this);
   late final $MedicalProtocolsTable medicalProtocols =
       $MedicalProtocolsTable(this);
   late final $VaccinationsTable vaccinations = $VaccinationsTable(this);
+  late final $MaternalCaresTable maternalCares = $MaternalCaresTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5329,10 +6629,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         households,
         householdMembers,
         consultations,
+        vitalSigns,
         syncQueue,
         caseReports,
         medicalProtocols,
-        vaccinations
+        vaccinations,
+        maternalCares
       ];
 }
 
@@ -6342,16 +7644,13 @@ typedef $$ConsultationsTableCreateCompanionBuilder = ConsultationsCompanion
     Function({
   required String id,
   required String patientId,
-  required String agentId,
-  required DateTime date,
-  required String chiefComplaint,
-  required String symptoms,
-  Value<String?> diagnosis,
-  Value<String?> treatment,
-  Value<String?> vitalSigns,
-  Value<String?> photos,
+  Value<String?> doctorId,
+  Value<String?> healthCenterId,
+  Value<String> status,
+  Value<String?> notes,
   required DateTime createdAt,
-  required DateTime updatedAt,
+  Value<DateTime?> updatedAt,
+  Value<String?> doctorName,
   Value<String> syncStatus,
   Value<int> rowid,
 });
@@ -6359,16 +7658,13 @@ typedef $$ConsultationsTableUpdateCompanionBuilder = ConsultationsCompanion
     Function({
   Value<String> id,
   Value<String> patientId,
-  Value<String> agentId,
-  Value<DateTime> date,
-  Value<String> chiefComplaint,
-  Value<String> symptoms,
-  Value<String?> diagnosis,
-  Value<String?> treatment,
-  Value<String?> vitalSigns,
-  Value<String?> photos,
+  Value<String?> doctorId,
+  Value<String?> healthCenterId,
+  Value<String> status,
+  Value<String?> notes,
   Value<DateTime> createdAt,
-  Value<DateTime> updatedAt,
+  Value<DateTime?> updatedAt,
+  Value<String?> doctorName,
   Value<String> syncStatus,
   Value<int> rowid,
 });
@@ -6388,36 +7684,27 @@ class $$ConsultationsTableFilterComposer
   ColumnFilters<String> get patientId => $composableBuilder(
       column: $table.patientId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get agentId => $composableBuilder(
-      column: $table.agentId, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get doctorId => $composableBuilder(
+      column: $table.doctorId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<DateTime> get date => $composableBuilder(
-      column: $table.date, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get chiefComplaint => $composableBuilder(
-      column: $table.chiefComplaint,
+  ColumnFilters<String> get healthCenterId => $composableBuilder(
+      column: $table.healthCenterId,
       builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get symptoms => $composableBuilder(
-      column: $table.symptoms, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get diagnosis => $composableBuilder(
-      column: $table.diagnosis, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get treatment => $composableBuilder(
-      column: $table.treatment, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get vitalSigns => $composableBuilder(
-      column: $table.vitalSigns, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get photos => $composableBuilder(
-      column: $table.photos, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get doctorName => $composableBuilder(
+      column: $table.doctorName, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get syncStatus => $composableBuilder(
       column: $table.syncStatus, builder: (column) => ColumnFilters(column));
@@ -6438,36 +7725,27 @@ class $$ConsultationsTableOrderingComposer
   ColumnOrderings<String> get patientId => $composableBuilder(
       column: $table.patientId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get agentId => $composableBuilder(
-      column: $table.agentId, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get doctorId => $composableBuilder(
+      column: $table.doctorId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<DateTime> get date => $composableBuilder(
-      column: $table.date, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get chiefComplaint => $composableBuilder(
-      column: $table.chiefComplaint,
+  ColumnOrderings<String> get healthCenterId => $composableBuilder(
+      column: $table.healthCenterId,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get symptoms => $composableBuilder(
-      column: $table.symptoms, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get diagnosis => $composableBuilder(
-      column: $table.diagnosis, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get treatment => $composableBuilder(
-      column: $table.treatment, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get vitalSigns => $composableBuilder(
-      column: $table.vitalSigns, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get photos => $composableBuilder(
-      column: $table.photos, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get doctorName => $composableBuilder(
+      column: $table.doctorName, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get syncStatus => $composableBuilder(
       column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
@@ -6488,35 +7766,26 @@ class $$ConsultationsTableAnnotationComposer
   GeneratedColumn<String> get patientId =>
       $composableBuilder(column: $table.patientId, builder: (column) => column);
 
-  GeneratedColumn<String> get agentId =>
-      $composableBuilder(column: $table.agentId, builder: (column) => column);
+  GeneratedColumn<String> get doctorId =>
+      $composableBuilder(column: $table.doctorId, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get date =>
-      $composableBuilder(column: $table.date, builder: (column) => column);
+  GeneratedColumn<String> get healthCenterId => $composableBuilder(
+      column: $table.healthCenterId, builder: (column) => column);
 
-  GeneratedColumn<String> get chiefComplaint => $composableBuilder(
-      column: $table.chiefComplaint, builder: (column) => column);
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
 
-  GeneratedColumn<String> get symptoms =>
-      $composableBuilder(column: $table.symptoms, builder: (column) => column);
-
-  GeneratedColumn<String> get diagnosis =>
-      $composableBuilder(column: $table.diagnosis, builder: (column) => column);
-
-  GeneratedColumn<String> get treatment =>
-      $composableBuilder(column: $table.treatment, builder: (column) => column);
-
-  GeneratedColumn<String> get vitalSigns => $composableBuilder(
-      column: $table.vitalSigns, builder: (column) => column);
-
-  GeneratedColumn<String> get photos =>
-      $composableBuilder(column: $table.photos, builder: (column) => column);
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get doctorName => $composableBuilder(
+      column: $table.doctorName, builder: (column) => column);
 
   GeneratedColumn<String> get syncStatus => $composableBuilder(
       column: $table.syncStatus, builder: (column) => column);
@@ -6550,64 +7819,52 @@ class $$ConsultationsTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> patientId = const Value.absent(),
-            Value<String> agentId = const Value.absent(),
-            Value<DateTime> date = const Value.absent(),
-            Value<String> chiefComplaint = const Value.absent(),
-            Value<String> symptoms = const Value.absent(),
-            Value<String?> diagnosis = const Value.absent(),
-            Value<String?> treatment = const Value.absent(),
-            Value<String?> vitalSigns = const Value.absent(),
-            Value<String?> photos = const Value.absent(),
+            Value<String?> doctorId = const Value.absent(),
+            Value<String?> healthCenterId = const Value.absent(),
+            Value<String> status = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
-            Value<DateTime> updatedAt = const Value.absent(),
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<String?> doctorName = const Value.absent(),
             Value<String> syncStatus = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ConsultationsCompanion(
             id: id,
             patientId: patientId,
-            agentId: agentId,
-            date: date,
-            chiefComplaint: chiefComplaint,
-            symptoms: symptoms,
-            diagnosis: diagnosis,
-            treatment: treatment,
-            vitalSigns: vitalSigns,
-            photos: photos,
+            doctorId: doctorId,
+            healthCenterId: healthCenterId,
+            status: status,
+            notes: notes,
             createdAt: createdAt,
             updatedAt: updatedAt,
+            doctorName: doctorName,
             syncStatus: syncStatus,
             rowid: rowid,
           ),
           createCompanionCallback: ({
             required String id,
             required String patientId,
-            required String agentId,
-            required DateTime date,
-            required String chiefComplaint,
-            required String symptoms,
-            Value<String?> diagnosis = const Value.absent(),
-            Value<String?> treatment = const Value.absent(),
-            Value<String?> vitalSigns = const Value.absent(),
-            Value<String?> photos = const Value.absent(),
+            Value<String?> doctorId = const Value.absent(),
+            Value<String?> healthCenterId = const Value.absent(),
+            Value<String> status = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
             required DateTime createdAt,
-            required DateTime updatedAt,
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<String?> doctorName = const Value.absent(),
             Value<String> syncStatus = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ConsultationsCompanion.insert(
             id: id,
             patientId: patientId,
-            agentId: agentId,
-            date: date,
-            chiefComplaint: chiefComplaint,
-            symptoms: symptoms,
-            diagnosis: diagnosis,
-            treatment: treatment,
-            vitalSigns: vitalSigns,
-            photos: photos,
+            doctorId: doctorId,
+            healthCenterId: healthCenterId,
+            status: status,
+            notes: notes,
             createdAt: createdAt,
             updatedAt: updatedAt,
+            doctorName: doctorName,
             syncStatus: syncStatus,
             rowid: rowid,
           ),
@@ -6632,6 +7889,301 @@ typedef $$ConsultationsTableProcessedTableManager = ProcessedTableManager<
       BaseReferences<_$AppDatabase, $ConsultationsTable, Consultation>
     ),
     Consultation,
+    PrefetchHooks Function()>;
+typedef $$VitalSignsTableCreateCompanionBuilder = VitalSignsCompanion Function({
+  required String id,
+  required String patientId,
+  Value<String?> medicalRecordId,
+  Value<double?> temperature,
+  Value<int?> bloodPressureSys,
+  Value<int?> bloodPressureDia,
+  Value<int?> heartRate,
+  Value<int?> respiratoryRate,
+  Value<double?> oxygenSaturation,
+  required String agentId,
+  required DateTime recordedAt,
+  Value<String> syncStatus,
+  Value<bool> isSynced,
+  Value<int> rowid,
+});
+typedef $$VitalSignsTableUpdateCompanionBuilder = VitalSignsCompanion Function({
+  Value<String> id,
+  Value<String> patientId,
+  Value<String?> medicalRecordId,
+  Value<double?> temperature,
+  Value<int?> bloodPressureSys,
+  Value<int?> bloodPressureDia,
+  Value<int?> heartRate,
+  Value<int?> respiratoryRate,
+  Value<double?> oxygenSaturation,
+  Value<String> agentId,
+  Value<DateTime> recordedAt,
+  Value<String> syncStatus,
+  Value<bool> isSynced,
+  Value<int> rowid,
+});
+
+class $$VitalSignsTableFilterComposer
+    extends Composer<_$AppDatabase, $VitalSignsTable> {
+  $$VitalSignsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get medicalRecordId => $composableBuilder(
+      column: $table.medicalRecordId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get temperature => $composableBuilder(
+      column: $table.temperature, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get bloodPressureSys => $composableBuilder(
+      column: $table.bloodPressureSys,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get bloodPressureDia => $composableBuilder(
+      column: $table.bloodPressureDia,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get heartRate => $composableBuilder(
+      column: $table.heartRate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get respiratoryRate => $composableBuilder(
+      column: $table.respiratoryRate,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get oxygenSaturation => $composableBuilder(
+      column: $table.oxygenSaturation,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get recordedAt => $composableBuilder(
+      column: $table.recordedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnFilters(column));
+}
+
+class $$VitalSignsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VitalSignsTable> {
+  $$VitalSignsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get medicalRecordId => $composableBuilder(
+      column: $table.medicalRecordId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get temperature => $composableBuilder(
+      column: $table.temperature, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get bloodPressureSys => $composableBuilder(
+      column: $table.bloodPressureSys,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get bloodPressureDia => $composableBuilder(
+      column: $table.bloodPressureDia,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get heartRate => $composableBuilder(
+      column: $table.heartRate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get respiratoryRate => $composableBuilder(
+      column: $table.respiratoryRate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get oxygenSaturation => $composableBuilder(
+      column: $table.oxygenSaturation,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get recordedAt => $composableBuilder(
+      column: $table.recordedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnOrderings(column));
+}
+
+class $$VitalSignsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VitalSignsTable> {
+  $$VitalSignsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get patientId =>
+      $composableBuilder(column: $table.patientId, builder: (column) => column);
+
+  GeneratedColumn<String> get medicalRecordId => $composableBuilder(
+      column: $table.medicalRecordId, builder: (column) => column);
+
+  GeneratedColumn<double> get temperature => $composableBuilder(
+      column: $table.temperature, builder: (column) => column);
+
+  GeneratedColumn<int> get bloodPressureSys => $composableBuilder(
+      column: $table.bloodPressureSys, builder: (column) => column);
+
+  GeneratedColumn<int> get bloodPressureDia => $composableBuilder(
+      column: $table.bloodPressureDia, builder: (column) => column);
+
+  GeneratedColumn<int> get heartRate =>
+      $composableBuilder(column: $table.heartRate, builder: (column) => column);
+
+  GeneratedColumn<int> get respiratoryRate => $composableBuilder(
+      column: $table.respiratoryRate, builder: (column) => column);
+
+  GeneratedColumn<double> get oxygenSaturation => $composableBuilder(
+      column: $table.oxygenSaturation, builder: (column) => column);
+
+  GeneratedColumn<String> get agentId =>
+      $composableBuilder(column: $table.agentId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get recordedAt => $composableBuilder(
+      column: $table.recordedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$VitalSignsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $VitalSignsTable,
+    VitalSign,
+    $$VitalSignsTableFilterComposer,
+    $$VitalSignsTableOrderingComposer,
+    $$VitalSignsTableAnnotationComposer,
+    $$VitalSignsTableCreateCompanionBuilder,
+    $$VitalSignsTableUpdateCompanionBuilder,
+    (VitalSign, BaseReferences<_$AppDatabase, $VitalSignsTable, VitalSign>),
+    VitalSign,
+    PrefetchHooks Function()> {
+  $$VitalSignsTableTableManager(_$AppDatabase db, $VitalSignsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VitalSignsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VitalSignsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VitalSignsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> patientId = const Value.absent(),
+            Value<String?> medicalRecordId = const Value.absent(),
+            Value<double?> temperature = const Value.absent(),
+            Value<int?> bloodPressureSys = const Value.absent(),
+            Value<int?> bloodPressureDia = const Value.absent(),
+            Value<int?> heartRate = const Value.absent(),
+            Value<int?> respiratoryRate = const Value.absent(),
+            Value<double?> oxygenSaturation = const Value.absent(),
+            Value<String> agentId = const Value.absent(),
+            Value<DateTime> recordedAt = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VitalSignsCompanion(
+            id: id,
+            patientId: patientId,
+            medicalRecordId: medicalRecordId,
+            temperature: temperature,
+            bloodPressureSys: bloodPressureSys,
+            bloodPressureDia: bloodPressureDia,
+            heartRate: heartRate,
+            respiratoryRate: respiratoryRate,
+            oxygenSaturation: oxygenSaturation,
+            agentId: agentId,
+            recordedAt: recordedAt,
+            syncStatus: syncStatus,
+            isSynced: isSynced,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String patientId,
+            Value<String?> medicalRecordId = const Value.absent(),
+            Value<double?> temperature = const Value.absent(),
+            Value<int?> bloodPressureSys = const Value.absent(),
+            Value<int?> bloodPressureDia = const Value.absent(),
+            Value<int?> heartRate = const Value.absent(),
+            Value<int?> respiratoryRate = const Value.absent(),
+            Value<double?> oxygenSaturation = const Value.absent(),
+            required String agentId,
+            required DateTime recordedAt,
+            Value<String> syncStatus = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VitalSignsCompanion.insert(
+            id: id,
+            patientId: patientId,
+            medicalRecordId: medicalRecordId,
+            temperature: temperature,
+            bloodPressureSys: bloodPressureSys,
+            bloodPressureDia: bloodPressureDia,
+            heartRate: heartRate,
+            respiratoryRate: respiratoryRate,
+            oxygenSaturation: oxygenSaturation,
+            agentId: agentId,
+            recordedAt: recordedAt,
+            syncStatus: syncStatus,
+            isSynced: isSynced,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$VitalSignsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $VitalSignsTable,
+    VitalSign,
+    $$VitalSignsTableFilterComposer,
+    $$VitalSignsTableOrderingComposer,
+    $$VitalSignsTableAnnotationComposer,
+    $$VitalSignsTableCreateCompanionBuilder,
+    $$VitalSignsTableUpdateCompanionBuilder,
+    (VitalSign, BaseReferences<_$AppDatabase, $VitalSignsTable, VitalSign>),
+    VitalSign,
     PrefetchHooks Function()>;
 typedef $$SyncQueueTableCreateCompanionBuilder = SyncQueueCompanion Function({
   Value<int> id,
@@ -7734,6 +9286,338 @@ typedef $$VaccinationsTableProcessedTableManager = ProcessedTableManager<
     ),
     Vaccination,
     PrefetchHooks Function()>;
+typedef $$MaternalCaresTableCreateCompanionBuilder = MaternalCaresCompanion
+    Function({
+  required String id,
+  required String patientId,
+  Value<DateTime?> pregnancyStart,
+  Value<DateTime?> expectedDelivery,
+  Value<int> prenatalVisits,
+  Value<String> riskLevel,
+  Value<DateTime?> deliveryDate,
+  Value<String?> deliveryType,
+  Value<String?> outcome,
+  Value<double?> newbornWeight,
+  required String agentId,
+  Value<String?> notes,
+  required DateTime createdAt,
+  Value<DateTime?> updatedAt,
+  Value<String> syncStatus,
+  Value<int> rowid,
+});
+typedef $$MaternalCaresTableUpdateCompanionBuilder = MaternalCaresCompanion
+    Function({
+  Value<String> id,
+  Value<String> patientId,
+  Value<DateTime?> pregnancyStart,
+  Value<DateTime?> expectedDelivery,
+  Value<int> prenatalVisits,
+  Value<String> riskLevel,
+  Value<DateTime?> deliveryDate,
+  Value<String?> deliveryType,
+  Value<String?> outcome,
+  Value<double?> newbornWeight,
+  Value<String> agentId,
+  Value<String?> notes,
+  Value<DateTime> createdAt,
+  Value<DateTime?> updatedAt,
+  Value<String> syncStatus,
+  Value<int> rowid,
+});
+
+class $$MaternalCaresTableFilterComposer
+    extends Composer<_$AppDatabase, $MaternalCaresTable> {
+  $$MaternalCaresTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get pregnancyStart => $composableBuilder(
+      column: $table.pregnancyStart,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get expectedDelivery => $composableBuilder(
+      column: $table.expectedDelivery,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get prenatalVisits => $composableBuilder(
+      column: $table.prenatalVisits,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get riskLevel => $composableBuilder(
+      column: $table.riskLevel, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get deliveryDate => $composableBuilder(
+      column: $table.deliveryDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get deliveryType => $composableBuilder(
+      column: $table.deliveryType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get outcome => $composableBuilder(
+      column: $table.outcome, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get newbornWeight => $composableBuilder(
+      column: $table.newbornWeight, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+}
+
+class $$MaternalCaresTableOrderingComposer
+    extends Composer<_$AppDatabase, $MaternalCaresTable> {
+  $$MaternalCaresTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get pregnancyStart => $composableBuilder(
+      column: $table.pregnancyStart,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get expectedDelivery => $composableBuilder(
+      column: $table.expectedDelivery,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get prenatalVisits => $composableBuilder(
+      column: $table.prenatalVisits,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get riskLevel => $composableBuilder(
+      column: $table.riskLevel, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deliveryDate => $composableBuilder(
+      column: $table.deliveryDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get deliveryType => $composableBuilder(
+      column: $table.deliveryType,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get outcome => $composableBuilder(
+      column: $table.outcome, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get newbornWeight => $composableBuilder(
+      column: $table.newbornWeight,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+}
+
+class $$MaternalCaresTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MaternalCaresTable> {
+  $$MaternalCaresTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get patientId =>
+      $composableBuilder(column: $table.patientId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get pregnancyStart => $composableBuilder(
+      column: $table.pregnancyStart, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get expectedDelivery => $composableBuilder(
+      column: $table.expectedDelivery, builder: (column) => column);
+
+  GeneratedColumn<int> get prenatalVisits => $composableBuilder(
+      column: $table.prenatalVisits, builder: (column) => column);
+
+  GeneratedColumn<String> get riskLevel =>
+      $composableBuilder(column: $table.riskLevel, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deliveryDate => $composableBuilder(
+      column: $table.deliveryDate, builder: (column) => column);
+
+  GeneratedColumn<String> get deliveryType => $composableBuilder(
+      column: $table.deliveryType, builder: (column) => column);
+
+  GeneratedColumn<String> get outcome =>
+      $composableBuilder(column: $table.outcome, builder: (column) => column);
+
+  GeneratedColumn<double> get newbornWeight => $composableBuilder(
+      column: $table.newbornWeight, builder: (column) => column);
+
+  GeneratedColumn<String> get agentId =>
+      $composableBuilder(column: $table.agentId, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+}
+
+class $$MaternalCaresTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $MaternalCaresTable,
+    MaternalCare,
+    $$MaternalCaresTableFilterComposer,
+    $$MaternalCaresTableOrderingComposer,
+    $$MaternalCaresTableAnnotationComposer,
+    $$MaternalCaresTableCreateCompanionBuilder,
+    $$MaternalCaresTableUpdateCompanionBuilder,
+    (
+      MaternalCare,
+      BaseReferences<_$AppDatabase, $MaternalCaresTable, MaternalCare>
+    ),
+    MaternalCare,
+    PrefetchHooks Function()> {
+  $$MaternalCaresTableTableManager(_$AppDatabase db, $MaternalCaresTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MaternalCaresTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MaternalCaresTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MaternalCaresTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> patientId = const Value.absent(),
+            Value<DateTime?> pregnancyStart = const Value.absent(),
+            Value<DateTime?> expectedDelivery = const Value.absent(),
+            Value<int> prenatalVisits = const Value.absent(),
+            Value<String> riskLevel = const Value.absent(),
+            Value<DateTime?> deliveryDate = const Value.absent(),
+            Value<String?> deliveryType = const Value.absent(),
+            Value<String?> outcome = const Value.absent(),
+            Value<double?> newbornWeight = const Value.absent(),
+            Value<String> agentId = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              MaternalCaresCompanion(
+            id: id,
+            patientId: patientId,
+            pregnancyStart: pregnancyStart,
+            expectedDelivery: expectedDelivery,
+            prenatalVisits: prenatalVisits,
+            riskLevel: riskLevel,
+            deliveryDate: deliveryDate,
+            deliveryType: deliveryType,
+            outcome: outcome,
+            newbornWeight: newbornWeight,
+            agentId: agentId,
+            notes: notes,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            syncStatus: syncStatus,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String patientId,
+            Value<DateTime?> pregnancyStart = const Value.absent(),
+            Value<DateTime?> expectedDelivery = const Value.absent(),
+            Value<int> prenatalVisits = const Value.absent(),
+            Value<String> riskLevel = const Value.absent(),
+            Value<DateTime?> deliveryDate = const Value.absent(),
+            Value<String?> deliveryType = const Value.absent(),
+            Value<String?> outcome = const Value.absent(),
+            Value<double?> newbornWeight = const Value.absent(),
+            required String agentId,
+            Value<String?> notes = const Value.absent(),
+            required DateTime createdAt,
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              MaternalCaresCompanion.insert(
+            id: id,
+            patientId: patientId,
+            pregnancyStart: pregnancyStart,
+            expectedDelivery: expectedDelivery,
+            prenatalVisits: prenatalVisits,
+            riskLevel: riskLevel,
+            deliveryDate: deliveryDate,
+            deliveryType: deliveryType,
+            outcome: outcome,
+            newbornWeight: newbornWeight,
+            agentId: agentId,
+            notes: notes,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            syncStatus: syncStatus,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$MaternalCaresTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $MaternalCaresTable,
+    MaternalCare,
+    $$MaternalCaresTableFilterComposer,
+    $$MaternalCaresTableOrderingComposer,
+    $$MaternalCaresTableAnnotationComposer,
+    $$MaternalCaresTableCreateCompanionBuilder,
+    $$MaternalCaresTableUpdateCompanionBuilder,
+    (
+      MaternalCare,
+      BaseReferences<_$AppDatabase, $MaternalCaresTable, MaternalCare>
+    ),
+    MaternalCare,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -7746,6 +9630,8 @@ class $AppDatabaseManager {
       $$HouseholdMembersTableTableManager(_db, _db.householdMembers);
   $$ConsultationsTableTableManager get consultations =>
       $$ConsultationsTableTableManager(_db, _db.consultations);
+  $$VitalSignsTableTableManager get vitalSigns =>
+      $$VitalSignsTableTableManager(_db, _db.vitalSigns);
   $$SyncQueueTableTableManager get syncQueue =>
       $$SyncQueueTableTableManager(_db, _db.syncQueue);
   $$CaseReportsTableTableManager get caseReports =>
@@ -7754,4 +9640,6 @@ class $AppDatabaseManager {
       $$MedicalProtocolsTableTableManager(_db, _db.medicalProtocols);
   $$VaccinationsTableTableManager get vaccinations =>
       $$VaccinationsTableTableManager(_db, _db.vaccinations);
+  $$MaternalCaresTableTableManager get maternalCares =>
+      $$MaternalCaresTableTableManager(_db, _db.maternalCares);
 }

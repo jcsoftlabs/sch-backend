@@ -76,18 +76,34 @@ class HouseholdMembers extends Table {
 class Consultations extends Table {
   TextColumn get id => text()();
   TextColumn get patientId => text()();
-  TextColumn get agentId => text()();
-  DateTimeColumn get date => dateTime()();
-  TextColumn get chiefComplaint => text()();
-  TextColumn get symptoms => text()(); // JSON array
-  TextColumn get diagnosis => text().nullable()();
-  TextColumn get treatment => text().nullable()();
-  TextColumn get vitalSigns => text().nullable()(); // JSON object
-  TextColumn get photos => text().nullable()(); // JSON array of paths
+  TextColumn get doctorId => text().nullable()();
+  TextColumn get healthCenterId => text().nullable()();
+  TextColumn get status => text().withDefault(const Constant('PENDING'))();
+  TextColumn get notes => text().nullable()();
   DateTimeColumn get createdAt => dateTime()();
-  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+  TextColumn get doctorName => text().nullable()(); // Cached reference
   TextColumn get syncStatus => text().withDefault(const Constant('pending'))();
   
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class VitalSigns extends Table {
+  TextColumn get id => text()();
+  TextColumn get patientId => text()();
+  TextColumn get medicalRecordId => text().nullable()();
+  RealColumn get temperature => real().nullable()();
+  IntColumn get bloodPressureSys => integer().nullable()();
+  IntColumn get bloodPressureDia => integer().nullable()();
+  IntColumn get heartRate => integer().nullable()();
+  IntColumn get respiratoryRate => integer().nullable()();
+  RealColumn get oxygenSaturation => real().nullable()();
+  TextColumn get agentId => text()();
+  DateTimeColumn get recordedAt => dateTime()();
+  TextColumn get syncStatus => text().withDefault(const Constant('pending'))();
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -161,7 +177,28 @@ class Vaccinations extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Patients, Households, HouseholdMembers, Consultations, SyncQueue, CaseReports, MedicalProtocols, Vaccinations])
+class MaternalCares extends Table {
+  TextColumn get id => text()();
+  TextColumn get patientId => text()();
+  DateTimeColumn get pregnancyStart => dateTime().nullable()();
+  DateTimeColumn get expectedDelivery => dateTime().nullable()();
+  IntColumn get prenatalVisits => integer().withDefault(const Constant(0))();
+  TextColumn get riskLevel => text().withDefault(const Constant('NORMAL'))();
+  DateTimeColumn get deliveryDate => dateTime().nullable()();
+  TextColumn get deliveryType => text().nullable()();
+  TextColumn get outcome => text().nullable()();
+  RealColumn get newbornWeight => real().nullable()();
+  TextColumn get agentId => text()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('pending'))();
+  
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(tables: [Patients, Households, HouseholdMembers, Consultations, VitalSigns, SyncQueue, CaseReports, MedicalProtocols, Vaccinations, MaternalCares])
 
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

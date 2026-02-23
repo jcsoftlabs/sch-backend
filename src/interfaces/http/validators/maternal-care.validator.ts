@@ -4,6 +4,7 @@ import { RiskLevel } from '@prisma/client';
 export const createMaternalCareSchema = z.object({
     body: z.object({
         patientId: z.string().uuid(),
+        agentId: z.string().uuid(),
         pregnancyStart: z.string().datetime().optional(),
         expectedDelivery: z.string().datetime().optional(),
         riskLevel: z.nativeEnum(RiskLevel).optional(),

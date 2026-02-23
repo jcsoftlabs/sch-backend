@@ -3,8 +3,8 @@ import '../../data/models/patient_model.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../vaccinations/presentation/widgets/vaccination_schedule_widget.dart';
-import '../widgets/vital_signs_history_widget.dart';
 import '../widgets/consultations_history_widget.dart';
+import '../widgets/maternal_care_card_widget.dart';
 
 class PatientDetailsPage extends StatelessWidget {
   final PatientModel? patient;
@@ -42,6 +42,12 @@ class PatientDetailsPage extends StatelessWidget {
             _buildHeaderCard(context),
             const SizedBox(height: 24),
             
+            // Maternal Care Section (Pregnancy Tracking)
+            if (patient!.gender == 'F' || patient!.gender == 'Féminin') ...[
+              MaternalCareCardWidget(patientId: patient!.id),
+              const SizedBox(height: 32),
+            ],
+
             // Vital Signs Section
             VitalSignsHistoryWidget(patientId: patient!.id),
             const SizedBox(height: 32),

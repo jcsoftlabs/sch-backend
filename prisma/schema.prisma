@@ -143,6 +143,7 @@ model User {
   appointmentsDoctor Appointment[]     @relation("AppointmentDoctor")
   smsMessages        SMSMessage[]      @relation("SMSAgent")
   prescriptionsDoctor Prescription[]   @relation("PrescriptionDoctor")
+  maternalCares      MaternalCare[]    @relation("MaternalCareAgent")
   diagnosesDoctor    Diagnosis[]       @relation("DiagnosisDoctor")
 }
 
@@ -310,6 +311,8 @@ model MaternalCare {
   deliveryType     String?   // normal, césarienne
   outcome          String?   // vivant, mort-né, etc.
   newbornWeight    Float?    // poids en kg
+  agentId          String
+  agent            User      @relation("MaternalCareAgent", fields: [agentId], references: [id])
   notes            String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt

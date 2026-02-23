@@ -12,6 +12,9 @@ import '../../features/triage/presentation/pages/create_case_report_page.dart';
 import '../../features/triage/presentation/pages/case_report_details_page.dart';
 import '../../features/vaccinations/presentation/pages/create_vaccination_page.dart';
 import '../../features/patients/presentation/pages/create_vital_sign_page.dart';
+import '../../features/patients/presentation/pages/create_maternal_care_page.dart';
+import '../../features/patients/presentation/pages/record_prenatal_visit_page.dart';
+import '../../features/patients/presentation/pages/record_delivery_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -90,6 +93,30 @@ class AppRouter {
         builder: (context, state) {
           final id = state.pathParameters['id']!;
           return CreateVitalSignPage(patientId: id);
+        },
+      ),
+      GoRoute(
+        path: '/patients/:id/maternal/new',
+        name: 'create-maternal-care',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return CreateMaternalCarePage(patientId: id);
+        },
+      ),
+      GoRoute(
+        path: '/maternal/:id/visit',
+        name: 'record-prenatal-visit',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return RecordPrenatalVisitPage(maternalCareId: id);
+        },
+      ),
+      GoRoute(
+        path: '/maternal/:id/delivery',
+        name: 'record-delivery',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return RecordDeliveryPage(maternalCareId: id);
         },
       ),
     ],

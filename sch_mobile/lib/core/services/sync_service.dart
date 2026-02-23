@@ -114,6 +114,12 @@ class SyncService {
       case 'CaseReport':
         await _syncCaseReport(op.operation, op.entityId, payload);
         break;
+      case 'VITAL_SIGN':
+        await _syncVitalSign(op.operation, op.entityId, payload);
+        break;
+      case 'MATERNAL_CARE':
+        await _syncMaternalCare(op.operation, op.entityId, payload);
+        break;
       default:
         throw Exception('Unknown entity type: ${op.entityType}');
     }
@@ -191,6 +197,39 @@ class SyncService {
         break;
       case 'DELETE':
         await _apiClient.dio.delete('/case-reports/$entityId');
+        break;
+    }
+  }
+
+  // Sync vital sign operations
+  Future<void> _syncVitalSign(
+    String operation,
+    String entityId,
+    Map<String, dynamic> payload,
+  ) async {
+    switch (operation) {
+      case 'CREATE':
+        final patientId = payload['patientId'];
+        await _apiClient.dio.post('/vital-signs/patient/$patientId', data: payload);
+        break;
+    }
+  }
+
+  // Sync maternal care operations
+  Future<void> _syncMaternalCare(
+    String operation,
+    String entityId,
+    Map<String, dynamic> payload,
+  ) async {
+    switch (operation) {
+      case 'CREATE':
+        await _apiClient.dio.post('/maternal-care', data: payload);
+        break;
+      case 'UPDATE':
+        await _apiClient.dio.put('/maternal-care/$entityId', data: payload);
+        break;
+      case 'DELETE':
+        await _apiClient.dio.delete('/maternal-care/$entityId');
         break;
     }
   }
