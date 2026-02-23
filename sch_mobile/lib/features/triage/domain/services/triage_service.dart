@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import '../../data/models/case_report_model.dart';
 import '../../data/models/medical_protocol_model.dart';
 import '../../data/models/triage_result_model.dart';
@@ -6,8 +7,9 @@ import '../../data/repositories/medical_protocol_repository.dart';
 /// Service for analyzing symptoms and determining urgency level
 class TriageService {
   final MedicalProtocolRepository _protocolRepo;
+  final Dio _dio;
 
-  TriageService(this._protocolRepo);
+  TriageService(this._protocolRepo, this._dio);
 
   /// Analyze symptoms text and determine urgency level
   /// 
@@ -57,7 +59,34 @@ class TriageService {
       }
     }
 
-    // 4. Determine urgency level
+    // 4. Try Online AI Triage first, fallback to offline
+    try {
+      final response = await _dio.post('/triage/analyze', data: {
+        'symptoms': symptoms,
+      });
+
+      if (response.data != null && response.data['status'] == 'success') {
+        final aiData = response.data['data'];
+        
+        // Parse the AI Urgency string to Enum
+        UrgencyLevel aiUrgency = switch (aiData['urgency']) {
+          'CRITICAL' => UrgencyLevel.critical,
+          'URGENT' => UrgencyLevel.urgent,
+          _ => UrgencyLevel.normal,
+        };
+
+        return TriageResultModel(
+          urgencyLevel: aiUrgency,
+          matchedProtocol: bestMatch,
+          keywords: (aiData['keywords'] as List).cast<String>(),
+          recommendation: aiData['clinicalAssessment'], // Use AI Assessment as recommendation
+        );
+      }
+    } catch (e) {
+      print('⚠️ Online AI Triage failed, falling back to offline algorithm: $e');
+    }
+
+    // 5. Offline Fallback: Determine urgency level
     UrgencyLevel urgency = UrgencyLevel.normal;
 
     if (bestMatch != null) {
@@ -67,13 +96,13 @@ class TriageService {
       urgency = _determineUrgencyFromKeywords(normalized);
     }
 
-    // 5. Generate recommendation
+    // 6. Generate fallback recommendation
     final recommendation = _generateRecommendation(urgency, bestMatch);
 
     return TriageResultModel(
       urgencyLevel: urgency,
       matchedProtocol: bestMatch,
-      keywords: matchedKeywords,
+      keywords: matchedKeywords.isEmpty ? ['analyse', 'hors-ligne'] : matchedKeywords,
       recommendation: recommendation,
     );
   }

@@ -40,7 +40,10 @@ final offlineMedicalProtocolRepositoryProvider =
 // ============================================================================
 
 final triageServiceProvider = Provider<TriageService>((ref) {
-  return TriageService(ref.read(medicalProtocolRepositoryProvider));
+  return TriageService(
+    ref.read(medicalProtocolRepositoryProvider),
+    ApiClient().dio,
+  );
 });
 
 // ============================================================================

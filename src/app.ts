@@ -24,6 +24,7 @@ import prescriptionRoutes from './interfaces/http/routes/prescription.routes';
 import emergencyContactRoutes from './interfaces/http/routes/emergency-contact.routes';
 import diagnosisRoutes from './interfaces/http/routes/diagnosis.routes';
 import labResultRoutes from './interfaces/http/routes/lab-result.routes';
+import triageRoutes from './interfaces/http/routes/triage.routes';
 import { errorHandler } from './interfaces/http/middlewares/errorHandler';
 import { authLimiter, apiLimiter } from './interfaces/http/middlewares/rateLimiter.middleware';
 
@@ -96,6 +97,7 @@ app.use('/api/prescriptions', prescriptionRoutes);
 app.use('/api/emergency-contacts', emergencyContactRoutes);
 app.use('/api/diagnoses', diagnosisRoutes);
 app.use('/api/lab-results', labResultRoutes);
+app.use('/api/triage', triageRoutes);
 
 app.get('/health', (req, res) => {
 
