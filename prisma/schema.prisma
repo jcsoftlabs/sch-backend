@@ -145,6 +145,7 @@ model User {
   prescriptionsDoctor Prescription[]   @relation("PrescriptionDoctor")
   maternalCares      MaternalCare[]    @relation("MaternalCareAgent")
   nutritionRecords   NutritionRecord[] @relation("NutritionRecordAgent")
+  appointmentsAgent  Appointment[]     @relation("AppointmentAgent")
   diagnosesDoctor    Diagnosis[]       @relation("DiagnosisDoctor")
 }
 
@@ -386,6 +387,8 @@ model Appointment {
   duration       Int               @default(30) // minutes
   reason         String?
   status         AppointmentStatus @default(SCHEDULED)
+  agentId        String
+  agent          User              @relation("AppointmentAgent", fields: [agentId], references: [id])
   notes          String?
   reminderSent   Boolean           @default(false)
   createdAt      DateTime          @default(now())

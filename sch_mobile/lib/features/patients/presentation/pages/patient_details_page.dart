@@ -6,6 +6,7 @@ import '../../../vaccinations/presentation/widgets/vaccination_schedule_widget.d
 import '../widgets/consultations_history_widget.dart';
 import '../widgets/maternal_care_card_widget.dart';
 import '../widgets/nutrition_history_widget.dart';
+import '../widgets/appointments_calendar_widget.dart';
 
 class PatientDetailsPage extends StatelessWidget {
   final PatientModel? patient;
@@ -55,6 +56,10 @@ class PatientDetailsPage extends StatelessWidget {
 
             // Nutrition Tracking Section
             NutritionHistoryWidget(patientId: patient!.id),
+            const SizedBox(height: 32),
+
+            // Appointments Section
+            AppointmentsCalendarWidget(patientId: patient!.id),
             const SizedBox(height: 32),
 
             // Vaccinations Section

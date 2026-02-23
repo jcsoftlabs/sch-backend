@@ -214,6 +214,26 @@ class NutritionRecords extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class Appointments extends Table {
+  TextColumn get id => text()();
+  TextColumn get patientId => text()();
+  TextColumn get doctorId => text().nullable()();
+  TextColumn get healthCenterId => text().nullable()();
+  DateTimeColumn get scheduledAt => dateTime()();
+  IntColumn get duration => integer().withDefault(const Constant(30))();
+  TextColumn get reason => text().nullable()();
+  TextColumn get status => text().withDefault(const Constant('SCHEDULED'))();
+  TextColumn get agentId => text()();
+  TextColumn get notes => text().nullable()();
+  BoolColumn get reminderSent => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('pending'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(tables: [
   Patients,
   Households,
@@ -225,7 +245,8 @@ class NutritionRecords extends Table {
   Vaccinations,
   VitalSigns,
   MaternalCares,
-  NutritionRecords
+  NutritionRecords,
+  Appointments
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

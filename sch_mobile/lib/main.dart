@@ -5,9 +5,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/providers/accessibility_provider.dart';
+import 'core/services/notification_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize local notifications
+  await NotificationService().init();
   // Default: allow all orientations (user can lock in settings)
   SystemChrome.setPreferredOrientations(DeviceOrientation.values);
   runApp(

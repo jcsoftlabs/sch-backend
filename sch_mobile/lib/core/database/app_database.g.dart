@@ -7104,6 +7104,689 @@ class NutritionRecordsCompanion extends UpdateCompanion<NutritionRecord> {
   }
 }
 
+class $AppointmentsTable extends Appointments
+    with TableInfo<$AppointmentsTable, Appointment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AppointmentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
+  @override
+  late final GeneratedColumn<String> patientId = GeneratedColumn<String>(
+      'patient_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _doctorIdMeta =
+      const VerificationMeta('doctorId');
+  @override
+  late final GeneratedColumn<String> doctorId = GeneratedColumn<String>(
+      'doctor_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _healthCenterIdMeta =
+      const VerificationMeta('healthCenterId');
+  @override
+  late final GeneratedColumn<String> healthCenterId = GeneratedColumn<String>(
+      'health_center_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _scheduledAtMeta =
+      const VerificationMeta('scheduledAt');
+  @override
+  late final GeneratedColumn<DateTime> scheduledAt = GeneratedColumn<DateTime>(
+      'scheduled_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _durationMeta =
+      const VerificationMeta('duration');
+  @override
+  late final GeneratedColumn<int> duration = GeneratedColumn<int>(
+      'duration', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(30));
+  static const VerificationMeta _reasonMeta = const VerificationMeta('reason');
+  @override
+  late final GeneratedColumn<String> reason = GeneratedColumn<String>(
+      'reason', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('SCHEDULED'));
+  static const VerificationMeta _agentIdMeta =
+      const VerificationMeta('agentId');
+  @override
+  late final GeneratedColumn<String> agentId = GeneratedColumn<String>(
+      'agent_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _reminderSentMeta =
+      const VerificationMeta('reminderSent');
+  @override
+  late final GeneratedColumn<bool> reminderSent = GeneratedColumn<bool>(
+      'reminder_sent', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("reminder_sent" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('pending'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        patientId,
+        doctorId,
+        healthCenterId,
+        scheduledAt,
+        duration,
+        reason,
+        status,
+        agentId,
+        notes,
+        reminderSent,
+        createdAt,
+        updatedAt,
+        syncStatus
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'appointments';
+  @override
+  VerificationContext validateIntegrity(Insertable<Appointment> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
+    } else if (isInserting) {
+      context.missing(_patientIdMeta);
+    }
+    if (data.containsKey('doctor_id')) {
+      context.handle(_doctorIdMeta,
+          doctorId.isAcceptableOrUnknown(data['doctor_id']!, _doctorIdMeta));
+    }
+    if (data.containsKey('health_center_id')) {
+      context.handle(
+          _healthCenterIdMeta,
+          healthCenterId.isAcceptableOrUnknown(
+              data['health_center_id']!, _healthCenterIdMeta));
+    }
+    if (data.containsKey('scheduled_at')) {
+      context.handle(
+          _scheduledAtMeta,
+          scheduledAt.isAcceptableOrUnknown(
+              data['scheduled_at']!, _scheduledAtMeta));
+    } else if (isInserting) {
+      context.missing(_scheduledAtMeta);
+    }
+    if (data.containsKey('duration')) {
+      context.handle(_durationMeta,
+          duration.isAcceptableOrUnknown(data['duration']!, _durationMeta));
+    }
+    if (data.containsKey('reason')) {
+      context.handle(_reasonMeta,
+          reason.isAcceptableOrUnknown(data['reason']!, _reasonMeta));
+    }
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    }
+    if (data.containsKey('agent_id')) {
+      context.handle(_agentIdMeta,
+          agentId.isAcceptableOrUnknown(data['agent_id']!, _agentIdMeta));
+    } else if (isInserting) {
+      context.missing(_agentIdMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    }
+    if (data.containsKey('reminder_sent')) {
+      context.handle(
+          _reminderSentMeta,
+          reminderSent.isAcceptableOrUnknown(
+              data['reminder_sent']!, _reminderSentMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Appointment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Appointment(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}patient_id'])!,
+      doctorId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}doctor_id']),
+      healthCenterId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}health_center_id']),
+      scheduledAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}scheduled_at'])!,
+      duration: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}duration'])!,
+      reason: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reason']),
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+      agentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}agent_id'])!,
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
+      reminderSent: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}reminder_sent'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at']),
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+    );
+  }
+
+  @override
+  $AppointmentsTable createAlias(String alias) {
+    return $AppointmentsTable(attachedDatabase, alias);
+  }
+}
+
+class Appointment extends DataClass implements Insertable<Appointment> {
+  final String id;
+  final String patientId;
+  final String? doctorId;
+  final String? healthCenterId;
+  final DateTime scheduledAt;
+  final int duration;
+  final String? reason;
+  final String status;
+  final String agentId;
+  final String? notes;
+  final bool reminderSent;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  final String syncStatus;
+  const Appointment(
+      {required this.id,
+      required this.patientId,
+      this.doctorId,
+      this.healthCenterId,
+      required this.scheduledAt,
+      required this.duration,
+      this.reason,
+      required this.status,
+      required this.agentId,
+      this.notes,
+      required this.reminderSent,
+      required this.createdAt,
+      this.updatedAt,
+      required this.syncStatus});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['patient_id'] = Variable<String>(patientId);
+    if (!nullToAbsent || doctorId != null) {
+      map['doctor_id'] = Variable<String>(doctorId);
+    }
+    if (!nullToAbsent || healthCenterId != null) {
+      map['health_center_id'] = Variable<String>(healthCenterId);
+    }
+    map['scheduled_at'] = Variable<DateTime>(scheduledAt);
+    map['duration'] = Variable<int>(duration);
+    if (!nullToAbsent || reason != null) {
+      map['reason'] = Variable<String>(reason);
+    }
+    map['status'] = Variable<String>(status);
+    map['agent_id'] = Variable<String>(agentId);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['reminder_sent'] = Variable<bool>(reminderSent);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || updatedAt != null) {
+      map['updated_at'] = Variable<DateTime>(updatedAt);
+    }
+    map['sync_status'] = Variable<String>(syncStatus);
+    return map;
+  }
+
+  AppointmentsCompanion toCompanion(bool nullToAbsent) {
+    return AppointmentsCompanion(
+      id: Value(id),
+      patientId: Value(patientId),
+      doctorId: doctorId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doctorId),
+      healthCenterId: healthCenterId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(healthCenterId),
+      scheduledAt: Value(scheduledAt),
+      duration: Value(duration),
+      reason:
+          reason == null && nullToAbsent ? const Value.absent() : Value(reason),
+      status: Value(status),
+      agentId: Value(agentId),
+      notes:
+          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
+      reminderSent: Value(reminderSent),
+      createdAt: Value(createdAt),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
+      syncStatus: Value(syncStatus),
+    );
+  }
+
+  factory Appointment.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Appointment(
+      id: serializer.fromJson<String>(json['id']),
+      patientId: serializer.fromJson<String>(json['patientId']),
+      doctorId: serializer.fromJson<String?>(json['doctorId']),
+      healthCenterId: serializer.fromJson<String?>(json['healthCenterId']),
+      scheduledAt: serializer.fromJson<DateTime>(json['scheduledAt']),
+      duration: serializer.fromJson<int>(json['duration']),
+      reason: serializer.fromJson<String?>(json['reason']),
+      status: serializer.fromJson<String>(json['status']),
+      agentId: serializer.fromJson<String>(json['agentId']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      reminderSent: serializer.fromJson<bool>(json['reminderSent']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'patientId': serializer.toJson<String>(patientId),
+      'doctorId': serializer.toJson<String?>(doctorId),
+      'healthCenterId': serializer.toJson<String?>(healthCenterId),
+      'scheduledAt': serializer.toJson<DateTime>(scheduledAt),
+      'duration': serializer.toJson<int>(duration),
+      'reason': serializer.toJson<String?>(reason),
+      'status': serializer.toJson<String>(status),
+      'agentId': serializer.toJson<String>(agentId),
+      'notes': serializer.toJson<String?>(notes),
+      'reminderSent': serializer.toJson<bool>(reminderSent),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime?>(updatedAt),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+    };
+  }
+
+  Appointment copyWith(
+          {String? id,
+          String? patientId,
+          Value<String?> doctorId = const Value.absent(),
+          Value<String?> healthCenterId = const Value.absent(),
+          DateTime? scheduledAt,
+          int? duration,
+          Value<String?> reason = const Value.absent(),
+          String? status,
+          String? agentId,
+          Value<String?> notes = const Value.absent(),
+          bool? reminderSent,
+          DateTime? createdAt,
+          Value<DateTime?> updatedAt = const Value.absent(),
+          String? syncStatus}) =>
+      Appointment(
+        id: id ?? this.id,
+        patientId: patientId ?? this.patientId,
+        doctorId: doctorId.present ? doctorId.value : this.doctorId,
+        healthCenterId:
+            healthCenterId.present ? healthCenterId.value : this.healthCenterId,
+        scheduledAt: scheduledAt ?? this.scheduledAt,
+        duration: duration ?? this.duration,
+        reason: reason.present ? reason.value : this.reason,
+        status: status ?? this.status,
+        agentId: agentId ?? this.agentId,
+        notes: notes.present ? notes.value : this.notes,
+        reminderSent: reminderSent ?? this.reminderSent,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
+        syncStatus: syncStatus ?? this.syncStatus,
+      );
+  Appointment copyWithCompanion(AppointmentsCompanion data) {
+    return Appointment(
+      id: data.id.present ? data.id.value : this.id,
+      patientId: data.patientId.present ? data.patientId.value : this.patientId,
+      doctorId: data.doctorId.present ? data.doctorId.value : this.doctorId,
+      healthCenterId: data.healthCenterId.present
+          ? data.healthCenterId.value
+          : this.healthCenterId,
+      scheduledAt:
+          data.scheduledAt.present ? data.scheduledAt.value : this.scheduledAt,
+      duration: data.duration.present ? data.duration.value : this.duration,
+      reason: data.reason.present ? data.reason.value : this.reason,
+      status: data.status.present ? data.status.value : this.status,
+      agentId: data.agentId.present ? data.agentId.value : this.agentId,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      reminderSent: data.reminderSent.present
+          ? data.reminderSent.value
+          : this.reminderSent,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Appointment(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('doctorId: $doctorId, ')
+          ..write('healthCenterId: $healthCenterId, ')
+          ..write('scheduledAt: $scheduledAt, ')
+          ..write('duration: $duration, ')
+          ..write('reason: $reason, ')
+          ..write('status: $status, ')
+          ..write('agentId: $agentId, ')
+          ..write('notes: $notes, ')
+          ..write('reminderSent: $reminderSent, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('syncStatus: $syncStatus')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      patientId,
+      doctorId,
+      healthCenterId,
+      scheduledAt,
+      duration,
+      reason,
+      status,
+      agentId,
+      notes,
+      reminderSent,
+      createdAt,
+      updatedAt,
+      syncStatus);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Appointment &&
+          other.id == this.id &&
+          other.patientId == this.patientId &&
+          other.doctorId == this.doctorId &&
+          other.healthCenterId == this.healthCenterId &&
+          other.scheduledAt == this.scheduledAt &&
+          other.duration == this.duration &&
+          other.reason == this.reason &&
+          other.status == this.status &&
+          other.agentId == this.agentId &&
+          other.notes == this.notes &&
+          other.reminderSent == this.reminderSent &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.syncStatus == this.syncStatus);
+}
+
+class AppointmentsCompanion extends UpdateCompanion<Appointment> {
+  final Value<String> id;
+  final Value<String> patientId;
+  final Value<String?> doctorId;
+  final Value<String?> healthCenterId;
+  final Value<DateTime> scheduledAt;
+  final Value<int> duration;
+  final Value<String?> reason;
+  final Value<String> status;
+  final Value<String> agentId;
+  final Value<String?> notes;
+  final Value<bool> reminderSent;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> updatedAt;
+  final Value<String> syncStatus;
+  final Value<int> rowid;
+  const AppointmentsCompanion({
+    this.id = const Value.absent(),
+    this.patientId = const Value.absent(),
+    this.doctorId = const Value.absent(),
+    this.healthCenterId = const Value.absent(),
+    this.scheduledAt = const Value.absent(),
+    this.duration = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.status = const Value.absent(),
+    this.agentId = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.reminderSent = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AppointmentsCompanion.insert({
+    required String id,
+    required String patientId,
+    this.doctorId = const Value.absent(),
+    this.healthCenterId = const Value.absent(),
+    required DateTime scheduledAt,
+    this.duration = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.status = const Value.absent(),
+    required String agentId,
+    this.notes = const Value.absent(),
+    this.reminderSent = const Value.absent(),
+    required DateTime createdAt,
+    this.updatedAt = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        patientId = Value(patientId),
+        scheduledAt = Value(scheduledAt),
+        agentId = Value(agentId),
+        createdAt = Value(createdAt);
+  static Insertable<Appointment> custom({
+    Expression<String>? id,
+    Expression<String>? patientId,
+    Expression<String>? doctorId,
+    Expression<String>? healthCenterId,
+    Expression<DateTime>? scheduledAt,
+    Expression<int>? duration,
+    Expression<String>? reason,
+    Expression<String>? status,
+    Expression<String>? agentId,
+    Expression<String>? notes,
+    Expression<bool>? reminderSent,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? syncStatus,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (patientId != null) 'patient_id': patientId,
+      if (doctorId != null) 'doctor_id': doctorId,
+      if (healthCenterId != null) 'health_center_id': healthCenterId,
+      if (scheduledAt != null) 'scheduled_at': scheduledAt,
+      if (duration != null) 'duration': duration,
+      if (reason != null) 'reason': reason,
+      if (status != null) 'status': status,
+      if (agentId != null) 'agent_id': agentId,
+      if (notes != null) 'notes': notes,
+      if (reminderSent != null) 'reminder_sent': reminderSent,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AppointmentsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? patientId,
+      Value<String?>? doctorId,
+      Value<String?>? healthCenterId,
+      Value<DateTime>? scheduledAt,
+      Value<int>? duration,
+      Value<String?>? reason,
+      Value<String>? status,
+      Value<String>? agentId,
+      Value<String?>? notes,
+      Value<bool>? reminderSent,
+      Value<DateTime>? createdAt,
+      Value<DateTime?>? updatedAt,
+      Value<String>? syncStatus,
+      Value<int>? rowid}) {
+    return AppointmentsCompanion(
+      id: id ?? this.id,
+      patientId: patientId ?? this.patientId,
+      doctorId: doctorId ?? this.doctorId,
+      healthCenterId: healthCenterId ?? this.healthCenterId,
+      scheduledAt: scheduledAt ?? this.scheduledAt,
+      duration: duration ?? this.duration,
+      reason: reason ?? this.reason,
+      status: status ?? this.status,
+      agentId: agentId ?? this.agentId,
+      notes: notes ?? this.notes,
+      reminderSent: reminderSent ?? this.reminderSent,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      syncStatus: syncStatus ?? this.syncStatus,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (patientId.present) {
+      map['patient_id'] = Variable<String>(patientId.value);
+    }
+    if (doctorId.present) {
+      map['doctor_id'] = Variable<String>(doctorId.value);
+    }
+    if (healthCenterId.present) {
+      map['health_center_id'] = Variable<String>(healthCenterId.value);
+    }
+    if (scheduledAt.present) {
+      map['scheduled_at'] = Variable<DateTime>(scheduledAt.value);
+    }
+    if (duration.present) {
+      map['duration'] = Variable<int>(duration.value);
+    }
+    if (reason.present) {
+      map['reason'] = Variable<String>(reason.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (agentId.present) {
+      map['agent_id'] = Variable<String>(agentId.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (reminderSent.present) {
+      map['reminder_sent'] = Variable<bool>(reminderSent.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppointmentsCompanion(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('doctorId: $doctorId, ')
+          ..write('healthCenterId: $healthCenterId, ')
+          ..write('scheduledAt: $scheduledAt, ')
+          ..write('duration: $duration, ')
+          ..write('reason: $reason, ')
+          ..write('status: $status, ')
+          ..write('agentId: $agentId, ')
+          ..write('notes: $notes, ')
+          ..write('reminderSent: $reminderSent, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7121,6 +7804,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MaternalCaresTable maternalCares = $MaternalCaresTable(this);
   late final $NutritionRecordsTable nutritionRecords =
       $NutritionRecordsTable(this);
+  late final $AppointmentsTable appointments = $AppointmentsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7136,7 +7820,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         vaccinations,
         vitalSigns,
         maternalCares,
-        nutritionRecords
+        nutritionRecords,
+        appointments
       ];
 }
 
@@ -10369,6 +11054,317 @@ typedef $$NutritionRecordsTableProcessedTableManager = ProcessedTableManager<
     ),
     NutritionRecord,
     PrefetchHooks Function()>;
+typedef $$AppointmentsTableCreateCompanionBuilder = AppointmentsCompanion
+    Function({
+  required String id,
+  required String patientId,
+  Value<String?> doctorId,
+  Value<String?> healthCenterId,
+  required DateTime scheduledAt,
+  Value<int> duration,
+  Value<String?> reason,
+  Value<String> status,
+  required String agentId,
+  Value<String?> notes,
+  Value<bool> reminderSent,
+  required DateTime createdAt,
+  Value<DateTime?> updatedAt,
+  Value<String> syncStatus,
+  Value<int> rowid,
+});
+typedef $$AppointmentsTableUpdateCompanionBuilder = AppointmentsCompanion
+    Function({
+  Value<String> id,
+  Value<String> patientId,
+  Value<String?> doctorId,
+  Value<String?> healthCenterId,
+  Value<DateTime> scheduledAt,
+  Value<int> duration,
+  Value<String?> reason,
+  Value<String> status,
+  Value<String> agentId,
+  Value<String?> notes,
+  Value<bool> reminderSent,
+  Value<DateTime> createdAt,
+  Value<DateTime?> updatedAt,
+  Value<String> syncStatus,
+  Value<int> rowid,
+});
+
+class $$AppointmentsTableFilterComposer
+    extends Composer<_$AppDatabase, $AppointmentsTable> {
+  $$AppointmentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get doctorId => $composableBuilder(
+      column: $table.doctorId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get healthCenterId => $composableBuilder(
+      column: $table.healthCenterId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get scheduledAt => $composableBuilder(
+      column: $table.scheduledAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get duration => $composableBuilder(
+      column: $table.duration, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get reason => $composableBuilder(
+      column: $table.reason, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get reminderSent => $composableBuilder(
+      column: $table.reminderSent, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+}
+
+class $$AppointmentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AppointmentsTable> {
+  $$AppointmentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get doctorId => $composableBuilder(
+      column: $table.doctorId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get healthCenterId => $composableBuilder(
+      column: $table.healthCenterId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get scheduledAt => $composableBuilder(
+      column: $table.scheduledAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get duration => $composableBuilder(
+      column: $table.duration, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get reason => $composableBuilder(
+      column: $table.reason, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get reminderSent => $composableBuilder(
+      column: $table.reminderSent,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+}
+
+class $$AppointmentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AppointmentsTable> {
+  $$AppointmentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get patientId =>
+      $composableBuilder(column: $table.patientId, builder: (column) => column);
+
+  GeneratedColumn<String> get doctorId =>
+      $composableBuilder(column: $table.doctorId, builder: (column) => column);
+
+  GeneratedColumn<String> get healthCenterId => $composableBuilder(
+      column: $table.healthCenterId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get scheduledAt => $composableBuilder(
+      column: $table.scheduledAt, builder: (column) => column);
+
+  GeneratedColumn<int> get duration =>
+      $composableBuilder(column: $table.duration, builder: (column) => column);
+
+  GeneratedColumn<String> get reason =>
+      $composableBuilder(column: $table.reason, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get agentId =>
+      $composableBuilder(column: $table.agentId, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<bool> get reminderSent => $composableBuilder(
+      column: $table.reminderSent, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+}
+
+class $$AppointmentsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $AppointmentsTable,
+    Appointment,
+    $$AppointmentsTableFilterComposer,
+    $$AppointmentsTableOrderingComposer,
+    $$AppointmentsTableAnnotationComposer,
+    $$AppointmentsTableCreateCompanionBuilder,
+    $$AppointmentsTableUpdateCompanionBuilder,
+    (
+      Appointment,
+      BaseReferences<_$AppDatabase, $AppointmentsTable, Appointment>
+    ),
+    Appointment,
+    PrefetchHooks Function()> {
+  $$AppointmentsTableTableManager(_$AppDatabase db, $AppointmentsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AppointmentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AppointmentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AppointmentsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> patientId = const Value.absent(),
+            Value<String?> doctorId = const Value.absent(),
+            Value<String?> healthCenterId = const Value.absent(),
+            Value<DateTime> scheduledAt = const Value.absent(),
+            Value<int> duration = const Value.absent(),
+            Value<String?> reason = const Value.absent(),
+            Value<String> status = const Value.absent(),
+            Value<String> agentId = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            Value<bool> reminderSent = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              AppointmentsCompanion(
+            id: id,
+            patientId: patientId,
+            doctorId: doctorId,
+            healthCenterId: healthCenterId,
+            scheduledAt: scheduledAt,
+            duration: duration,
+            reason: reason,
+            status: status,
+            agentId: agentId,
+            notes: notes,
+            reminderSent: reminderSent,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            syncStatus: syncStatus,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String patientId,
+            Value<String?> doctorId = const Value.absent(),
+            Value<String?> healthCenterId = const Value.absent(),
+            required DateTime scheduledAt,
+            Value<int> duration = const Value.absent(),
+            Value<String?> reason = const Value.absent(),
+            Value<String> status = const Value.absent(),
+            required String agentId,
+            Value<String?> notes = const Value.absent(),
+            Value<bool> reminderSent = const Value.absent(),
+            required DateTime createdAt,
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              AppointmentsCompanion.insert(
+            id: id,
+            patientId: patientId,
+            doctorId: doctorId,
+            healthCenterId: healthCenterId,
+            scheduledAt: scheduledAt,
+            duration: duration,
+            reason: reason,
+            status: status,
+            agentId: agentId,
+            notes: notes,
+            reminderSent: reminderSent,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            syncStatus: syncStatus,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$AppointmentsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $AppointmentsTable,
+    Appointment,
+    $$AppointmentsTableFilterComposer,
+    $$AppointmentsTableOrderingComposer,
+    $$AppointmentsTableAnnotationComposer,
+    $$AppointmentsTableCreateCompanionBuilder,
+    $$AppointmentsTableUpdateCompanionBuilder,
+    (
+      Appointment,
+      BaseReferences<_$AppDatabase, $AppointmentsTable, Appointment>
+    ),
+    Appointment,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -10395,4 +11391,6 @@ class $AppDatabaseManager {
       $$MaternalCaresTableTableManager(_db, _db.maternalCares);
   $$NutritionRecordsTableTableManager get nutritionRecords =>
       $$NutritionRecordsTableTableManager(_db, _db.nutritionRecords);
+  $$AppointmentsTableTableManager get appointments =>
+      $$AppointmentsTableTableManager(_db, _db.appointments);
 }

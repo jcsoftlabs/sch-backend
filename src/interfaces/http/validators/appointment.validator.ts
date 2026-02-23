@@ -4,6 +4,7 @@ import { AppointmentStatus } from '@prisma/client';
 export const createAppointmentSchema = z.object({
     body: z.object({
         patientId: z.string().uuid(),
+        agentId: z.string().uuid(),
         doctorId: z.string().uuid().optional(),
         healthCenterId: z.string().uuid().optional(),
         scheduledAt: z.string().datetime(),

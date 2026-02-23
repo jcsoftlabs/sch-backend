@@ -9,19 +9,19 @@ export class AppointmentRepository implements IAppointmentRepository {
     async findById(id: string): Promise<Appointment | null> {
         return prisma.appointment.findUnique({
             where: { id },
-            include: { patient: true, doctor: true, healthCenter: true }
+            include: { patient: true, doctor: true, healthCenter: true, agent: true }
         });
     }
     async findAll(): Promise<Appointment[]> {
         return prisma.appointment.findMany({
-            include: { patient: true, doctor: true, healthCenter: true },
+            include: { patient: true, doctor: true, healthCenter: true, agent: true },
             orderBy: { scheduledAt: 'asc' }
         });
     }
     async findByPatientId(patientId: string): Promise<Appointment[]> {
         return prisma.appointment.findMany({
             where: { patientId },
-            include: { doctor: true, healthCenter: true },
+            include: { doctor: true, healthCenter: true, agent: true },
             orderBy: { scheduledAt: 'asc' }
         });
     }
@@ -42,6 +42,13 @@ export class AppointmentRepository implements IAppointmentRepository {
     async findUpcoming(fromDate: Date): Promise<Appointment[]> {
         return prisma.appointment.findMany({
             where: { scheduledAt: { gte: fromDate }, status: { in: ['SCHEDULED', 'CONFIRMED'] } },
+            include: { patient: true, doctor: true, healthCenter: true, agent: true },
+            orderBy: { scheduledAt: 'asc' }
+        });
+    }
+    async findByAgentId(agentId: string): Promise<Appointment[]> {
+        return prisma.appointment.findMany({
+            where: { agentId },
             include: { patient: true, doctor: true, healthCenter: true },
             orderBy: { scheduledAt: 'asc' }
         });

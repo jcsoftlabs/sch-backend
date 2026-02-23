@@ -8,6 +8,7 @@ export interface IAppointmentRepository {
     findByDoctorId(doctorId: string): Promise<Appointment[]>;
     findByHealthCenterId(centerId: string): Promise<Appointment[]>;
     findUpcoming(fromDate: Date): Promise<Appointment[]>;
+    findByAgentId(agentId: string): Promise<Appointment[]>;
     update(id: string, data: Partial<Appointment>): Promise<Appointment>;
     delete(id: string): Promise<Appointment>;
 }

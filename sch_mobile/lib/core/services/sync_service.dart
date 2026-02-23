@@ -123,6 +123,9 @@ class SyncService {
       case 'NUTRITION':
         await _syncNutrition(op.operation, op.entityId, payload);
         break;
+      case 'APPOINTMENT':
+        await _syncAppointment(op.operation, op.entityId, payload);
+        break;
       default:
         throw Exception('Unknown entity type: ${op.entityType}');
     }

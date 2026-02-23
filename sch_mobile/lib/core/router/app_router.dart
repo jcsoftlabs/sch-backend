@@ -16,6 +16,7 @@ import '../../features/patients/presentation/pages/create_maternal_care_page.dar
 import '../../features/patients/presentation/pages/record_prenatal_visit_page.dart';
 import '../../features/patients/presentation/pages/record_delivery_page.dart';
 import '../../features/patients/presentation/pages/record_nutrition_page.dart';
+import '../../features/patients/presentation/pages/create_appointment_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -126,6 +127,14 @@ class AppRouter {
         builder: (context, state) {
           final id = state.pathParameters['id']!;
           return RecordNutritionPage(patientId: id);
+        },
+      ),
+      GoRoute(
+        path: '/patients/:id/appointments/new',
+        name: 'create-appointment',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return CreateAppointmentPage(patientId: id);
         },
       ),
     ],
