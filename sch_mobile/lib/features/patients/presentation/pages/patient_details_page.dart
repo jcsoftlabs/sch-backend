@@ -7,6 +7,7 @@ import '../widgets/consultations_history_widget.dart';
 import '../widgets/maternal_care_card_widget.dart';
 import '../widgets/nutrition_history_widget.dart';
 import '../widgets/appointments_calendar_widget.dart';
+import '../../communications/presentation/widgets/send_sms_dialog.dart';
 
 class PatientDetailsPage extends StatelessWidget {
   final PatientModel? patient;
@@ -112,6 +113,33 @@ class PatientDetailsPage extends StatelessWidget {
                       const Icon(Icons.phone, size: 16, color: AppColors.lightTextMuted),
                       const SizedBox(width: 8),
                       Text(patient!.phone ?? "Aucun numéro"),
+                      if (patient!.phone != null && patient!.phone!.isNotEmpty) ...[
+                        const Spacer(),
+                        Container(
+                          height: 32,
+                          width: 32,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(Icons.sms, size: 16, color: AppColors.primary),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => SendSmsDialog(
+                                  patientId: patient!.id,
+                                  patientName: patient!.fullName,
+                                  phoneNumber: patient!.phone!,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                   const SizedBox(height: 4),
