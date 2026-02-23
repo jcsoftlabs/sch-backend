@@ -37,6 +37,16 @@ export const getConsultationById = async (req: Request, res: Response, next: Nex
     }
 };
 
+export const getByPatient = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const patientId = req.params.patientId as string;
+        const consultations = await consultationService.getConsultationsByPatient(patientId);
+        res.status(200).json({ status: 'success', data: { consultations } });
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const updateConsultationStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = req.params.id as string as string;

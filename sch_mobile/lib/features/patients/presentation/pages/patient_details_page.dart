@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../../data/models/patient_model.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/empty_state.dart';
+import '../../../vaccinations/presentation/widgets/vaccination_schedule_widget.dart';
+import '../widgets/vital_signs_history_widget.dart';
+import '../widgets/consultations_history_widget.dart';
 
 class PatientDetailsPage extends StatelessWidget {
   final PatientModel? patient;
@@ -39,23 +42,18 @@ class PatientDetailsPage extends StatelessWidget {
             _buildHeaderCard(context),
             const SizedBox(height: 24),
             
-            // Medical Record Section (Stub for now)
-            Text(
-              'Dossier Médical',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Center(
-                  child: Text(
-                    'Le dossier médical sera affiché ici',
-                    style: TextStyle(color: AppColors.lightTextMuted),
-                  ),
-                ),
-              ),
-            ),
+            // Vital Signs Section
+            VitalSignsHistoryWidget(patientId: patient!.id),
+            const SizedBox(height: 32),
+
+            // Vaccinations Section
+            VaccinationScheduleWidget(patientId: patient!.id),
+            
+            const SizedBox(height: 32),
+            // Consultations History Section
+            ConsultationsHistoryWidget(patientId: patient!.id),
+            
+            const SizedBox(height: 32),
           ],
         ),
       ),

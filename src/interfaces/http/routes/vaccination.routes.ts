@@ -10,6 +10,7 @@ router.use(authenticate);
 
 router.get('/', ctrl.getAll);
 router.get('/due', ctrl.getDue);
+router.get('/stats/dashboard', ctrl.getDashboardStats);
 router.get('/:id', ctrl.getById);
 router.get('/patient/:patientId', ctrl.getByPatient);
 router.post('/', validate(createVaccinationSchema), ctrl.create);

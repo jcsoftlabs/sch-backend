@@ -15,6 +15,14 @@ export class ConsultationRepository implements IConsultationRepository {
         return prisma.consultation.findUnique({ where: { id }, include: { patient: true, doctor: true } });
     }
 
+    async findByPatientId(patientId: string): Promise<Consultation[]> {
+        return prisma.consultation.findMany({
+            where: { patientId },
+            orderBy: { createdAt: 'desc' },
+            include: { doctor: true }
+        });
+    }
+
     async update(id: string, data: Prisma.ConsultationUpdateInput): Promise<Consultation> {
         return prisma.consultation.update({ where: { id }, data });
     }

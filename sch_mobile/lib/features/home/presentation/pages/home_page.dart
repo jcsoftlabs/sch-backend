@@ -11,10 +11,9 @@ import 'patients_page.dart';
 import 'households_page.dart';
 import '../../../triage/presentation/pages/case_reports_page.dart';
 import 'profile_page.dart';
-import '../../../../core/providers/sync_provider.dart';
-import '../../../patients/presentation/providers/patient_provider.dart';
 import '../../../households/presentation/providers/households_provider.dart';
 import '../../../triage/presentation/providers/triage_providers.dart';
+import '../../../vaccinations/presentation/widgets/vaccination_alerts_widget.dart';
 
 // ============================================================================
 // Home Page — shell with adaptive navigation
@@ -268,6 +267,11 @@ class _DashboardTabState extends ConsumerState<DashboardTab>
                 ],
 
                 const SizedBox(height: 24),
+                _SectionLabel('Alertes Vaccinales', isDark: isDark),
+                const SizedBox(height: 12),
+                const VaccinationAlertsWidget(),
+
+                const SizedBox(height: 32),
               ],
             ),
           ),

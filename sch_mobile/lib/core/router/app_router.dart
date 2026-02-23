@@ -10,6 +10,8 @@ import '../../features/households/presentation/pages/add_member_page.dart';
 import '../../features/triage/presentation/pages/case_reports_page.dart';
 import '../../features/triage/presentation/pages/create_case_report_page.dart';
 import '../../features/triage/presentation/pages/case_report_details_page.dart';
+import '../../features/vaccinations/presentation/pages/create_vaccination_page.dart';
+import '../../features/patients/presentation/pages/create_vital_sign_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -72,6 +74,22 @@ class AppRouter {
         builder: (context, state) {
           final id = state.pathParameters['id']!;
           return CaseReportDetailsPage(caseReportId: id);
+        },
+      ),
+      GoRoute(
+        path: '/patients/:id/vaccination/new',
+        name: 'create-vaccination',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return CreateVaccinationPage(patientId: id);
+        },
+      ),
+      GoRoute(
+        path: '/patients/:id/vitals/new',
+        name: 'create-vital-signs',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return CreateVitalSignPage(patientId: id);
         },
       ),
     ],

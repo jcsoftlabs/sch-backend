@@ -12,6 +12,10 @@ export class VaccinationService {
         return this.repo.findAll();
     }
 
+    async getDashboardStats() {
+        return this.repo.getDashboardStats();
+    }
+
     async getVaccinationById(id: string) {
         const vacc = await this.repo.findById(id);
         if (!vacc) throw new AppError('Vaccination record not found', 404);

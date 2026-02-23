@@ -144,7 +144,24 @@ class MedicalProtocols extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Patients, Households, HouseholdMembers, Consultations, SyncQueue, CaseReports, MedicalProtocols])
+class Vaccinations extends Table {
+  TextColumn get id => text()();
+  TextColumn get patientId => text()();
+  TextColumn get vaccine => text()();
+  IntColumn get doseNumber => integer()();
+  DateTimeColumn get dateGiven => dateTime()();
+  DateTimeColumn get nextDueDate => dateTime().nullable()();
+  TextColumn get batchNumber => text().nullable()();
+  TextColumn get agentId => text()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(tables: [Patients, Households, HouseholdMembers, Consultations, SyncQueue, CaseReports, MedicalProtocols, Vaccinations])
 
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

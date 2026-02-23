@@ -23,6 +23,7 @@ import {
     Pill,
     Home,
     Brain,
+    Syringe,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { useRouter } from "next/navigation";
@@ -96,6 +97,12 @@ const navigationGroups = [
                 icon: BarChart3,
                 href: "/dashboard/agents-kpi",
                 color: "text-indigo-400",
+            },
+            {
+                label: "Vaccinations",
+                icon: Syringe,
+                href: "/dashboard/vaccinations",
+                color: "text-purple-400",
             },
             {
                 label: "Alertes Épidémio.",

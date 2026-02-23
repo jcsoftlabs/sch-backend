@@ -12,6 +12,13 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
     } catch (error) { next(error); }
 };
 
+export const getDashboardStats = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const stats = await service.getDashboardStats();
+        res.status(200).json({ status: 'success', data: stats });
+    } catch (error) { next(error); }
+};
+
 export const getById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const vaccination = await service.getVaccinationById(req.params.id as string as string);

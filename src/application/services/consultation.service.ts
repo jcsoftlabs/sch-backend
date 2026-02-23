@@ -35,6 +35,10 @@ export class ConsultationService {
         return consultation;
     }
 
+    async getConsultationsByPatient(patientId: string): Promise<Consultation[]> {
+        return this.consultationRepository.findByPatientId(patientId);
+    }
+
     async updateStatus(id: string, status: any, doctorId?: string): Promise<Consultation> {
         // Validate status enum manually or trust TS/Prisma
         const data: Prisma.ConsultationUpdateInput = { status };

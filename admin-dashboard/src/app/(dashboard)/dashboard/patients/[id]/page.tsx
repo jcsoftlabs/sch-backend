@@ -10,7 +10,8 @@ import { PrescriptionList } from "@/components/medical-records/PrescriptionList"
 import { DiagnosisList } from "@/components/medical-records/DiagnosisList";
 import { LabResultsList } from "@/components/medical-records/LabResultsList";
 import { EmergencyContactList } from "@/components/medical-records/EmergencyContactList";
-import { User, FileText, FlaskConical, Phone, Pill } from "lucide-react";
+import { VaccinationList } from "@/components/medical-records/VaccinationList";
+import { User, FileText, FlaskConical, Phone, Pill, Syringe } from "lucide-react";
 
 export default function PatientDetailPage() {
     const params = useParams();
@@ -79,8 +80,8 @@ export default function PatientDetailPage() {
 
             {/* Tabs for Medical Records */}
             <Tabs defaultValue="info" className="space-y-4">
-                <TabsList className="grid w-full grid-cols-5">
-                    <TabsTrigger value="info" className="flex items-center gap-2">
+                <TabsList className="grid w-full grid-cols-6 h-auto">
+                    <TabsTrigger value="info" className="flex items-center gap-2 py-2">
                         <User className="h-4 w-4" />
                         Informations
                     </TabsTrigger>
@@ -96,9 +97,13 @@ export default function PatientDetailPage() {
                         <FlaskConical className="h-4 w-4" />
                         Résultats Labo
                     </TabsTrigger>
-                    <TabsTrigger value="emergency" className="flex items-center gap-2">
-                        <Phone className="h-4 w-4" />
-                        Contacts Urgence
+                    <TabsTrigger value="emergency" className="flex items-center gap-2 py-2">
+                        <Phone className="h-4 w-4 hidden md:block" />
+                        Contacts
+                    </TabsTrigger>
+                    <TabsTrigger value="vaccinations" className="flex items-center gap-2 py-2">
+                        <Syringe className="h-4 w-4 hidden md:block" />
+                        Vaccins
                     </TabsTrigger>
                 </TabsList>
 
@@ -159,6 +164,10 @@ export default function PatientDetailPage() {
 
                 <TabsContent value="emergency">
                     <EmergencyContactList patientId={patientId} />
+                </TabsContent>
+
+                <TabsContent value="vaccinations">
+                    <VaccinationList patientId={patientId} />
                 </TabsContent>
             </Tabs>
         </div>
