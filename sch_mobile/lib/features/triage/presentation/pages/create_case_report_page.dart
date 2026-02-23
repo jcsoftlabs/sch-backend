@@ -11,6 +11,9 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../../core/services/location_service.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/services/draft_service.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:dio/dio.dart';
+import 'dart:io';
 
 /// Page to create a new case report with symptom analysis
 class CreateCaseReportPage extends ConsumerStatefulWidget {
@@ -150,15 +153,85 @@ class _CreateCaseReportPageState extends ConsumerState<CreateCaseReportPage> {
         _isAnalyzing = false;
       });
       if (mounted) {
-        HapticFeedback.vibrate();
+        // If it's a network error, prompt for SMS Fallback
+        if (e is DioException || e is SocketException || e.toString().contains('SocketException') || e.toString().contains('Failed host lookup')) {
+           _showSmsFallbackDialog();
+        } else {
+          HapticFeedback.vibrate();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Erreur lors de l'analyse: $e"),
+              backgroundColor: AppColors.error,
+              behavior: SnackBarBehavior.floating,
+              margin: const EdgeInsets.all(16),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadius.sm)),
+            ),
+          );
+        }
+      }
+    }
+  }
+
+  Future<void> _showSmsFallbackDialog() async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.lg)),
+        title: const Row(children: [
+          Icon(Icons.wifi_off, color: AppColors.error),
+          SizedBox(width: 10),
+          Text('Hors Ligne - Urgence ?', style: TextStyle(color: AppColors.error)),
+        ]),
+        content: const Text(
+            'Impossible de contacter le serveur d\'Intelligence Artificielle. Voulez-vous déclencher une Alerte SMS d\'Urgence via le réseau cellulaire régulier ?\n\nCela transmettra vos descriptions directement à l\'équipe médicale centrale.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Annuler', style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton.icon(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error, foregroundColor: Colors.white),
+            icon: const Icon(Icons.sms),
+            label: const Text('Alerte SMS'),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true) {
+      _triggerSmsEmergency();
+    }
+  }
+
+  Future<void> _triggerSmsEmergency() async {
+    final user = ref.read(authStateProvider).user;
+    final agentId = user?.id ?? 'inconnu';
+    
+    // Construct SMS payload adhering to the Backend Hook format
+    final smsBody = "URGENCE ASCP\nAgent: $agentId\nSymptomes: ${_symptomsController.text}";
+    
+    final Uri smsUri = Uri(
+      scheme: 'sms',
+      path: '+18884661771', // the VONAGE dummy webhook number, customizable via .env
+      queryParameters: <String, String>{
+        'body': smsBody,
+      },
+    );
+
+    try {
+      if (await canLaunchUrl(smsUri)) {
+        await launchUrl(smsUri);
+      } else {
+        throw 'Impossible d\'ouvrir l\'application SMS native.';
+      }
+    } catch (e) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Erreur lors de l'analyse: $e"),
+            content: Text(e.toString()),
             backgroundColor: AppColors.error,
-            behavior: SnackBarBehavior.floating,
-            margin: const EdgeInsets.all(16),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.sm)),
           ),
         );
       }
