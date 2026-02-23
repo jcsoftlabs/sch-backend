@@ -144,6 +144,7 @@ model User {
   smsMessages        SMSMessage[]      @relation("SMSAgent")
   prescriptionsDoctor Prescription[]   @relation("PrescriptionDoctor")
   maternalCares      MaternalCare[]    @relation("MaternalCareAgent")
+  nutritionRecords   NutritionRecord[] @relation("NutritionRecordAgent")
   diagnosesDoctor    Diagnosis[]       @relation("DiagnosisDoctor")
 }
 
@@ -327,6 +328,8 @@ model NutritionRecord {
   height    Float           // cm
   muac      Float?          // périmètre brachial en mm
   status    NutritionStatus @default(NORMAL)
+  agentId   String
+  agent     User            @relation("NutritionRecordAgent", fields: [agentId], references: [id])
   notes     String?
   date      DateTime        @default(now())
 }

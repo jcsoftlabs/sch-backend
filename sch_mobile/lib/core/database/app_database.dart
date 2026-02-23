@@ -198,8 +198,35 @@ class MaternalCares extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Patients, Households, HouseholdMembers, Consultations, VitalSigns, SyncQueue, CaseReports, MedicalProtocols, Vaccinations, MaternalCares])
+class NutritionRecords extends Table {
+  TextColumn get id => text()();
+  TextColumn get patientId => text()();
+  RealColumn get weight => real()();
+  RealColumn get height => real()();
+  RealColumn get muac => real().nullable()();
+  TextColumn get status => text().withDefault(const Constant('NORMAL'))();
+  TextColumn get agentId => text()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get syncStatus => text().withDefault(const Constant('pending'))();
 
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(tables: [
+  Patients,
+  Households,
+  HouseholdMembers,
+  Consultations,
+  SyncQueue,
+  CaseReports,
+  MedicalProtocols,
+  Vaccinations,
+  VitalSigns,
+  MaternalCares,
+  NutritionRecords
+])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

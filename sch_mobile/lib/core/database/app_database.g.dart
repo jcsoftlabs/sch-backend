@@ -2820,683 +2820,6 @@ class ConsultationsCompanion extends UpdateCompanion<Consultation> {
   }
 }
 
-class $VitalSignsTable extends VitalSigns
-    with TableInfo<$VitalSignsTable, VitalSign> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $VitalSignsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _patientIdMeta =
-      const VerificationMeta('patientId');
-  @override
-  late final GeneratedColumn<String> patientId = GeneratedColumn<String>(
-      'patient_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _medicalRecordIdMeta =
-      const VerificationMeta('medicalRecordId');
-  @override
-  late final GeneratedColumn<String> medicalRecordId = GeneratedColumn<String>(
-      'medical_record_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _temperatureMeta =
-      const VerificationMeta('temperature');
-  @override
-  late final GeneratedColumn<double> temperature = GeneratedColumn<double>(
-      'temperature', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _bloodPressureSysMeta =
-      const VerificationMeta('bloodPressureSys');
-  @override
-  late final GeneratedColumn<int> bloodPressureSys = GeneratedColumn<int>(
-      'blood_pressure_sys', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _bloodPressureDiaMeta =
-      const VerificationMeta('bloodPressureDia');
-  @override
-  late final GeneratedColumn<int> bloodPressureDia = GeneratedColumn<int>(
-      'blood_pressure_dia', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _heartRateMeta =
-      const VerificationMeta('heartRate');
-  @override
-  late final GeneratedColumn<int> heartRate = GeneratedColumn<int>(
-      'heart_rate', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _respiratoryRateMeta =
-      const VerificationMeta('respiratoryRate');
-  @override
-  late final GeneratedColumn<int> respiratoryRate = GeneratedColumn<int>(
-      'respiratory_rate', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _oxygenSaturationMeta =
-      const VerificationMeta('oxygenSaturation');
-  @override
-  late final GeneratedColumn<double> oxygenSaturation = GeneratedColumn<double>(
-      'oxygen_saturation', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _agentIdMeta =
-      const VerificationMeta('agentId');
-  @override
-  late final GeneratedColumn<String> agentId = GeneratedColumn<String>(
-      'agent_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _recordedAtMeta =
-      const VerificationMeta('recordedAt');
-  @override
-  late final GeneratedColumn<DateTime> recordedAt = GeneratedColumn<DateTime>(
-      'recorded_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _syncStatusMeta =
-      const VerificationMeta('syncStatus');
-  @override
-  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
-      'sync_status', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant('pending'));
-  static const VerificationMeta _isSyncedMeta =
-      const VerificationMeta('isSynced');
-  @override
-  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
-      'is_synced', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
-      defaultValue: const Constant(false));
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        patientId,
-        medicalRecordId,
-        temperature,
-        bloodPressureSys,
-        bloodPressureDia,
-        heartRate,
-        respiratoryRate,
-        oxygenSaturation,
-        agentId,
-        recordedAt,
-        syncStatus,
-        isSynced
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'vital_signs';
-  @override
-  VerificationContext validateIntegrity(Insertable<VitalSign> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('patient_id')) {
-      context.handle(_patientIdMeta,
-          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
-    } else if (isInserting) {
-      context.missing(_patientIdMeta);
-    }
-    if (data.containsKey('medical_record_id')) {
-      context.handle(
-          _medicalRecordIdMeta,
-          medicalRecordId.isAcceptableOrUnknown(
-              data['medical_record_id']!, _medicalRecordIdMeta));
-    }
-    if (data.containsKey('temperature')) {
-      context.handle(
-          _temperatureMeta,
-          temperature.isAcceptableOrUnknown(
-              data['temperature']!, _temperatureMeta));
-    }
-    if (data.containsKey('blood_pressure_sys')) {
-      context.handle(
-          _bloodPressureSysMeta,
-          bloodPressureSys.isAcceptableOrUnknown(
-              data['blood_pressure_sys']!, _bloodPressureSysMeta));
-    }
-    if (data.containsKey('blood_pressure_dia')) {
-      context.handle(
-          _bloodPressureDiaMeta,
-          bloodPressureDia.isAcceptableOrUnknown(
-              data['blood_pressure_dia']!, _bloodPressureDiaMeta));
-    }
-    if (data.containsKey('heart_rate')) {
-      context.handle(_heartRateMeta,
-          heartRate.isAcceptableOrUnknown(data['heart_rate']!, _heartRateMeta));
-    }
-    if (data.containsKey('respiratory_rate')) {
-      context.handle(
-          _respiratoryRateMeta,
-          respiratoryRate.isAcceptableOrUnknown(
-              data['respiratory_rate']!, _respiratoryRateMeta));
-    }
-    if (data.containsKey('oxygen_saturation')) {
-      context.handle(
-          _oxygenSaturationMeta,
-          oxygenSaturation.isAcceptableOrUnknown(
-              data['oxygen_saturation']!, _oxygenSaturationMeta));
-    }
-    if (data.containsKey('agent_id')) {
-      context.handle(_agentIdMeta,
-          agentId.isAcceptableOrUnknown(data['agent_id']!, _agentIdMeta));
-    } else if (isInserting) {
-      context.missing(_agentIdMeta);
-    }
-    if (data.containsKey('recorded_at')) {
-      context.handle(
-          _recordedAtMeta,
-          recordedAt.isAcceptableOrUnknown(
-              data['recorded_at']!, _recordedAtMeta));
-    } else if (isInserting) {
-      context.missing(_recordedAtMeta);
-    }
-    if (data.containsKey('sync_status')) {
-      context.handle(
-          _syncStatusMeta,
-          syncStatus.isAcceptableOrUnknown(
-              data['sync_status']!, _syncStatusMeta));
-    }
-    if (data.containsKey('is_synced')) {
-      context.handle(_isSyncedMeta,
-          isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  VitalSign map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return VitalSign(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      patientId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}patient_id'])!,
-      medicalRecordId: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}medical_record_id']),
-      temperature: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}temperature']),
-      bloodPressureSys: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}blood_pressure_sys']),
-      bloodPressureDia: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}blood_pressure_dia']),
-      heartRate: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}heart_rate']),
-      respiratoryRate: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}respiratory_rate']),
-      oxygenSaturation: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}oxygen_saturation']),
-      agentId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}agent_id'])!,
-      recordedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}recorded_at'])!,
-      syncStatus: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
-      isSynced: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
-    );
-  }
-
-  @override
-  $VitalSignsTable createAlias(String alias) {
-    return $VitalSignsTable(attachedDatabase, alias);
-  }
-}
-
-class VitalSign extends DataClass implements Insertable<VitalSign> {
-  final String id;
-  final String patientId;
-  final String? medicalRecordId;
-  final double? temperature;
-  final int? bloodPressureSys;
-  final int? bloodPressureDia;
-  final int? heartRate;
-  final int? respiratoryRate;
-  final double? oxygenSaturation;
-  final String agentId;
-  final DateTime recordedAt;
-  final String syncStatus;
-  final bool isSynced;
-  const VitalSign(
-      {required this.id,
-      required this.patientId,
-      this.medicalRecordId,
-      this.temperature,
-      this.bloodPressureSys,
-      this.bloodPressureDia,
-      this.heartRate,
-      this.respiratoryRate,
-      this.oxygenSaturation,
-      required this.agentId,
-      required this.recordedAt,
-      required this.syncStatus,
-      required this.isSynced});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['patient_id'] = Variable<String>(patientId);
-    if (!nullToAbsent || medicalRecordId != null) {
-      map['medical_record_id'] = Variable<String>(medicalRecordId);
-    }
-    if (!nullToAbsent || temperature != null) {
-      map['temperature'] = Variable<double>(temperature);
-    }
-    if (!nullToAbsent || bloodPressureSys != null) {
-      map['blood_pressure_sys'] = Variable<int>(bloodPressureSys);
-    }
-    if (!nullToAbsent || bloodPressureDia != null) {
-      map['blood_pressure_dia'] = Variable<int>(bloodPressureDia);
-    }
-    if (!nullToAbsent || heartRate != null) {
-      map['heart_rate'] = Variable<int>(heartRate);
-    }
-    if (!nullToAbsent || respiratoryRate != null) {
-      map['respiratory_rate'] = Variable<int>(respiratoryRate);
-    }
-    if (!nullToAbsent || oxygenSaturation != null) {
-      map['oxygen_saturation'] = Variable<double>(oxygenSaturation);
-    }
-    map['agent_id'] = Variable<String>(agentId);
-    map['recorded_at'] = Variable<DateTime>(recordedAt);
-    map['sync_status'] = Variable<String>(syncStatus);
-    map['is_synced'] = Variable<bool>(isSynced);
-    return map;
-  }
-
-  VitalSignsCompanion toCompanion(bool nullToAbsent) {
-    return VitalSignsCompanion(
-      id: Value(id),
-      patientId: Value(patientId),
-      medicalRecordId: medicalRecordId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(medicalRecordId),
-      temperature: temperature == null && nullToAbsent
-          ? const Value.absent()
-          : Value(temperature),
-      bloodPressureSys: bloodPressureSys == null && nullToAbsent
-          ? const Value.absent()
-          : Value(bloodPressureSys),
-      bloodPressureDia: bloodPressureDia == null && nullToAbsent
-          ? const Value.absent()
-          : Value(bloodPressureDia),
-      heartRate: heartRate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(heartRate),
-      respiratoryRate: respiratoryRate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(respiratoryRate),
-      oxygenSaturation: oxygenSaturation == null && nullToAbsent
-          ? const Value.absent()
-          : Value(oxygenSaturation),
-      agentId: Value(agentId),
-      recordedAt: Value(recordedAt),
-      syncStatus: Value(syncStatus),
-      isSynced: Value(isSynced),
-    );
-  }
-
-  factory VitalSign.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return VitalSign(
-      id: serializer.fromJson<String>(json['id']),
-      patientId: serializer.fromJson<String>(json['patientId']),
-      medicalRecordId: serializer.fromJson<String?>(json['medicalRecordId']),
-      temperature: serializer.fromJson<double?>(json['temperature']),
-      bloodPressureSys: serializer.fromJson<int?>(json['bloodPressureSys']),
-      bloodPressureDia: serializer.fromJson<int?>(json['bloodPressureDia']),
-      heartRate: serializer.fromJson<int?>(json['heartRate']),
-      respiratoryRate: serializer.fromJson<int?>(json['respiratoryRate']),
-      oxygenSaturation: serializer.fromJson<double?>(json['oxygenSaturation']),
-      agentId: serializer.fromJson<String>(json['agentId']),
-      recordedAt: serializer.fromJson<DateTime>(json['recordedAt']),
-      syncStatus: serializer.fromJson<String>(json['syncStatus']),
-      isSynced: serializer.fromJson<bool>(json['isSynced']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'patientId': serializer.toJson<String>(patientId),
-      'medicalRecordId': serializer.toJson<String?>(medicalRecordId),
-      'temperature': serializer.toJson<double?>(temperature),
-      'bloodPressureSys': serializer.toJson<int?>(bloodPressureSys),
-      'bloodPressureDia': serializer.toJson<int?>(bloodPressureDia),
-      'heartRate': serializer.toJson<int?>(heartRate),
-      'respiratoryRate': serializer.toJson<int?>(respiratoryRate),
-      'oxygenSaturation': serializer.toJson<double?>(oxygenSaturation),
-      'agentId': serializer.toJson<String>(agentId),
-      'recordedAt': serializer.toJson<DateTime>(recordedAt),
-      'syncStatus': serializer.toJson<String>(syncStatus),
-      'isSynced': serializer.toJson<bool>(isSynced),
-    };
-  }
-
-  VitalSign copyWith(
-          {String? id,
-          String? patientId,
-          Value<String?> medicalRecordId = const Value.absent(),
-          Value<double?> temperature = const Value.absent(),
-          Value<int?> bloodPressureSys = const Value.absent(),
-          Value<int?> bloodPressureDia = const Value.absent(),
-          Value<int?> heartRate = const Value.absent(),
-          Value<int?> respiratoryRate = const Value.absent(),
-          Value<double?> oxygenSaturation = const Value.absent(),
-          String? agentId,
-          DateTime? recordedAt,
-          String? syncStatus,
-          bool? isSynced}) =>
-      VitalSign(
-        id: id ?? this.id,
-        patientId: patientId ?? this.patientId,
-        medicalRecordId: medicalRecordId.present
-            ? medicalRecordId.value
-            : this.medicalRecordId,
-        temperature: temperature.present ? temperature.value : this.temperature,
-        bloodPressureSys: bloodPressureSys.present
-            ? bloodPressureSys.value
-            : this.bloodPressureSys,
-        bloodPressureDia: bloodPressureDia.present
-            ? bloodPressureDia.value
-            : this.bloodPressureDia,
-        heartRate: heartRate.present ? heartRate.value : this.heartRate,
-        respiratoryRate: respiratoryRate.present
-            ? respiratoryRate.value
-            : this.respiratoryRate,
-        oxygenSaturation: oxygenSaturation.present
-            ? oxygenSaturation.value
-            : this.oxygenSaturation,
-        agentId: agentId ?? this.agentId,
-        recordedAt: recordedAt ?? this.recordedAt,
-        syncStatus: syncStatus ?? this.syncStatus,
-        isSynced: isSynced ?? this.isSynced,
-      );
-  VitalSign copyWithCompanion(VitalSignsCompanion data) {
-    return VitalSign(
-      id: data.id.present ? data.id.value : this.id,
-      patientId: data.patientId.present ? data.patientId.value : this.patientId,
-      medicalRecordId: data.medicalRecordId.present
-          ? data.medicalRecordId.value
-          : this.medicalRecordId,
-      temperature:
-          data.temperature.present ? data.temperature.value : this.temperature,
-      bloodPressureSys: data.bloodPressureSys.present
-          ? data.bloodPressureSys.value
-          : this.bloodPressureSys,
-      bloodPressureDia: data.bloodPressureDia.present
-          ? data.bloodPressureDia.value
-          : this.bloodPressureDia,
-      heartRate: data.heartRate.present ? data.heartRate.value : this.heartRate,
-      respiratoryRate: data.respiratoryRate.present
-          ? data.respiratoryRate.value
-          : this.respiratoryRate,
-      oxygenSaturation: data.oxygenSaturation.present
-          ? data.oxygenSaturation.value
-          : this.oxygenSaturation,
-      agentId: data.agentId.present ? data.agentId.value : this.agentId,
-      recordedAt:
-          data.recordedAt.present ? data.recordedAt.value : this.recordedAt,
-      syncStatus:
-          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
-      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('VitalSign(')
-          ..write('id: $id, ')
-          ..write('patientId: $patientId, ')
-          ..write('medicalRecordId: $medicalRecordId, ')
-          ..write('temperature: $temperature, ')
-          ..write('bloodPressureSys: $bloodPressureSys, ')
-          ..write('bloodPressureDia: $bloodPressureDia, ')
-          ..write('heartRate: $heartRate, ')
-          ..write('respiratoryRate: $respiratoryRate, ')
-          ..write('oxygenSaturation: $oxygenSaturation, ')
-          ..write('agentId: $agentId, ')
-          ..write('recordedAt: $recordedAt, ')
-          ..write('syncStatus: $syncStatus, ')
-          ..write('isSynced: $isSynced')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      id,
-      patientId,
-      medicalRecordId,
-      temperature,
-      bloodPressureSys,
-      bloodPressureDia,
-      heartRate,
-      respiratoryRate,
-      oxygenSaturation,
-      agentId,
-      recordedAt,
-      syncStatus,
-      isSynced);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is VitalSign &&
-          other.id == this.id &&
-          other.patientId == this.patientId &&
-          other.medicalRecordId == this.medicalRecordId &&
-          other.temperature == this.temperature &&
-          other.bloodPressureSys == this.bloodPressureSys &&
-          other.bloodPressureDia == this.bloodPressureDia &&
-          other.heartRate == this.heartRate &&
-          other.respiratoryRate == this.respiratoryRate &&
-          other.oxygenSaturation == this.oxygenSaturation &&
-          other.agentId == this.agentId &&
-          other.recordedAt == this.recordedAt &&
-          other.syncStatus == this.syncStatus &&
-          other.isSynced == this.isSynced);
-}
-
-class VitalSignsCompanion extends UpdateCompanion<VitalSign> {
-  final Value<String> id;
-  final Value<String> patientId;
-  final Value<String?> medicalRecordId;
-  final Value<double?> temperature;
-  final Value<int?> bloodPressureSys;
-  final Value<int?> bloodPressureDia;
-  final Value<int?> heartRate;
-  final Value<int?> respiratoryRate;
-  final Value<double?> oxygenSaturation;
-  final Value<String> agentId;
-  final Value<DateTime> recordedAt;
-  final Value<String> syncStatus;
-  final Value<bool> isSynced;
-  final Value<int> rowid;
-  const VitalSignsCompanion({
-    this.id = const Value.absent(),
-    this.patientId = const Value.absent(),
-    this.medicalRecordId = const Value.absent(),
-    this.temperature = const Value.absent(),
-    this.bloodPressureSys = const Value.absent(),
-    this.bloodPressureDia = const Value.absent(),
-    this.heartRate = const Value.absent(),
-    this.respiratoryRate = const Value.absent(),
-    this.oxygenSaturation = const Value.absent(),
-    this.agentId = const Value.absent(),
-    this.recordedAt = const Value.absent(),
-    this.syncStatus = const Value.absent(),
-    this.isSynced = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  VitalSignsCompanion.insert({
-    required String id,
-    required String patientId,
-    this.medicalRecordId = const Value.absent(),
-    this.temperature = const Value.absent(),
-    this.bloodPressureSys = const Value.absent(),
-    this.bloodPressureDia = const Value.absent(),
-    this.heartRate = const Value.absent(),
-    this.respiratoryRate = const Value.absent(),
-    this.oxygenSaturation = const Value.absent(),
-    required String agentId,
-    required DateTime recordedAt,
-    this.syncStatus = const Value.absent(),
-    this.isSynced = const Value.absent(),
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        patientId = Value(patientId),
-        agentId = Value(agentId),
-        recordedAt = Value(recordedAt);
-  static Insertable<VitalSign> custom({
-    Expression<String>? id,
-    Expression<String>? patientId,
-    Expression<String>? medicalRecordId,
-    Expression<double>? temperature,
-    Expression<int>? bloodPressureSys,
-    Expression<int>? bloodPressureDia,
-    Expression<int>? heartRate,
-    Expression<int>? respiratoryRate,
-    Expression<double>? oxygenSaturation,
-    Expression<String>? agentId,
-    Expression<DateTime>? recordedAt,
-    Expression<String>? syncStatus,
-    Expression<bool>? isSynced,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (patientId != null) 'patient_id': patientId,
-      if (medicalRecordId != null) 'medical_record_id': medicalRecordId,
-      if (temperature != null) 'temperature': temperature,
-      if (bloodPressureSys != null) 'blood_pressure_sys': bloodPressureSys,
-      if (bloodPressureDia != null) 'blood_pressure_dia': bloodPressureDia,
-      if (heartRate != null) 'heart_rate': heartRate,
-      if (respiratoryRate != null) 'respiratory_rate': respiratoryRate,
-      if (oxygenSaturation != null) 'oxygen_saturation': oxygenSaturation,
-      if (agentId != null) 'agent_id': agentId,
-      if (recordedAt != null) 'recorded_at': recordedAt,
-      if (syncStatus != null) 'sync_status': syncStatus,
-      if (isSynced != null) 'is_synced': isSynced,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  VitalSignsCompanion copyWith(
-      {Value<String>? id,
-      Value<String>? patientId,
-      Value<String?>? medicalRecordId,
-      Value<double?>? temperature,
-      Value<int?>? bloodPressureSys,
-      Value<int?>? bloodPressureDia,
-      Value<int?>? heartRate,
-      Value<int?>? respiratoryRate,
-      Value<double?>? oxygenSaturation,
-      Value<String>? agentId,
-      Value<DateTime>? recordedAt,
-      Value<String>? syncStatus,
-      Value<bool>? isSynced,
-      Value<int>? rowid}) {
-    return VitalSignsCompanion(
-      id: id ?? this.id,
-      patientId: patientId ?? this.patientId,
-      medicalRecordId: medicalRecordId ?? this.medicalRecordId,
-      temperature: temperature ?? this.temperature,
-      bloodPressureSys: bloodPressureSys ?? this.bloodPressureSys,
-      bloodPressureDia: bloodPressureDia ?? this.bloodPressureDia,
-      heartRate: heartRate ?? this.heartRate,
-      respiratoryRate: respiratoryRate ?? this.respiratoryRate,
-      oxygenSaturation: oxygenSaturation ?? this.oxygenSaturation,
-      agentId: agentId ?? this.agentId,
-      recordedAt: recordedAt ?? this.recordedAt,
-      syncStatus: syncStatus ?? this.syncStatus,
-      isSynced: isSynced ?? this.isSynced,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (patientId.present) {
-      map['patient_id'] = Variable<String>(patientId.value);
-    }
-    if (medicalRecordId.present) {
-      map['medical_record_id'] = Variable<String>(medicalRecordId.value);
-    }
-    if (temperature.present) {
-      map['temperature'] = Variable<double>(temperature.value);
-    }
-    if (bloodPressureSys.present) {
-      map['blood_pressure_sys'] = Variable<int>(bloodPressureSys.value);
-    }
-    if (bloodPressureDia.present) {
-      map['blood_pressure_dia'] = Variable<int>(bloodPressureDia.value);
-    }
-    if (heartRate.present) {
-      map['heart_rate'] = Variable<int>(heartRate.value);
-    }
-    if (respiratoryRate.present) {
-      map['respiratory_rate'] = Variable<int>(respiratoryRate.value);
-    }
-    if (oxygenSaturation.present) {
-      map['oxygen_saturation'] = Variable<double>(oxygenSaturation.value);
-    }
-    if (agentId.present) {
-      map['agent_id'] = Variable<String>(agentId.value);
-    }
-    if (recordedAt.present) {
-      map['recorded_at'] = Variable<DateTime>(recordedAt.value);
-    }
-    if (syncStatus.present) {
-      map['sync_status'] = Variable<String>(syncStatus.value);
-    }
-    if (isSynced.present) {
-      map['is_synced'] = Variable<bool>(isSynced.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('VitalSignsCompanion(')
-          ..write('id: $id, ')
-          ..write('patientId: $patientId, ')
-          ..write('medicalRecordId: $medicalRecordId, ')
-          ..write('temperature: $temperature, ')
-          ..write('bloodPressureSys: $bloodPressureSys, ')
-          ..write('bloodPressureDia: $bloodPressureDia, ')
-          ..write('heartRate: $heartRate, ')
-          ..write('respiratoryRate: $respiratoryRate, ')
-          ..write('oxygenSaturation: $oxygenSaturation, ')
-          ..write('agentId: $agentId, ')
-          ..write('recordedAt: $recordedAt, ')
-          ..write('syncStatus: $syncStatus, ')
-          ..write('isSynced: $isSynced, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $SyncQueueTable extends SyncQueue
     with TableInfo<$SyncQueueTable, SyncQueueData> {
   @override
@@ -5859,6 +5182,683 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
   }
 }
 
+class $VitalSignsTable extends VitalSigns
+    with TableInfo<$VitalSignsTable, VitalSign> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VitalSignsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
+  @override
+  late final GeneratedColumn<String> patientId = GeneratedColumn<String>(
+      'patient_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _medicalRecordIdMeta =
+      const VerificationMeta('medicalRecordId');
+  @override
+  late final GeneratedColumn<String> medicalRecordId = GeneratedColumn<String>(
+      'medical_record_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _temperatureMeta =
+      const VerificationMeta('temperature');
+  @override
+  late final GeneratedColumn<double> temperature = GeneratedColumn<double>(
+      'temperature', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _bloodPressureSysMeta =
+      const VerificationMeta('bloodPressureSys');
+  @override
+  late final GeneratedColumn<int> bloodPressureSys = GeneratedColumn<int>(
+      'blood_pressure_sys', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _bloodPressureDiaMeta =
+      const VerificationMeta('bloodPressureDia');
+  @override
+  late final GeneratedColumn<int> bloodPressureDia = GeneratedColumn<int>(
+      'blood_pressure_dia', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _heartRateMeta =
+      const VerificationMeta('heartRate');
+  @override
+  late final GeneratedColumn<int> heartRate = GeneratedColumn<int>(
+      'heart_rate', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _respiratoryRateMeta =
+      const VerificationMeta('respiratoryRate');
+  @override
+  late final GeneratedColumn<int> respiratoryRate = GeneratedColumn<int>(
+      'respiratory_rate', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _oxygenSaturationMeta =
+      const VerificationMeta('oxygenSaturation');
+  @override
+  late final GeneratedColumn<double> oxygenSaturation = GeneratedColumn<double>(
+      'oxygen_saturation', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _agentIdMeta =
+      const VerificationMeta('agentId');
+  @override
+  late final GeneratedColumn<String> agentId = GeneratedColumn<String>(
+      'agent_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _recordedAtMeta =
+      const VerificationMeta('recordedAt');
+  @override
+  late final GeneratedColumn<DateTime> recordedAt = GeneratedColumn<DateTime>(
+      'recorded_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('pending'));
+  static const VerificationMeta _isSyncedMeta =
+      const VerificationMeta('isSynced');
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+      'is_synced', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        patientId,
+        medicalRecordId,
+        temperature,
+        bloodPressureSys,
+        bloodPressureDia,
+        heartRate,
+        respiratoryRate,
+        oxygenSaturation,
+        agentId,
+        recordedAt,
+        syncStatus,
+        isSynced
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vital_signs';
+  @override
+  VerificationContext validateIntegrity(Insertable<VitalSign> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
+    } else if (isInserting) {
+      context.missing(_patientIdMeta);
+    }
+    if (data.containsKey('medical_record_id')) {
+      context.handle(
+          _medicalRecordIdMeta,
+          medicalRecordId.isAcceptableOrUnknown(
+              data['medical_record_id']!, _medicalRecordIdMeta));
+    }
+    if (data.containsKey('temperature')) {
+      context.handle(
+          _temperatureMeta,
+          temperature.isAcceptableOrUnknown(
+              data['temperature']!, _temperatureMeta));
+    }
+    if (data.containsKey('blood_pressure_sys')) {
+      context.handle(
+          _bloodPressureSysMeta,
+          bloodPressureSys.isAcceptableOrUnknown(
+              data['blood_pressure_sys']!, _bloodPressureSysMeta));
+    }
+    if (data.containsKey('blood_pressure_dia')) {
+      context.handle(
+          _bloodPressureDiaMeta,
+          bloodPressureDia.isAcceptableOrUnknown(
+              data['blood_pressure_dia']!, _bloodPressureDiaMeta));
+    }
+    if (data.containsKey('heart_rate')) {
+      context.handle(_heartRateMeta,
+          heartRate.isAcceptableOrUnknown(data['heart_rate']!, _heartRateMeta));
+    }
+    if (data.containsKey('respiratory_rate')) {
+      context.handle(
+          _respiratoryRateMeta,
+          respiratoryRate.isAcceptableOrUnknown(
+              data['respiratory_rate']!, _respiratoryRateMeta));
+    }
+    if (data.containsKey('oxygen_saturation')) {
+      context.handle(
+          _oxygenSaturationMeta,
+          oxygenSaturation.isAcceptableOrUnknown(
+              data['oxygen_saturation']!, _oxygenSaturationMeta));
+    }
+    if (data.containsKey('agent_id')) {
+      context.handle(_agentIdMeta,
+          agentId.isAcceptableOrUnknown(data['agent_id']!, _agentIdMeta));
+    } else if (isInserting) {
+      context.missing(_agentIdMeta);
+    }
+    if (data.containsKey('recorded_at')) {
+      context.handle(
+          _recordedAtMeta,
+          recordedAt.isAcceptableOrUnknown(
+              data['recorded_at']!, _recordedAtMeta));
+    } else if (isInserting) {
+      context.missing(_recordedAtMeta);
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(_isSyncedMeta,
+          isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VitalSign map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VitalSign(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}patient_id'])!,
+      medicalRecordId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}medical_record_id']),
+      temperature: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}temperature']),
+      bloodPressureSys: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}blood_pressure_sys']),
+      bloodPressureDia: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}blood_pressure_dia']),
+      heartRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}heart_rate']),
+      respiratoryRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}respiratory_rate']),
+      oxygenSaturation: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}oxygen_saturation']),
+      agentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}agent_id'])!,
+      recordedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}recorded_at'])!,
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+      isSynced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_synced'])!,
+    );
+  }
+
+  @override
+  $VitalSignsTable createAlias(String alias) {
+    return $VitalSignsTable(attachedDatabase, alias);
+  }
+}
+
+class VitalSign extends DataClass implements Insertable<VitalSign> {
+  final String id;
+  final String patientId;
+  final String? medicalRecordId;
+  final double? temperature;
+  final int? bloodPressureSys;
+  final int? bloodPressureDia;
+  final int? heartRate;
+  final int? respiratoryRate;
+  final double? oxygenSaturation;
+  final String agentId;
+  final DateTime recordedAt;
+  final String syncStatus;
+  final bool isSynced;
+  const VitalSign(
+      {required this.id,
+      required this.patientId,
+      this.medicalRecordId,
+      this.temperature,
+      this.bloodPressureSys,
+      this.bloodPressureDia,
+      this.heartRate,
+      this.respiratoryRate,
+      this.oxygenSaturation,
+      required this.agentId,
+      required this.recordedAt,
+      required this.syncStatus,
+      required this.isSynced});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['patient_id'] = Variable<String>(patientId);
+    if (!nullToAbsent || medicalRecordId != null) {
+      map['medical_record_id'] = Variable<String>(medicalRecordId);
+    }
+    if (!nullToAbsent || temperature != null) {
+      map['temperature'] = Variable<double>(temperature);
+    }
+    if (!nullToAbsent || bloodPressureSys != null) {
+      map['blood_pressure_sys'] = Variable<int>(bloodPressureSys);
+    }
+    if (!nullToAbsent || bloodPressureDia != null) {
+      map['blood_pressure_dia'] = Variable<int>(bloodPressureDia);
+    }
+    if (!nullToAbsent || heartRate != null) {
+      map['heart_rate'] = Variable<int>(heartRate);
+    }
+    if (!nullToAbsent || respiratoryRate != null) {
+      map['respiratory_rate'] = Variable<int>(respiratoryRate);
+    }
+    if (!nullToAbsent || oxygenSaturation != null) {
+      map['oxygen_saturation'] = Variable<double>(oxygenSaturation);
+    }
+    map['agent_id'] = Variable<String>(agentId);
+    map['recorded_at'] = Variable<DateTime>(recordedAt);
+    map['sync_status'] = Variable<String>(syncStatus);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  VitalSignsCompanion toCompanion(bool nullToAbsent) {
+    return VitalSignsCompanion(
+      id: Value(id),
+      patientId: Value(patientId),
+      medicalRecordId: medicalRecordId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(medicalRecordId),
+      temperature: temperature == null && nullToAbsent
+          ? const Value.absent()
+          : Value(temperature),
+      bloodPressureSys: bloodPressureSys == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bloodPressureSys),
+      bloodPressureDia: bloodPressureDia == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bloodPressureDia),
+      heartRate: heartRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(heartRate),
+      respiratoryRate: respiratoryRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(respiratoryRate),
+      oxygenSaturation: oxygenSaturation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(oxygenSaturation),
+      agentId: Value(agentId),
+      recordedAt: Value(recordedAt),
+      syncStatus: Value(syncStatus),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory VitalSign.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VitalSign(
+      id: serializer.fromJson<String>(json['id']),
+      patientId: serializer.fromJson<String>(json['patientId']),
+      medicalRecordId: serializer.fromJson<String?>(json['medicalRecordId']),
+      temperature: serializer.fromJson<double?>(json['temperature']),
+      bloodPressureSys: serializer.fromJson<int?>(json['bloodPressureSys']),
+      bloodPressureDia: serializer.fromJson<int?>(json['bloodPressureDia']),
+      heartRate: serializer.fromJson<int?>(json['heartRate']),
+      respiratoryRate: serializer.fromJson<int?>(json['respiratoryRate']),
+      oxygenSaturation: serializer.fromJson<double?>(json['oxygenSaturation']),
+      agentId: serializer.fromJson<String>(json['agentId']),
+      recordedAt: serializer.fromJson<DateTime>(json['recordedAt']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'patientId': serializer.toJson<String>(patientId),
+      'medicalRecordId': serializer.toJson<String?>(medicalRecordId),
+      'temperature': serializer.toJson<double?>(temperature),
+      'bloodPressureSys': serializer.toJson<int?>(bloodPressureSys),
+      'bloodPressureDia': serializer.toJson<int?>(bloodPressureDia),
+      'heartRate': serializer.toJson<int?>(heartRate),
+      'respiratoryRate': serializer.toJson<int?>(respiratoryRate),
+      'oxygenSaturation': serializer.toJson<double?>(oxygenSaturation),
+      'agentId': serializer.toJson<String>(agentId),
+      'recordedAt': serializer.toJson<DateTime>(recordedAt),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  VitalSign copyWith(
+          {String? id,
+          String? patientId,
+          Value<String?> medicalRecordId = const Value.absent(),
+          Value<double?> temperature = const Value.absent(),
+          Value<int?> bloodPressureSys = const Value.absent(),
+          Value<int?> bloodPressureDia = const Value.absent(),
+          Value<int?> heartRate = const Value.absent(),
+          Value<int?> respiratoryRate = const Value.absent(),
+          Value<double?> oxygenSaturation = const Value.absent(),
+          String? agentId,
+          DateTime? recordedAt,
+          String? syncStatus,
+          bool? isSynced}) =>
+      VitalSign(
+        id: id ?? this.id,
+        patientId: patientId ?? this.patientId,
+        medicalRecordId: medicalRecordId.present
+            ? medicalRecordId.value
+            : this.medicalRecordId,
+        temperature: temperature.present ? temperature.value : this.temperature,
+        bloodPressureSys: bloodPressureSys.present
+            ? bloodPressureSys.value
+            : this.bloodPressureSys,
+        bloodPressureDia: bloodPressureDia.present
+            ? bloodPressureDia.value
+            : this.bloodPressureDia,
+        heartRate: heartRate.present ? heartRate.value : this.heartRate,
+        respiratoryRate: respiratoryRate.present
+            ? respiratoryRate.value
+            : this.respiratoryRate,
+        oxygenSaturation: oxygenSaturation.present
+            ? oxygenSaturation.value
+            : this.oxygenSaturation,
+        agentId: agentId ?? this.agentId,
+        recordedAt: recordedAt ?? this.recordedAt,
+        syncStatus: syncStatus ?? this.syncStatus,
+        isSynced: isSynced ?? this.isSynced,
+      );
+  VitalSign copyWithCompanion(VitalSignsCompanion data) {
+    return VitalSign(
+      id: data.id.present ? data.id.value : this.id,
+      patientId: data.patientId.present ? data.patientId.value : this.patientId,
+      medicalRecordId: data.medicalRecordId.present
+          ? data.medicalRecordId.value
+          : this.medicalRecordId,
+      temperature:
+          data.temperature.present ? data.temperature.value : this.temperature,
+      bloodPressureSys: data.bloodPressureSys.present
+          ? data.bloodPressureSys.value
+          : this.bloodPressureSys,
+      bloodPressureDia: data.bloodPressureDia.present
+          ? data.bloodPressureDia.value
+          : this.bloodPressureDia,
+      heartRate: data.heartRate.present ? data.heartRate.value : this.heartRate,
+      respiratoryRate: data.respiratoryRate.present
+          ? data.respiratoryRate.value
+          : this.respiratoryRate,
+      oxygenSaturation: data.oxygenSaturation.present
+          ? data.oxygenSaturation.value
+          : this.oxygenSaturation,
+      agentId: data.agentId.present ? data.agentId.value : this.agentId,
+      recordedAt:
+          data.recordedAt.present ? data.recordedAt.value : this.recordedAt,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VitalSign(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('medicalRecordId: $medicalRecordId, ')
+          ..write('temperature: $temperature, ')
+          ..write('bloodPressureSys: $bloodPressureSys, ')
+          ..write('bloodPressureDia: $bloodPressureDia, ')
+          ..write('heartRate: $heartRate, ')
+          ..write('respiratoryRate: $respiratoryRate, ')
+          ..write('oxygenSaturation: $oxygenSaturation, ')
+          ..write('agentId: $agentId, ')
+          ..write('recordedAt: $recordedAt, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      patientId,
+      medicalRecordId,
+      temperature,
+      bloodPressureSys,
+      bloodPressureDia,
+      heartRate,
+      respiratoryRate,
+      oxygenSaturation,
+      agentId,
+      recordedAt,
+      syncStatus,
+      isSynced);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VitalSign &&
+          other.id == this.id &&
+          other.patientId == this.patientId &&
+          other.medicalRecordId == this.medicalRecordId &&
+          other.temperature == this.temperature &&
+          other.bloodPressureSys == this.bloodPressureSys &&
+          other.bloodPressureDia == this.bloodPressureDia &&
+          other.heartRate == this.heartRate &&
+          other.respiratoryRate == this.respiratoryRate &&
+          other.oxygenSaturation == this.oxygenSaturation &&
+          other.agentId == this.agentId &&
+          other.recordedAt == this.recordedAt &&
+          other.syncStatus == this.syncStatus &&
+          other.isSynced == this.isSynced);
+}
+
+class VitalSignsCompanion extends UpdateCompanion<VitalSign> {
+  final Value<String> id;
+  final Value<String> patientId;
+  final Value<String?> medicalRecordId;
+  final Value<double?> temperature;
+  final Value<int?> bloodPressureSys;
+  final Value<int?> bloodPressureDia;
+  final Value<int?> heartRate;
+  final Value<int?> respiratoryRate;
+  final Value<double?> oxygenSaturation;
+  final Value<String> agentId;
+  final Value<DateTime> recordedAt;
+  final Value<String> syncStatus;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const VitalSignsCompanion({
+    this.id = const Value.absent(),
+    this.patientId = const Value.absent(),
+    this.medicalRecordId = const Value.absent(),
+    this.temperature = const Value.absent(),
+    this.bloodPressureSys = const Value.absent(),
+    this.bloodPressureDia = const Value.absent(),
+    this.heartRate = const Value.absent(),
+    this.respiratoryRate = const Value.absent(),
+    this.oxygenSaturation = const Value.absent(),
+    this.agentId = const Value.absent(),
+    this.recordedAt = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VitalSignsCompanion.insert({
+    required String id,
+    required String patientId,
+    this.medicalRecordId = const Value.absent(),
+    this.temperature = const Value.absent(),
+    this.bloodPressureSys = const Value.absent(),
+    this.bloodPressureDia = const Value.absent(),
+    this.heartRate = const Value.absent(),
+    this.respiratoryRate = const Value.absent(),
+    this.oxygenSaturation = const Value.absent(),
+    required String agentId,
+    required DateTime recordedAt,
+    this.syncStatus = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        patientId = Value(patientId),
+        agentId = Value(agentId),
+        recordedAt = Value(recordedAt);
+  static Insertable<VitalSign> custom({
+    Expression<String>? id,
+    Expression<String>? patientId,
+    Expression<String>? medicalRecordId,
+    Expression<double>? temperature,
+    Expression<int>? bloodPressureSys,
+    Expression<int>? bloodPressureDia,
+    Expression<int>? heartRate,
+    Expression<int>? respiratoryRate,
+    Expression<double>? oxygenSaturation,
+    Expression<String>? agentId,
+    Expression<DateTime>? recordedAt,
+    Expression<String>? syncStatus,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (patientId != null) 'patient_id': patientId,
+      if (medicalRecordId != null) 'medical_record_id': medicalRecordId,
+      if (temperature != null) 'temperature': temperature,
+      if (bloodPressureSys != null) 'blood_pressure_sys': bloodPressureSys,
+      if (bloodPressureDia != null) 'blood_pressure_dia': bloodPressureDia,
+      if (heartRate != null) 'heart_rate': heartRate,
+      if (respiratoryRate != null) 'respiratory_rate': respiratoryRate,
+      if (oxygenSaturation != null) 'oxygen_saturation': oxygenSaturation,
+      if (agentId != null) 'agent_id': agentId,
+      if (recordedAt != null) 'recorded_at': recordedAt,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VitalSignsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? patientId,
+      Value<String?>? medicalRecordId,
+      Value<double?>? temperature,
+      Value<int?>? bloodPressureSys,
+      Value<int?>? bloodPressureDia,
+      Value<int?>? heartRate,
+      Value<int?>? respiratoryRate,
+      Value<double?>? oxygenSaturation,
+      Value<String>? agentId,
+      Value<DateTime>? recordedAt,
+      Value<String>? syncStatus,
+      Value<bool>? isSynced,
+      Value<int>? rowid}) {
+    return VitalSignsCompanion(
+      id: id ?? this.id,
+      patientId: patientId ?? this.patientId,
+      medicalRecordId: medicalRecordId ?? this.medicalRecordId,
+      temperature: temperature ?? this.temperature,
+      bloodPressureSys: bloodPressureSys ?? this.bloodPressureSys,
+      bloodPressureDia: bloodPressureDia ?? this.bloodPressureDia,
+      heartRate: heartRate ?? this.heartRate,
+      respiratoryRate: respiratoryRate ?? this.respiratoryRate,
+      oxygenSaturation: oxygenSaturation ?? this.oxygenSaturation,
+      agentId: agentId ?? this.agentId,
+      recordedAt: recordedAt ?? this.recordedAt,
+      syncStatus: syncStatus ?? this.syncStatus,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (patientId.present) {
+      map['patient_id'] = Variable<String>(patientId.value);
+    }
+    if (medicalRecordId.present) {
+      map['medical_record_id'] = Variable<String>(medicalRecordId.value);
+    }
+    if (temperature.present) {
+      map['temperature'] = Variable<double>(temperature.value);
+    }
+    if (bloodPressureSys.present) {
+      map['blood_pressure_sys'] = Variable<int>(bloodPressureSys.value);
+    }
+    if (bloodPressureDia.present) {
+      map['blood_pressure_dia'] = Variable<int>(bloodPressureDia.value);
+    }
+    if (heartRate.present) {
+      map['heart_rate'] = Variable<int>(heartRate.value);
+    }
+    if (respiratoryRate.present) {
+      map['respiratory_rate'] = Variable<int>(respiratoryRate.value);
+    }
+    if (oxygenSaturation.present) {
+      map['oxygen_saturation'] = Variable<double>(oxygenSaturation.value);
+    }
+    if (agentId.present) {
+      map['agent_id'] = Variable<String>(agentId.value);
+    }
+    if (recordedAt.present) {
+      map['recorded_at'] = Variable<DateTime>(recordedAt.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VitalSignsCompanion(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('medicalRecordId: $medicalRecordId, ')
+          ..write('temperature: $temperature, ')
+          ..write('bloodPressureSys: $bloodPressureSys, ')
+          ..write('bloodPressureDia: $bloodPressureDia, ')
+          ..write('heartRate: $heartRate, ')
+          ..write('respiratoryRate: $respiratoryRate, ')
+          ..write('oxygenSaturation: $oxygenSaturation, ')
+          ..write('agentId: $agentId, ')
+          ..write('recordedAt: $recordedAt, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $MaternalCaresTable extends MaternalCares
     with TableInfo<$MaternalCaresTable, MaternalCare> {
   @override
@@ -6605,6 +6605,505 @@ class MaternalCaresCompanion extends UpdateCompanion<MaternalCare> {
   }
 }
 
+class $NutritionRecordsTable extends NutritionRecords
+    with TableInfo<$NutritionRecordsTable, NutritionRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NutritionRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
+  @override
+  late final GeneratedColumn<String> patientId = GeneratedColumn<String>(
+      'patient_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _weightMeta = const VerificationMeta('weight');
+  @override
+  late final GeneratedColumn<double> weight = GeneratedColumn<double>(
+      'weight', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _heightMeta = const VerificationMeta('height');
+  @override
+  late final GeneratedColumn<double> height = GeneratedColumn<double>(
+      'height', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _muacMeta = const VerificationMeta('muac');
+  @override
+  late final GeneratedColumn<double> muac = GeneratedColumn<double>(
+      'muac', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('NORMAL'));
+  static const VerificationMeta _agentIdMeta =
+      const VerificationMeta('agentId');
+  @override
+  late final GeneratedColumn<String> agentId = GeneratedColumn<String>(
+      'agent_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+      'date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('pending'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        patientId,
+        weight,
+        height,
+        muac,
+        status,
+        agentId,
+        notes,
+        date,
+        syncStatus
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'nutrition_records';
+  @override
+  VerificationContext validateIntegrity(Insertable<NutritionRecord> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
+    } else if (isInserting) {
+      context.missing(_patientIdMeta);
+    }
+    if (data.containsKey('weight')) {
+      context.handle(_weightMeta,
+          weight.isAcceptableOrUnknown(data['weight']!, _weightMeta));
+    } else if (isInserting) {
+      context.missing(_weightMeta);
+    }
+    if (data.containsKey('height')) {
+      context.handle(_heightMeta,
+          height.isAcceptableOrUnknown(data['height']!, _heightMeta));
+    } else if (isInserting) {
+      context.missing(_heightMeta);
+    }
+    if (data.containsKey('muac')) {
+      context.handle(
+          _muacMeta, muac.isAcceptableOrUnknown(data['muac']!, _muacMeta));
+    }
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    }
+    if (data.containsKey('agent_id')) {
+      context.handle(_agentIdMeta,
+          agentId.isAcceptableOrUnknown(data['agent_id']!, _agentIdMeta));
+    } else if (isInserting) {
+      context.missing(_agentIdMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NutritionRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NutritionRecord(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}patient_id'])!,
+      weight: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}weight'])!,
+      height: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}height'])!,
+      muac: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}muac']),
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+      agentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}agent_id'])!,
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+    );
+  }
+
+  @override
+  $NutritionRecordsTable createAlias(String alias) {
+    return $NutritionRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class NutritionRecord extends DataClass implements Insertable<NutritionRecord> {
+  final String id;
+  final String patientId;
+  final double weight;
+  final double height;
+  final double? muac;
+  final String status;
+  final String agentId;
+  final String? notes;
+  final DateTime date;
+  final String syncStatus;
+  const NutritionRecord(
+      {required this.id,
+      required this.patientId,
+      required this.weight,
+      required this.height,
+      this.muac,
+      required this.status,
+      required this.agentId,
+      this.notes,
+      required this.date,
+      required this.syncStatus});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['patient_id'] = Variable<String>(patientId);
+    map['weight'] = Variable<double>(weight);
+    map['height'] = Variable<double>(height);
+    if (!nullToAbsent || muac != null) {
+      map['muac'] = Variable<double>(muac);
+    }
+    map['status'] = Variable<String>(status);
+    map['agent_id'] = Variable<String>(agentId);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['date'] = Variable<DateTime>(date);
+    map['sync_status'] = Variable<String>(syncStatus);
+    return map;
+  }
+
+  NutritionRecordsCompanion toCompanion(bool nullToAbsent) {
+    return NutritionRecordsCompanion(
+      id: Value(id),
+      patientId: Value(patientId),
+      weight: Value(weight),
+      height: Value(height),
+      muac: muac == null && nullToAbsent ? const Value.absent() : Value(muac),
+      status: Value(status),
+      agentId: Value(agentId),
+      notes:
+          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
+      date: Value(date),
+      syncStatus: Value(syncStatus),
+    );
+  }
+
+  factory NutritionRecord.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NutritionRecord(
+      id: serializer.fromJson<String>(json['id']),
+      patientId: serializer.fromJson<String>(json['patientId']),
+      weight: serializer.fromJson<double>(json['weight']),
+      height: serializer.fromJson<double>(json['height']),
+      muac: serializer.fromJson<double?>(json['muac']),
+      status: serializer.fromJson<String>(json['status']),
+      agentId: serializer.fromJson<String>(json['agentId']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'patientId': serializer.toJson<String>(patientId),
+      'weight': serializer.toJson<double>(weight),
+      'height': serializer.toJson<double>(height),
+      'muac': serializer.toJson<double?>(muac),
+      'status': serializer.toJson<String>(status),
+      'agentId': serializer.toJson<String>(agentId),
+      'notes': serializer.toJson<String?>(notes),
+      'date': serializer.toJson<DateTime>(date),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+    };
+  }
+
+  NutritionRecord copyWith(
+          {String? id,
+          String? patientId,
+          double? weight,
+          double? height,
+          Value<double?> muac = const Value.absent(),
+          String? status,
+          String? agentId,
+          Value<String?> notes = const Value.absent(),
+          DateTime? date,
+          String? syncStatus}) =>
+      NutritionRecord(
+        id: id ?? this.id,
+        patientId: patientId ?? this.patientId,
+        weight: weight ?? this.weight,
+        height: height ?? this.height,
+        muac: muac.present ? muac.value : this.muac,
+        status: status ?? this.status,
+        agentId: agentId ?? this.agentId,
+        notes: notes.present ? notes.value : this.notes,
+        date: date ?? this.date,
+        syncStatus: syncStatus ?? this.syncStatus,
+      );
+  NutritionRecord copyWithCompanion(NutritionRecordsCompanion data) {
+    return NutritionRecord(
+      id: data.id.present ? data.id.value : this.id,
+      patientId: data.patientId.present ? data.patientId.value : this.patientId,
+      weight: data.weight.present ? data.weight.value : this.weight,
+      height: data.height.present ? data.height.value : this.height,
+      muac: data.muac.present ? data.muac.value : this.muac,
+      status: data.status.present ? data.status.value : this.status,
+      agentId: data.agentId.present ? data.agentId.value : this.agentId,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      date: data.date.present ? data.date.value : this.date,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NutritionRecord(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('weight: $weight, ')
+          ..write('height: $height, ')
+          ..write('muac: $muac, ')
+          ..write('status: $status, ')
+          ..write('agentId: $agentId, ')
+          ..write('notes: $notes, ')
+          ..write('date: $date, ')
+          ..write('syncStatus: $syncStatus')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, patientId, weight, height, muac, status,
+      agentId, notes, date, syncStatus);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NutritionRecord &&
+          other.id == this.id &&
+          other.patientId == this.patientId &&
+          other.weight == this.weight &&
+          other.height == this.height &&
+          other.muac == this.muac &&
+          other.status == this.status &&
+          other.agentId == this.agentId &&
+          other.notes == this.notes &&
+          other.date == this.date &&
+          other.syncStatus == this.syncStatus);
+}
+
+class NutritionRecordsCompanion extends UpdateCompanion<NutritionRecord> {
+  final Value<String> id;
+  final Value<String> patientId;
+  final Value<double> weight;
+  final Value<double> height;
+  final Value<double?> muac;
+  final Value<String> status;
+  final Value<String> agentId;
+  final Value<String?> notes;
+  final Value<DateTime> date;
+  final Value<String> syncStatus;
+  final Value<int> rowid;
+  const NutritionRecordsCompanion({
+    this.id = const Value.absent(),
+    this.patientId = const Value.absent(),
+    this.weight = const Value.absent(),
+    this.height = const Value.absent(),
+    this.muac = const Value.absent(),
+    this.status = const Value.absent(),
+    this.agentId = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.date = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NutritionRecordsCompanion.insert({
+    required String id,
+    required String patientId,
+    required double weight,
+    required double height,
+    this.muac = const Value.absent(),
+    this.status = const Value.absent(),
+    required String agentId,
+    this.notes = const Value.absent(),
+    required DateTime date,
+    this.syncStatus = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        patientId = Value(patientId),
+        weight = Value(weight),
+        height = Value(height),
+        agentId = Value(agentId),
+        date = Value(date);
+  static Insertable<NutritionRecord> custom({
+    Expression<String>? id,
+    Expression<String>? patientId,
+    Expression<double>? weight,
+    Expression<double>? height,
+    Expression<double>? muac,
+    Expression<String>? status,
+    Expression<String>? agentId,
+    Expression<String>? notes,
+    Expression<DateTime>? date,
+    Expression<String>? syncStatus,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (patientId != null) 'patient_id': patientId,
+      if (weight != null) 'weight': weight,
+      if (height != null) 'height': height,
+      if (muac != null) 'muac': muac,
+      if (status != null) 'status': status,
+      if (agentId != null) 'agent_id': agentId,
+      if (notes != null) 'notes': notes,
+      if (date != null) 'date': date,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NutritionRecordsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? patientId,
+      Value<double>? weight,
+      Value<double>? height,
+      Value<double?>? muac,
+      Value<String>? status,
+      Value<String>? agentId,
+      Value<String?>? notes,
+      Value<DateTime>? date,
+      Value<String>? syncStatus,
+      Value<int>? rowid}) {
+    return NutritionRecordsCompanion(
+      id: id ?? this.id,
+      patientId: patientId ?? this.patientId,
+      weight: weight ?? this.weight,
+      height: height ?? this.height,
+      muac: muac ?? this.muac,
+      status: status ?? this.status,
+      agentId: agentId ?? this.agentId,
+      notes: notes ?? this.notes,
+      date: date ?? this.date,
+      syncStatus: syncStatus ?? this.syncStatus,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (patientId.present) {
+      map['patient_id'] = Variable<String>(patientId.value);
+    }
+    if (weight.present) {
+      map['weight'] = Variable<double>(weight.value);
+    }
+    if (height.present) {
+      map['height'] = Variable<double>(height.value);
+    }
+    if (muac.present) {
+      map['muac'] = Variable<double>(muac.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (agentId.present) {
+      map['agent_id'] = Variable<String>(agentId.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NutritionRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('patientId: $patientId, ')
+          ..write('weight: $weight, ')
+          ..write('height: $height, ')
+          ..write('muac: $muac, ')
+          ..write('status: $status, ')
+          ..write('agentId: $agentId, ')
+          ..write('notes: $notes, ')
+          ..write('date: $date, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -6613,13 +7112,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $HouseholdMembersTable householdMembers =
       $HouseholdMembersTable(this);
   late final $ConsultationsTable consultations = $ConsultationsTable(this);
-  late final $VitalSignsTable vitalSigns = $VitalSignsTable(this);
   late final $SyncQueueTable syncQueue = $SyncQueueTable(this);
   late final $CaseReportsTable caseReports = $CaseReportsTable(this);
   late final $MedicalProtocolsTable medicalProtocols =
       $MedicalProtocolsTable(this);
   late final $VaccinationsTable vaccinations = $VaccinationsTable(this);
+  late final $VitalSignsTable vitalSigns = $VitalSignsTable(this);
   late final $MaternalCaresTable maternalCares = $MaternalCaresTable(this);
+  late final $NutritionRecordsTable nutritionRecords =
+      $NutritionRecordsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6629,12 +7130,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         households,
         householdMembers,
         consultations,
-        vitalSigns,
         syncQueue,
         caseReports,
         medicalProtocols,
         vaccinations,
-        maternalCares
+        vitalSigns,
+        maternalCares,
+        nutritionRecords
       ];
 }
 
@@ -7890,301 +8392,6 @@ typedef $$ConsultationsTableProcessedTableManager = ProcessedTableManager<
     ),
     Consultation,
     PrefetchHooks Function()>;
-typedef $$VitalSignsTableCreateCompanionBuilder = VitalSignsCompanion Function({
-  required String id,
-  required String patientId,
-  Value<String?> medicalRecordId,
-  Value<double?> temperature,
-  Value<int?> bloodPressureSys,
-  Value<int?> bloodPressureDia,
-  Value<int?> heartRate,
-  Value<int?> respiratoryRate,
-  Value<double?> oxygenSaturation,
-  required String agentId,
-  required DateTime recordedAt,
-  Value<String> syncStatus,
-  Value<bool> isSynced,
-  Value<int> rowid,
-});
-typedef $$VitalSignsTableUpdateCompanionBuilder = VitalSignsCompanion Function({
-  Value<String> id,
-  Value<String> patientId,
-  Value<String?> medicalRecordId,
-  Value<double?> temperature,
-  Value<int?> bloodPressureSys,
-  Value<int?> bloodPressureDia,
-  Value<int?> heartRate,
-  Value<int?> respiratoryRate,
-  Value<double?> oxygenSaturation,
-  Value<String> agentId,
-  Value<DateTime> recordedAt,
-  Value<String> syncStatus,
-  Value<bool> isSynced,
-  Value<int> rowid,
-});
-
-class $$VitalSignsTableFilterComposer
-    extends Composer<_$AppDatabase, $VitalSignsTable> {
-  $$VitalSignsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get patientId => $composableBuilder(
-      column: $table.patientId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get medicalRecordId => $composableBuilder(
-      column: $table.medicalRecordId,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get temperature => $composableBuilder(
-      column: $table.temperature, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get bloodPressureSys => $composableBuilder(
-      column: $table.bloodPressureSys,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get bloodPressureDia => $composableBuilder(
-      column: $table.bloodPressureDia,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get heartRate => $composableBuilder(
-      column: $table.heartRate, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get respiratoryRate => $composableBuilder(
-      column: $table.respiratoryRate,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get oxygenSaturation => $composableBuilder(
-      column: $table.oxygenSaturation,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get agentId => $composableBuilder(
-      column: $table.agentId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get recordedAt => $composableBuilder(
-      column: $table.recordedAt, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get syncStatus => $composableBuilder(
-      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get isSynced => $composableBuilder(
-      column: $table.isSynced, builder: (column) => ColumnFilters(column));
-}
-
-class $$VitalSignsTableOrderingComposer
-    extends Composer<_$AppDatabase, $VitalSignsTable> {
-  $$VitalSignsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get patientId => $composableBuilder(
-      column: $table.patientId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get medicalRecordId => $composableBuilder(
-      column: $table.medicalRecordId,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get temperature => $composableBuilder(
-      column: $table.temperature, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get bloodPressureSys => $composableBuilder(
-      column: $table.bloodPressureSys,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get bloodPressureDia => $composableBuilder(
-      column: $table.bloodPressureDia,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get heartRate => $composableBuilder(
-      column: $table.heartRate, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get respiratoryRate => $composableBuilder(
-      column: $table.respiratoryRate,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get oxygenSaturation => $composableBuilder(
-      column: $table.oxygenSaturation,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get agentId => $composableBuilder(
-      column: $table.agentId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get recordedAt => $composableBuilder(
-      column: $table.recordedAt, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get syncStatus => $composableBuilder(
-      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get isSynced => $composableBuilder(
-      column: $table.isSynced, builder: (column) => ColumnOrderings(column));
-}
-
-class $$VitalSignsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $VitalSignsTable> {
-  $$VitalSignsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get patientId =>
-      $composableBuilder(column: $table.patientId, builder: (column) => column);
-
-  GeneratedColumn<String> get medicalRecordId => $composableBuilder(
-      column: $table.medicalRecordId, builder: (column) => column);
-
-  GeneratedColumn<double> get temperature => $composableBuilder(
-      column: $table.temperature, builder: (column) => column);
-
-  GeneratedColumn<int> get bloodPressureSys => $composableBuilder(
-      column: $table.bloodPressureSys, builder: (column) => column);
-
-  GeneratedColumn<int> get bloodPressureDia => $composableBuilder(
-      column: $table.bloodPressureDia, builder: (column) => column);
-
-  GeneratedColumn<int> get heartRate =>
-      $composableBuilder(column: $table.heartRate, builder: (column) => column);
-
-  GeneratedColumn<int> get respiratoryRate => $composableBuilder(
-      column: $table.respiratoryRate, builder: (column) => column);
-
-  GeneratedColumn<double> get oxygenSaturation => $composableBuilder(
-      column: $table.oxygenSaturation, builder: (column) => column);
-
-  GeneratedColumn<String> get agentId =>
-      $composableBuilder(column: $table.agentId, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get recordedAt => $composableBuilder(
-      column: $table.recordedAt, builder: (column) => column);
-
-  GeneratedColumn<String> get syncStatus => $composableBuilder(
-      column: $table.syncStatus, builder: (column) => column);
-
-  GeneratedColumn<bool> get isSynced =>
-      $composableBuilder(column: $table.isSynced, builder: (column) => column);
-}
-
-class $$VitalSignsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $VitalSignsTable,
-    VitalSign,
-    $$VitalSignsTableFilterComposer,
-    $$VitalSignsTableOrderingComposer,
-    $$VitalSignsTableAnnotationComposer,
-    $$VitalSignsTableCreateCompanionBuilder,
-    $$VitalSignsTableUpdateCompanionBuilder,
-    (VitalSign, BaseReferences<_$AppDatabase, $VitalSignsTable, VitalSign>),
-    VitalSign,
-    PrefetchHooks Function()> {
-  $$VitalSignsTableTableManager(_$AppDatabase db, $VitalSignsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$VitalSignsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$VitalSignsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$VitalSignsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> patientId = const Value.absent(),
-            Value<String?> medicalRecordId = const Value.absent(),
-            Value<double?> temperature = const Value.absent(),
-            Value<int?> bloodPressureSys = const Value.absent(),
-            Value<int?> bloodPressureDia = const Value.absent(),
-            Value<int?> heartRate = const Value.absent(),
-            Value<int?> respiratoryRate = const Value.absent(),
-            Value<double?> oxygenSaturation = const Value.absent(),
-            Value<String> agentId = const Value.absent(),
-            Value<DateTime> recordedAt = const Value.absent(),
-            Value<String> syncStatus = const Value.absent(),
-            Value<bool> isSynced = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              VitalSignsCompanion(
-            id: id,
-            patientId: patientId,
-            medicalRecordId: medicalRecordId,
-            temperature: temperature,
-            bloodPressureSys: bloodPressureSys,
-            bloodPressureDia: bloodPressureDia,
-            heartRate: heartRate,
-            respiratoryRate: respiratoryRate,
-            oxygenSaturation: oxygenSaturation,
-            agentId: agentId,
-            recordedAt: recordedAt,
-            syncStatus: syncStatus,
-            isSynced: isSynced,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String patientId,
-            Value<String?> medicalRecordId = const Value.absent(),
-            Value<double?> temperature = const Value.absent(),
-            Value<int?> bloodPressureSys = const Value.absent(),
-            Value<int?> bloodPressureDia = const Value.absent(),
-            Value<int?> heartRate = const Value.absent(),
-            Value<int?> respiratoryRate = const Value.absent(),
-            Value<double?> oxygenSaturation = const Value.absent(),
-            required String agentId,
-            required DateTime recordedAt,
-            Value<String> syncStatus = const Value.absent(),
-            Value<bool> isSynced = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              VitalSignsCompanion.insert(
-            id: id,
-            patientId: patientId,
-            medicalRecordId: medicalRecordId,
-            temperature: temperature,
-            bloodPressureSys: bloodPressureSys,
-            bloodPressureDia: bloodPressureDia,
-            heartRate: heartRate,
-            respiratoryRate: respiratoryRate,
-            oxygenSaturation: oxygenSaturation,
-            agentId: agentId,
-            recordedAt: recordedAt,
-            syncStatus: syncStatus,
-            isSynced: isSynced,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$VitalSignsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $VitalSignsTable,
-    VitalSign,
-    $$VitalSignsTableFilterComposer,
-    $$VitalSignsTableOrderingComposer,
-    $$VitalSignsTableAnnotationComposer,
-    $$VitalSignsTableCreateCompanionBuilder,
-    $$VitalSignsTableUpdateCompanionBuilder,
-    (VitalSign, BaseReferences<_$AppDatabase, $VitalSignsTable, VitalSign>),
-    VitalSign,
-    PrefetchHooks Function()>;
 typedef $$SyncQueueTableCreateCompanionBuilder = SyncQueueCompanion Function({
   Value<int> id,
   required String operation,
@@ -9286,6 +9493,301 @@ typedef $$VaccinationsTableProcessedTableManager = ProcessedTableManager<
     ),
     Vaccination,
     PrefetchHooks Function()>;
+typedef $$VitalSignsTableCreateCompanionBuilder = VitalSignsCompanion Function({
+  required String id,
+  required String patientId,
+  Value<String?> medicalRecordId,
+  Value<double?> temperature,
+  Value<int?> bloodPressureSys,
+  Value<int?> bloodPressureDia,
+  Value<int?> heartRate,
+  Value<int?> respiratoryRate,
+  Value<double?> oxygenSaturation,
+  required String agentId,
+  required DateTime recordedAt,
+  Value<String> syncStatus,
+  Value<bool> isSynced,
+  Value<int> rowid,
+});
+typedef $$VitalSignsTableUpdateCompanionBuilder = VitalSignsCompanion Function({
+  Value<String> id,
+  Value<String> patientId,
+  Value<String?> medicalRecordId,
+  Value<double?> temperature,
+  Value<int?> bloodPressureSys,
+  Value<int?> bloodPressureDia,
+  Value<int?> heartRate,
+  Value<int?> respiratoryRate,
+  Value<double?> oxygenSaturation,
+  Value<String> agentId,
+  Value<DateTime> recordedAt,
+  Value<String> syncStatus,
+  Value<bool> isSynced,
+  Value<int> rowid,
+});
+
+class $$VitalSignsTableFilterComposer
+    extends Composer<_$AppDatabase, $VitalSignsTable> {
+  $$VitalSignsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get medicalRecordId => $composableBuilder(
+      column: $table.medicalRecordId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get temperature => $composableBuilder(
+      column: $table.temperature, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get bloodPressureSys => $composableBuilder(
+      column: $table.bloodPressureSys,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get bloodPressureDia => $composableBuilder(
+      column: $table.bloodPressureDia,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get heartRate => $composableBuilder(
+      column: $table.heartRate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get respiratoryRate => $composableBuilder(
+      column: $table.respiratoryRate,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get oxygenSaturation => $composableBuilder(
+      column: $table.oxygenSaturation,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get recordedAt => $composableBuilder(
+      column: $table.recordedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnFilters(column));
+}
+
+class $$VitalSignsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VitalSignsTable> {
+  $$VitalSignsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get medicalRecordId => $composableBuilder(
+      column: $table.medicalRecordId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get temperature => $composableBuilder(
+      column: $table.temperature, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get bloodPressureSys => $composableBuilder(
+      column: $table.bloodPressureSys,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get bloodPressureDia => $composableBuilder(
+      column: $table.bloodPressureDia,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get heartRate => $composableBuilder(
+      column: $table.heartRate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get respiratoryRate => $composableBuilder(
+      column: $table.respiratoryRate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get oxygenSaturation => $composableBuilder(
+      column: $table.oxygenSaturation,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get recordedAt => $composableBuilder(
+      column: $table.recordedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+      column: $table.isSynced, builder: (column) => ColumnOrderings(column));
+}
+
+class $$VitalSignsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VitalSignsTable> {
+  $$VitalSignsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get patientId =>
+      $composableBuilder(column: $table.patientId, builder: (column) => column);
+
+  GeneratedColumn<String> get medicalRecordId => $composableBuilder(
+      column: $table.medicalRecordId, builder: (column) => column);
+
+  GeneratedColumn<double> get temperature => $composableBuilder(
+      column: $table.temperature, builder: (column) => column);
+
+  GeneratedColumn<int> get bloodPressureSys => $composableBuilder(
+      column: $table.bloodPressureSys, builder: (column) => column);
+
+  GeneratedColumn<int> get bloodPressureDia => $composableBuilder(
+      column: $table.bloodPressureDia, builder: (column) => column);
+
+  GeneratedColumn<int> get heartRate =>
+      $composableBuilder(column: $table.heartRate, builder: (column) => column);
+
+  GeneratedColumn<int> get respiratoryRate => $composableBuilder(
+      column: $table.respiratoryRate, builder: (column) => column);
+
+  GeneratedColumn<double> get oxygenSaturation => $composableBuilder(
+      column: $table.oxygenSaturation, builder: (column) => column);
+
+  GeneratedColumn<String> get agentId =>
+      $composableBuilder(column: $table.agentId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get recordedAt => $composableBuilder(
+      column: $table.recordedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$VitalSignsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $VitalSignsTable,
+    VitalSign,
+    $$VitalSignsTableFilterComposer,
+    $$VitalSignsTableOrderingComposer,
+    $$VitalSignsTableAnnotationComposer,
+    $$VitalSignsTableCreateCompanionBuilder,
+    $$VitalSignsTableUpdateCompanionBuilder,
+    (VitalSign, BaseReferences<_$AppDatabase, $VitalSignsTable, VitalSign>),
+    VitalSign,
+    PrefetchHooks Function()> {
+  $$VitalSignsTableTableManager(_$AppDatabase db, $VitalSignsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VitalSignsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VitalSignsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VitalSignsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> patientId = const Value.absent(),
+            Value<String?> medicalRecordId = const Value.absent(),
+            Value<double?> temperature = const Value.absent(),
+            Value<int?> bloodPressureSys = const Value.absent(),
+            Value<int?> bloodPressureDia = const Value.absent(),
+            Value<int?> heartRate = const Value.absent(),
+            Value<int?> respiratoryRate = const Value.absent(),
+            Value<double?> oxygenSaturation = const Value.absent(),
+            Value<String> agentId = const Value.absent(),
+            Value<DateTime> recordedAt = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VitalSignsCompanion(
+            id: id,
+            patientId: patientId,
+            medicalRecordId: medicalRecordId,
+            temperature: temperature,
+            bloodPressureSys: bloodPressureSys,
+            bloodPressureDia: bloodPressureDia,
+            heartRate: heartRate,
+            respiratoryRate: respiratoryRate,
+            oxygenSaturation: oxygenSaturation,
+            agentId: agentId,
+            recordedAt: recordedAt,
+            syncStatus: syncStatus,
+            isSynced: isSynced,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String patientId,
+            Value<String?> medicalRecordId = const Value.absent(),
+            Value<double?> temperature = const Value.absent(),
+            Value<int?> bloodPressureSys = const Value.absent(),
+            Value<int?> bloodPressureDia = const Value.absent(),
+            Value<int?> heartRate = const Value.absent(),
+            Value<int?> respiratoryRate = const Value.absent(),
+            Value<double?> oxygenSaturation = const Value.absent(),
+            required String agentId,
+            required DateTime recordedAt,
+            Value<String> syncStatus = const Value.absent(),
+            Value<bool> isSynced = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VitalSignsCompanion.insert(
+            id: id,
+            patientId: patientId,
+            medicalRecordId: medicalRecordId,
+            temperature: temperature,
+            bloodPressureSys: bloodPressureSys,
+            bloodPressureDia: bloodPressureDia,
+            heartRate: heartRate,
+            respiratoryRate: respiratoryRate,
+            oxygenSaturation: oxygenSaturation,
+            agentId: agentId,
+            recordedAt: recordedAt,
+            syncStatus: syncStatus,
+            isSynced: isSynced,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$VitalSignsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $VitalSignsTable,
+    VitalSign,
+    $$VitalSignsTableFilterComposer,
+    $$VitalSignsTableOrderingComposer,
+    $$VitalSignsTableAnnotationComposer,
+    $$VitalSignsTableCreateCompanionBuilder,
+    $$VitalSignsTableUpdateCompanionBuilder,
+    (VitalSign, BaseReferences<_$AppDatabase, $VitalSignsTable, VitalSign>),
+    VitalSign,
+    PrefetchHooks Function()>;
 typedef $$MaternalCaresTableCreateCompanionBuilder = MaternalCaresCompanion
     Function({
   required String id,
@@ -9618,6 +10120,255 @@ typedef $$MaternalCaresTableProcessedTableManager = ProcessedTableManager<
     ),
     MaternalCare,
     PrefetchHooks Function()>;
+typedef $$NutritionRecordsTableCreateCompanionBuilder
+    = NutritionRecordsCompanion Function({
+  required String id,
+  required String patientId,
+  required double weight,
+  required double height,
+  Value<double?> muac,
+  Value<String> status,
+  required String agentId,
+  Value<String?> notes,
+  required DateTime date,
+  Value<String> syncStatus,
+  Value<int> rowid,
+});
+typedef $$NutritionRecordsTableUpdateCompanionBuilder
+    = NutritionRecordsCompanion Function({
+  Value<String> id,
+  Value<String> patientId,
+  Value<double> weight,
+  Value<double> height,
+  Value<double?> muac,
+  Value<String> status,
+  Value<String> agentId,
+  Value<String?> notes,
+  Value<DateTime> date,
+  Value<String> syncStatus,
+  Value<int> rowid,
+});
+
+class $$NutritionRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $NutritionRecordsTable> {
+  $$NutritionRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get weight => $composableBuilder(
+      column: $table.weight, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get height => $composableBuilder(
+      column: $table.height, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get muac => $composableBuilder(
+      column: $table.muac, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+      column: $table.date, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+}
+
+class $$NutritionRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $NutritionRecordsTable> {
+  $$NutritionRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get patientId => $composableBuilder(
+      column: $table.patientId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get weight => $composableBuilder(
+      column: $table.weight, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get height => $composableBuilder(
+      column: $table.height, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get muac => $composableBuilder(
+      column: $table.muac, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get agentId => $composableBuilder(
+      column: $table.agentId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+      column: $table.date, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+}
+
+class $$NutritionRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NutritionRecordsTable> {
+  $$NutritionRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get patientId =>
+      $composableBuilder(column: $table.patientId, builder: (column) => column);
+
+  GeneratedColumn<double> get weight =>
+      $composableBuilder(column: $table.weight, builder: (column) => column);
+
+  GeneratedColumn<double> get height =>
+      $composableBuilder(column: $table.height, builder: (column) => column);
+
+  GeneratedColumn<double> get muac =>
+      $composableBuilder(column: $table.muac, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get agentId =>
+      $composableBuilder(column: $table.agentId, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+}
+
+class $$NutritionRecordsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $NutritionRecordsTable,
+    NutritionRecord,
+    $$NutritionRecordsTableFilterComposer,
+    $$NutritionRecordsTableOrderingComposer,
+    $$NutritionRecordsTableAnnotationComposer,
+    $$NutritionRecordsTableCreateCompanionBuilder,
+    $$NutritionRecordsTableUpdateCompanionBuilder,
+    (
+      NutritionRecord,
+      BaseReferences<_$AppDatabase, $NutritionRecordsTable, NutritionRecord>
+    ),
+    NutritionRecord,
+    PrefetchHooks Function()> {
+  $$NutritionRecordsTableTableManager(
+      _$AppDatabase db, $NutritionRecordsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NutritionRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NutritionRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NutritionRecordsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> patientId = const Value.absent(),
+            Value<double> weight = const Value.absent(),
+            Value<double> height = const Value.absent(),
+            Value<double?> muac = const Value.absent(),
+            Value<String> status = const Value.absent(),
+            Value<String> agentId = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            Value<DateTime> date = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              NutritionRecordsCompanion(
+            id: id,
+            patientId: patientId,
+            weight: weight,
+            height: height,
+            muac: muac,
+            status: status,
+            agentId: agentId,
+            notes: notes,
+            date: date,
+            syncStatus: syncStatus,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String patientId,
+            required double weight,
+            required double height,
+            Value<double?> muac = const Value.absent(),
+            Value<String> status = const Value.absent(),
+            required String agentId,
+            Value<String?> notes = const Value.absent(),
+            required DateTime date,
+            Value<String> syncStatus = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              NutritionRecordsCompanion.insert(
+            id: id,
+            patientId: patientId,
+            weight: weight,
+            height: height,
+            muac: muac,
+            status: status,
+            agentId: agentId,
+            notes: notes,
+            date: date,
+            syncStatus: syncStatus,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$NutritionRecordsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $NutritionRecordsTable,
+    NutritionRecord,
+    $$NutritionRecordsTableFilterComposer,
+    $$NutritionRecordsTableOrderingComposer,
+    $$NutritionRecordsTableAnnotationComposer,
+    $$NutritionRecordsTableCreateCompanionBuilder,
+    $$NutritionRecordsTableUpdateCompanionBuilder,
+    (
+      NutritionRecord,
+      BaseReferences<_$AppDatabase, $NutritionRecordsTable, NutritionRecord>
+    ),
+    NutritionRecord,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -9630,8 +10381,6 @@ class $AppDatabaseManager {
       $$HouseholdMembersTableTableManager(_db, _db.householdMembers);
   $$ConsultationsTableTableManager get consultations =>
       $$ConsultationsTableTableManager(_db, _db.consultations);
-  $$VitalSignsTableTableManager get vitalSigns =>
-      $$VitalSignsTableTableManager(_db, _db.vitalSigns);
   $$SyncQueueTableTableManager get syncQueue =>
       $$SyncQueueTableTableManager(_db, _db.syncQueue);
   $$CaseReportsTableTableManager get caseReports =>
@@ -9640,6 +10389,10 @@ class $AppDatabaseManager {
       $$MedicalProtocolsTableTableManager(_db, _db.medicalProtocols);
   $$VaccinationsTableTableManager get vaccinations =>
       $$VaccinationsTableTableManager(_db, _db.vaccinations);
+  $$VitalSignsTableTableManager get vitalSigns =>
+      $$VitalSignsTableTableManager(_db, _db.vitalSigns);
   $$MaternalCaresTableTableManager get maternalCares =>
       $$MaternalCaresTableTableManager(_db, _db.maternalCares);
+  $$NutritionRecordsTableTableManager get nutritionRecords =>
+      $$NutritionRecordsTableTableManager(_db, _db.nutritionRecords);
 }

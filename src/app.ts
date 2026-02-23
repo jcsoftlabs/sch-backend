@@ -26,6 +26,7 @@ import diagnosisRoutes from './interfaces/http/routes/diagnosis.routes';
 import labResultRoutes from './interfaces/http/routes/lab-result.routes';
 import triageRoutes from './interfaces/http/routes/triage.routes';
 import vitalSignRoutes from './interfaces/http/routes/vital-sign.routes';
+import nutritionRoutes from './interfaces/http/routes/nutrition.routes';
 import { errorHandler } from './interfaces/http/middlewares/errorHandler';
 import { authLimiter, apiLimiter } from './interfaces/http/middlewares/rateLimiter.middleware';
 
@@ -100,6 +101,7 @@ app.use('/api/diagnoses', diagnosisRoutes);
 app.use('/api/lab-results', labResultRoutes);
 app.use('/api/vital-signs', vitalSignRoutes);
 app.use('/api/triage', triageRoutes);
+app.use('/api/nutrition', nutritionRoutes);
 
 app.get('/health', (req, res) => {
 

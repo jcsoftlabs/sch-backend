@@ -5,6 +5,7 @@ import '../../../../core/widgets/empty_state.dart';
 import '../../../vaccinations/presentation/widgets/vaccination_schedule_widget.dart';
 import '../widgets/consultations_history_widget.dart';
 import '../widgets/maternal_care_card_widget.dart';
+import '../widgets/nutrition_history_widget.dart';
 
 class PatientDetailsPage extends StatelessWidget {
   final PatientModel? patient;
@@ -50,6 +51,10 @@ class PatientDetailsPage extends StatelessWidget {
 
             // Vital Signs Section
             VitalSignsHistoryWidget(patientId: patient!.id),
+            const SizedBox(height: 32),
+
+            // Nutrition Tracking Section
+            NutritionHistoryWidget(patientId: patient!.id),
             const SizedBox(height: 32),
 
             // Vaccinations Section

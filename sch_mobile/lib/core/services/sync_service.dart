@@ -120,6 +120,9 @@ class SyncService {
       case 'MATERNAL_CARE':
         await _syncMaternalCare(op.operation, op.entityId, payload);
         break;
+      case 'NUTRITION':
+        await _syncNutrition(op.operation, op.entityId, payload);
+        break;
       default:
         throw Exception('Unknown entity type: ${op.entityType}');
     }
@@ -230,6 +233,25 @@ class SyncService {
         break;
       case 'DELETE':
         await _apiClient.dio.delete('/maternal-care/$entityId');
+        break;
+    }
+  }
+
+  // Sync nutrition operations
+  Future<void> _syncNutrition(
+    String operation,
+    String entityId,
+    Map<String, dynamic> payload,
+  ) async {
+    switch (operation) {
+      case 'CREATE':
+        await _apiClient.dio.post('/nutrition', data: payload);
+        break;
+      case 'UPDATE':
+        await _apiClient.dio.put('/nutrition/$entityId', data: payload);
+        break;
+      case 'DELETE':
+        await _apiClient.dio.delete('/nutrition/$entityId');
         break;
     }
   }
